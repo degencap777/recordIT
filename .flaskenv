@@ -1,0 +1,2 @@
+FLASK_APP=recordit
+FLASK_ENV=development

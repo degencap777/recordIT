@@ -1,0 +1,18 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+autopep8 = "*"
+flask-debugtoolbar = "*"
+
+[packages]
+flask = "*"
+flask-babel = "*"
+flask-apscheduler = "*"
+flask-caching = "*"
+flask-login = "*"
+flask-sqlalchemy = "*"
+flask-wtf = "*"
+python-dotenv = "*"

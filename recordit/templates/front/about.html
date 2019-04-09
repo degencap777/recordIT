@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+
+
+{% block breadcrumb %}
+<div class="breadcrumb-area" data-bgimage="{{ url_for('static', filename='images/bg/breadcrumb-bg-01.jpg') }}"
+    data-black-overlay="4">
+    <div class="container">
+        <div class="in-breadcrumb">
+            <div class="row">
+                <div class="col">
+                    <h3>About Us</h3>
+                    <!-- breadcrumb-list start -->
+                    <ul class="breadcrumb-list">
+                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <li class="breadcrumb-item active">About Us</li>
+                    </ul>
+                    <!-- breadcrumb-list end -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock breadcrumb %}
+
+{% block content %}
+<main class="page-content">
+    <!-- About Us Area -->
+    <div class="about-us-area section-ptb">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="about-us-contents">
+                        <h3>Welcome To <span>EduHas</span></h3>
+                        <p>There are many variations of passages of Lorem Ipsum available, buthe majority have
+                            suffered alteration in some form, by injeed randomised words which don't look even
+                            sliglieable.All the Lorem Ipsum generators on the Internet tend to repe
+                            defined chunks as necessary, making this the first true generator on the Internet. It
+                            uses </p>
+                        <div class="about-us-btn">
+                            <a href="#">Start learn now</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5 ">
+                    <div class="about-us-image text-right">
+                        <img src="{{ url_for('static', filename='images/about/about-01.jpg') }}" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--// About Us Area -->
+
+
+    <!-- Project Count Area Start -->
+    <div class="project-count-area section-ptb-160 project-count-bg">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-lg-8  ml-auto mr-auto">
+                    <!-- section-title -->
+                    <div class="section-title">
+                        <h4>about us</h4>
+                        <h3 class="text-white">SOME IMPORTANT FACTS</h3>
+                    </div>
+                    <!--// section-title -->
+                </div>
+            </div>
+
+            <div class="project-count-inner">
+                <div class="row">
+                    <div class="col-lg-10 ml-auto mr-auto">
+                        <div class="row">
+                            <div class="col-lg-3 col-sm-6">
+                                <!-- counter start -->
+                                <div class="counter text-center">
+                                    <h3 class="counter-active">50</h3>
+                                    <p>Teacher</p>
+                                </div>
+                                <!-- counter end -->
+                            </div>
+                            <div class="col-lg-3 col-sm-6">
+                                <!-- counter start -->
+                                <div class="counter text-center">
+                                    <h3 class="counter-active">65</h3>
+                                    <p>Courses</p>
+                                </div>
+                                <!-- counter end -->
+                            </div>
+                            <div class="col-lg-3 col-sm-6">
+                                <!-- counter start -->
+                                <div class="counter text-center">
+                                    <h3 class="counter-active">160</h3>
+                                    <p>Members</p>
+                                </div>
+                                <!-- counter end -->
+                            </div>
+                            <div class="col-lg-3 col-sm-6">
+                                <!-- counter start -->
+                                <div class="counter text-center">
+                                    <h3 class="counter-active">82</h3>
+                                    <p>Countries</p>
+                                </div>
+                                <!-- counter end -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Project Count Area End -->
+</main>
+{% endblock content %}

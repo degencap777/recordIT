@@ -1,0 +1,124 @@
+<!--
+    ____                           __   _ __ 
+   / __ \___  _________  _________/ /  (_) /_
+  / /_/ / _ \/ ___/ __ \/ ___/ __  /  / / __/
+ / _, _/  __/ /__/ /_/ / /  / /_/ /  / / /_  
+/_/ |_|\___/\___/\____/_/   \__,_/  /_/\__/  
+-->
+<!DOCTYPE html>
+<html lang="zh">
+
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="x-ua-compatible" content="ie=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <title>{% block title %}Record it{% endblock %}</title>
+
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon/favicon.ico') }}">
+        <link rel="apple-touch-icon" sizes="180x180"
+            href="{{ url_for('static', filename='favicon/apple-touch-icon.png') }}">
+        <link rel="android-chrome" type="image/png" sizes="192x192"
+            href="{{ url_for('static', filename='favicon/android-chrome-192x192.png') }}">
+        <link rel="android-chrome" type="image/png" sizes="512x512"
+            href="{{ url_for('static', filename='favicon/android-chrome-512x512.png') }}">
+        <link rel="icon" type="image/png" sizes="16x16"
+            href="{{ url_for('static', filename='favicon/favicon-16x16.ico') }}">
+        <link rel="icon" type="image/png" sizes="32x32"
+            href="{{ url_for('static', filename='favicon/favicon-32x32.ico') }}">
+        <link rel="manifest" href="{{ url_for('static', filename='favicon/site.webmanifest') }}">
+
+        {% block styles %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/material-design-iconic-font.min.css') }}" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/plugins.css') }}" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        {% endblock styles %}
+
+        {% block headscript %}
+        <script src="{{ url_for('static', filename='js/vendor/modernizr-3.6.0.min.js') }}"></script>
+        {% endblock headscript %}
+    </head>
+
+    <body>
+        <div class="main-wrapper">
+            {% block header %}
+            <header class="header-area">
+                <div class="header-bottom-area header-sticky header-sticky">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-3 col-md-5 col-6">
+                                <div class="logo-area">
+                                    <a href="/">
+                                        <h4>Record it</h4>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-9 col-md-7 col-6">
+                                <div class="header-bottom-right">
+                                    <!-- main-menu -->
+                                    <div class="main-menu">
+                                        <nav class="main-navigation">
+                                            <ul>
+                                                <li><a href="/">HOME</a></li>
+                                                <li><a href="/about">ABOUT</a></li>
+                                                <li><a href="/login">LOGIN</a></li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                    <!--// main-menu -->
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                <!-- mobile-menu start -->
+                                <div class="mobile-menu d-block d-lg-none"></div>
+                                <!-- mobile-menu end -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            {% endblock header %}
+
+            {% block breadcrumb %}
+            {% endblock breadcrumb %}
+
+            {% block content %}
+            {% endblock content %}
+
+            {% block footer %}
+            <footer class="footer-area">
+                <!-- Footer-bottom Area -->
+                <div class="footer-bottom">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="copy-right pt--10 pb--10 text-center text-white">
+                                    <p>
+                                        &copy; 2019
+                                        <a href="http://www.bootstrapmb.com"><span>NCUST-AI</span></a> /
+                                        <span>Zero</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--// Footer-botton Area -->
+            </footer>
+            {% endblock footer %}
+        </div>
+
+        {% block scripts %}
+        <script src="{{ url_for('static', filename='js/vendor/jquery-3.3.1.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/plugins.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/ajax-mail.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+        {% endblock scripts %}
+    </body>
+
+</html>

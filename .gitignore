@@ -104,3 +104,6 @@ venv.bak/
 # vscode
 .history
 .vscode
+
+# docs
+*.zip

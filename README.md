@@ -6,6 +6,8 @@
 /_/ |_|\___/\___/\____/_/   \__,_/  /_/\__/  
 </pre>
 
+<p align="center"><img src="assets/indexPage.png" alt="IndexPage"></p>
+
 ## Feature
 
 wait for adding.
@@ -36,3 +38,4 @@ wait for adding.
 ### Other
 
 -   [ ] translation
+-   [ ] verification code

@@ -58,4 +58,4 @@ def get_locale():
     if locale:
         return locale
 
-    return request.accept_languages.best_match(current_app.config['MMCS_LOCALES'])
+    return request.accept_languages.best_match(current_app.config['LOCALES'])

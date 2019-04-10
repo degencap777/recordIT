@@ -11,7 +11,7 @@ from flask_babel import _
 from flask_wtf.csrf import CSRFError
 
 from recordit.blueprints.view import view_bp
-from recordit.extensions import babel, cache, csrf, db, login_manager, scheduler, toolbar
+from recordit.extensions import babel, cache, csrf, db, login_manager, scheduler, toolbar, bootstrap
 from recordit.settings import basedir, config
 
 
@@ -85,6 +85,7 @@ def register_extensions(app):
     """register all extensions for flask
     """
 
+    bootstrap.init_app(app)
     db.init_app(app)
     login_manager.init_app(app)
     csrf.init_app(app)

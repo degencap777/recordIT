@@ -50,7 +50,7 @@
                             <div class="col-lg-3 col-md-5 col-6">
                                 <div class="logo-area">
                                     <a href="/">
-                                        <h4>Record it</h4>
+                                        <img src="{{ url_for('static', filename='logo.png') }}" alt="Record it">
                                     </a>
                                 </div>
                             </div>
@@ -64,6 +64,13 @@
                                                 <li><a href="/">HOME</a></li>
                                                 <li><a href="/about">ABOUT</a></li>
                                                 <li><a href="/login">LOGIN</a></li>
+                                                <li class="active">
+                                                    <a href="#local">LANGUAGE</a>
+                                                    <ul class="sub-menu">
+                                                        <li><a href="#">简体中文</a></li>
+                                                        <li><a href="#">English</a></li>
+                                                    </ul>
+                                                </li>
                                             </ul>
                                         </nav>
                                     </div>
@@ -97,7 +104,8 @@
                                 <div class="copy-right pt--10 pb--10 text-center text-white">
                                     <p>
                                         &copy; 2019
-                                        <a href="/" title="{{ _('North China University of Science and Technology University AI Profession') }}">
+                                        <a href="/"
+                                            title="{{ _('North China University of Science and Technology University AI Profession') }}">
                                             <span>NCUST-AI</span></a> /
                                         <a href="https://github.com/Zeroto521" title="Written by Zeroto521">
                                             <span>Zero</span></a>

@@ -1,6 +1,6 @@
 {
-    "name": "RecordIt",
-    "short_name": "recordit",
+    "name": "Recordit",
+    "short_name": "Recordit",
     "icons": [{
         "src": "/android-chrome-192x192.png",
         "sizes": "192x192",

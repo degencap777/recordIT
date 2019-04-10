@@ -8,69 +8,63 @@
             <div class="itemBg">
                 <img src="{{ url_for('static', filename='images/slider/background-image-1.jpg') }}" alt="" />
             </div>
-            <!-- Hero Content One Start -->
             <div class="container">
                 <div class="hero-content-one">
                     <div class="row">
                         <div class="col">
                             <div class="slider-text-info">
-                                <h1>
-                                    <span>Modern Education </span> <br />
-                                    For Everyone
-                                </h1>
-                                <a href="about.html" class="btn slider-btn uppercase"><span>About us</span></a>
+                                <h1><span>Record it</span></h1>
+                                <h1>{{ _('Just click & submit') }}</h1>
+                                <a href="{{ url_for('auth.login') }}" class="btn slider-btn uppercase">
+                                    <span>Sign in Now</span>
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Hero Content One End -->
         </div>
 
         <div class="singleSlide" data-black-overlay="3">
             <div class="itemBg">
                 <img src="{{ url_for('static', filename='images/slider/background-image-2.jpg') }}" alt="" />
             </div>
-            <!-- Hero Content One Start -->
             <div class="container">
                 <div class="hero-content-one">
                     <div class="row">
                         <div class="col">
                             <div class="slider-text-info">
-                                <h1>
-                                    <span>Modern Education </span> <br />
-                                    For Everyone
-                                </h1>
-                                <a href="/about" class="btn slider-btn uppercase"><span>About us</span></a>
+                                <h1><span>Record it</span></h1>
+                                <h1>{{ _('For Class') }}</h1>
+                                <a href="{{ url_for('auth.login') }}" class="btn slider-btn uppercase">
+                                    <span>Sign in Now</span>
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Hero Content One End -->
         </div>
 
         <div class="singleSlide" data-black-overlay="3">
             <div class="itemBg">
                 <img src="{{ url_for('static', filename='images/slider/background-image-3.jpg') }}" alt="" />
             </div>
-            <!-- Hero Content One Start -->
             <div class="container">
                 <div class="hero-content-one">
                     <div class="row">
                         <div class="col">
                             <div class="slider-text-info">
-                                <h1>
-                                    <span>Modern Education </span> <br />
-                                    For Everyone
-                                </h1>
-                                <a href="/about" class="btn slider-btn uppercase"><span>About us</span></a>
+                                <h1><span>Record it</span></h1>
+                                <h1>{{ _('For Everyone') }}</h1>
+                                <a href="{{ url_for('front.about') }}" class="btn slider-btn uppercase">
+                                    <span>About us</span>
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Hero Content One End -->
         </div>
     </div>
 </div>
@@ -79,116 +73,47 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 ml-auto mr-auto">
-                <!-- section-title -->
                 <div class="section-title-three">
-                    <h4>WELCOME TO EDUCATION</h4>
-                    <h3>Our Course Categories</h3>
-                    <p>
-                        Contrary to popular belief, Lorem Ipsum is not
-                        simply random text. It has roots in a pi classical
-                        Latin literature from 45 BC, making it over 2000
-                        years old. Richard McClintock,
-                    </p>
+                    <h4>Just Record it</h4>
+                    <p>{{ lipsum(1) }}</p>
                 </div>
-                <!--// section-title -->
             </div>
         </div>
 
         <div class="row">
-            <div class="col">
-                <div class="course-categories-wrap">
-                    <div class="coustom-col-2">
-                        <!-- single-course-categories -->
-                        <div class="single-course-categories malachite">
-                            <div class="item-inner">
-                                <div class="cours-icon">
-                                    <img src="{{ url_for('static', filename='images/icon/icon-01.png') }}" alt="" />
-                                </div>
-                                <div class="cours-title">
-                                    <h5>Photoshop</h5>
-                                </div>
-                            </div>
+            <div class="col-lg-4 col-sm-6">
+                <div class="single-course-categories malachite">
+                    <div class="item-inner">
+                        <div class="cours-icon">
+                            <img src="{{ url_for('static', filename='images/icon/icon-01.png') }}" alt="" />
                         </div>
-                        <!--// single-course-categories -->
-                    </div>
-
-                    <div class="coustom-col-2">
-                        <!-- single-course-categories -->
-                        <div class="single-course-categories sunglow">
-                            <div class="item-inner">
-                                <div class="cours-icon">
-                                    <img src="{{ url_for('static', filename='images/icon/icon-02.png') }}" alt="" />
-                                </div>
-                                <div class="cours-title">
-                                    <h5>Illustration</h5>
-                                </div>
-                            </div>
+                        <div class="cours-title">
+                            <h5>Coding</h5>
                         </div>
-                        <!--// single-course-categories -->
                     </div>
-
-                    <div class="coustom-col-2">
-                        <!-- single-course-categories -->
-                        <div class="single-course-categories mariner">
-                            <div class="item-inner">
-                                <div class="cours-icon">
-                                    <img src="{{ url_for('static', filename='images/icon/icon-03.png') }}" alt="" />
-                                </div>
-                                <div class="cours-title">
-                                    <h5>Photography</h5>
-                                </div>
-                            </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                <div class="single-course-categories brilliantrose">
+                    <div class="item-inner">
+                        <div class="cours-icon">
+                            <img src="{{ url_for('static', filename='images/icon/icon-04.png') }}" alt="" />
                         </div>
-                        <!--// single-course-categories -->
-                    </div>
-
-                    <div class="coustom-col-2">
-                        <!-- single-course-categories -->
-                        <div class="single-course-categories brilliantrose">
-                            <div class="item-inner">
-                                <div class="cours-icon">
-                                    <img src="{{ url_for('static', filename='images/icon/icon-04.png') }}" alt="" />
-                                </div>
-                                <div class="cours-title">
-                                    <h5>HTML & CSS</h5>
-                                </div>
-                            </div>
+                        <div class="cours-title">
+                            <h5>HTML & CSS</h5>
                         </div>
-                        <!--// single-course-categories -->
                     </div>
-
-                    <div class="coustom-col-2">
-                        <!-- single-course-categories -->
-                        <div class="single-course-categories shakespeare">
-                            <div class="item-inner">
-                                <div class="cours-icon">
-                                    <img src="{{ url_for('static', filename='images/icon/icon-05.png') }}" alt="" />
-                                </div>
-                                <div class="cours-title">
-                                    <h5>Development</h5>
-                                </div>
-                            </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                <div class="single-course-categories shakespeare">
+                    <div class="item-inner">
+                        <div class="cours-icon">
+                            <img src="{{ url_for('static', filename='images/icon/icon-05.png') }}" alt="" />
                         </div>
-                        <!--// single-course-categories -->
-                    </div>
-
-                    <div class="coustom-col-2">
-                        <!-- single-course-categories -->
-                        <div class="single-course-categories deyork">
-                            <div class="item-inner">
-                                <div class="cours-icon">
-                                    <img src="{{ url_for('static', filename='images/icon/icon-06.png') }}" alt="" />
-                                </div>
-                                <div class="cours-title">
-                                    <h5>Flim & Media</h5>
-                                </div>
-                            </div>
+                        <div class="cours-title">
+                            <h5>Development</h5>
                         </div>
-                        <!--// single-course-categories -->
-                    </div>
-
-                    <div class="all-course-btn">
-                        <a href="course-grid.html" class="all-course">all course</a>
                     </div>
                 </div>
             </div>

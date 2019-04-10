@@ -1,7 +1,6 @@
 (function ($) {
     "use strict";
 
-
     new WOW().init();
 
     $(window).on('load', function () {
@@ -221,8 +220,10 @@
     $.scrollUp({
         scrollText: '<i class="zmdi zmdi-long-arrow-up"></i>',
         easingType: 'linear',
-        scrollSpeed: 1000,
+        scrollSpeed: 2000,
         animation: 'fade'
     });
+
+    $("[data-toggle='tooltip']").tooltip();
 
 })(jQuery);

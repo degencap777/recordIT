@@ -1,0 +1,5 @@
+{% macro link_field(link_name, link_url, link_title, is_newpage=False) %}
+    <a href="{{ link_url }}" title="{{ link_title }}" {% if is_newpage %}target="_blank" {% endif %} data-toggle="tooltip">
+        {{ link_name }}
+    </a>
+{% endmacro %}

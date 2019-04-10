@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 
+{% block title %}Error {{ code }}{% endblock %}
 
 {% block breadcrumb %}
 <div class="breadcrumb-area" data-bgimage="{{ url_for('static', filename='images/bg/breadcrumb-bg-01.jpg') }}"
@@ -8,10 +9,14 @@
         <div class="in-breadcrumb">
             <div class="row">
                 <div class="col">
-                    <h3>Error 404</h3>
+                    <h3>Error {{ code }}</h3>
                     <ul class="breadcrumb-list">
-                        <li class="breadcrumb-item"><a href="/">Home</a></li>
-                        <li class="breadcrumb-item active">Error 404</li>
+                        <li class="breadcrumb-item">
+                            <a href="/">Home</a>
+                        </li>
+                        <li class="breadcrumb-item active">
+                            Error {{ code }}
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -22,20 +27,21 @@
 
 {% block content %}
 <main class="page-content section-ptb">
-
     <div class="container">
         <div class="row">
             <div class="col-lg-8 ml-auto mr-auto text-center">
                 <div class="search-error-wrapper">
-                    <h1>404</h1>
-                    <h4>PAGE NOT BE FOUND</h4>
-                    <p class="home-link">Sorry but the page you are looking for does not exist, have been removed,
-                        name changed or is temporarity unavailable.</p>
-                    <a href="/" class="home-bacck-button">Back to home page</a>
+                    <h1>{{ code }}</h1>
+                    <h4>{{ info }}</h4>
+                    <p>
+                        {{ _('Sorry, the page you are looking for does not exist, have been removed, name changed or is temporarity unavailable.') }}
+                    </p>
+                    <a href="/" class="home-bacck-button">
+                        {{ _('Back to home page') }}
+                    </a>
                 </div>
             </div>
         </div>
     </div>
-
 </main>
 {% endblock content %}

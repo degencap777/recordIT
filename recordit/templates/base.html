@@ -5,6 +5,7 @@
  / _, _/  __/ /__/ /_/ / /  / /_/ /  / / /_  
 /_/ |_|\___/\___/\____/_/   \__,_/  /_/\__/  
 -->
+{% from 'macros.html' import link_field %}
 <!DOCTYPE html>
 <html lang="zh">
 
@@ -57,13 +58,12 @@
 
                             <div class="col-lg-9 col-md-7 col-6">
                                 <div class="header-bottom-right">
-                                    <!-- main-menu -->
                                     <div class="main-menu">
                                         <nav class="main-navigation">
                                             <ul>
                                                 <li><a href="/">HOME</a></li>
-                                                <li><a href="/about">ABOUT</a></li>
-                                                <li><a href="/login">LOGIN</a></li>
+                                                <li><a href="{{ url_for('front.about') }}">ABOUT</a></li>
+                                                <li><a href="{{ url_for('auth.login') }}">LOGIN</a></li>
                                                 <li class="active">
                                                     <a href="#local">LANGUAGE</a>
                                                     <ul class="sub-menu">
@@ -74,14 +74,12 @@
                                             </ul>
                                         </nav>
                                     </div>
-                                    <!--// main-menu -->
                                 </div>
                             </div>
 
                             <div class="col">
-                                <!-- mobile-menu start -->
-                                <div class="mobile-menu d-block d-lg-none"></div>
-                                <!-- mobile-menu end -->
+                                <div class="mobile-menu d-block d-lg-none">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -102,13 +100,9 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="copy-right pt--10 pb--10 text-center text-white">
-                                    <p>
-                                        &copy; 2019
-                                        <a href="/"
-                                            title="{{ _('North China University of Science and Technology University AI Profession') }}">
-                                            <span>NCUST-AI</span></a> /
-                                        <a href="https://github.com/Zeroto521" title="Written by Zeroto521">
-                                            <span>Zero</span></a>
+                                    <p>&copy; 2019
+                                        {{ link_field("NCUST-AI", "/", _('North China University of Science and Technology University AI Profession'), True) }} /
+                                        {{ link_field("Zero", "https://github.com/Zeroto521", "Written by Zeroto521", True) }}
                                     </p>
                                 </div>
                             </div>

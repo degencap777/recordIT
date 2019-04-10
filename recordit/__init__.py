@@ -10,7 +10,8 @@ from flask import Flask, Markup, render_template, request, session
 from flask_babel import _
 from flask_wtf.csrf import CSRFError
 
-from recordit.blueprints.view import view_bp
+from recordit.blueprints.auth import auth_bp
+from recordit.blueprints.front import front_bp
 from recordit.extensions import babel, cache, csrf, db, login_manager, scheduler, toolbar, bootstrap
 from recordit.settings import basedir, config
 
@@ -100,7 +101,8 @@ def register_blueprints(app):
     """register all views for flask
     """
 
-    app.register_blueprint(view_bp)
+    app.register_blueprint(front_bp)
+    app.register_blueprint(auth_bp, url_prefix='/auth')
 
 
 def register_errors(app):

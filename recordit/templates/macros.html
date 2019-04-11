@@ -1,5 +1,55 @@
 {% macro link_field(link_name, link_url, link_title, is_newpage=False) %}
-    <a href="{{ link_url }}" title="{{ link_title }}" {% if is_newpage %}target="_blank" {% endif %} data-toggle="tooltip">
-        {{ link_name }}
-    </a>
+<a href="{{ link_url }}" title="{{ link_title }}" {% if is_newpage %}target="_blank" {% endif %} data-toggle="tooltip">
+    {{ link_name }}
+</a>
+{% endmacro %}
+
+
+{% macro single_slide(filename, content, button, btn_link, alt='slide image', title='Record it') %}
+    <div class="singleSlide" data-black-overlay="3">
+        <div class="itemBg">
+            <img src="{{ url_for('static', filename=filename) }}" alt="{{ alt }}" />
+        </div>
+        <div class="container">
+            <div class="hero-content-one">
+                <div class="row">
+                    <div class="col">
+                        <div class="slider-text-info">
+                            <h1><span>{{ title }}</span></h1>
+                            <h1>{{ content }}</h1>
+                            <a href="{{ url_for(btn_link) }}" class="btn slider-btn uppercase">
+                                <span>{{ button }}</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endmacro %}
+
+
+{% macro single_cours(filename, title, alt='icon', color='malachite') %}
+    <div class="col-lg-4 col-sm-6">
+        <div class="single-course-categories {{ color }}">
+            <div class="item-inner">
+                <div class="cours-icon">
+                    <img src="{{ url_for('static', filename=filename) }}" alt={{ alt }} />
+                </div>
+                <div class="cours-title">
+                    <h5>{{ title }}</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endmacro %}
+
+
+{% macro single_counter(tag, number) %}
+    <div class="col-lg-3 col-sm-6">
+        <div class="counter text-center">
+            <h3 class="counter-active">{{ number }}</h3>
+            <p>{{ tag }}</p>
+        </div>
+    </div>
 {% endmacro %}

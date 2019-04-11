@@ -12,7 +12,7 @@
                     <h3>Error {{ code }}</h3>
                     <ul class="breadcrumb-list">
                         <li class="breadcrumb-item">
-                            <a href="/">Home</a>
+                            <a href="{{ url_for('front.index') }}">Home</a>
                         </li>
                         <li class="breadcrumb-item active">
                             Error {{ code }}
@@ -36,7 +36,7 @@
                     <p>
                         {{ _('Sorry, the page you are looking for does not exist, have been removed, name changed or is temporarity unavailable.') }}
                     </p>
-                    <a href="/" class="home-bacck-button">
+                    <a href="{{ url_for('front.index') }}" class="home-bacck-button">
                         {{ _('Back to home page') }}
                     </a>
                 </div>

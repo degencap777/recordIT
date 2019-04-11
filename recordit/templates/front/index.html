@@ -1,71 +1,14 @@
 {% extends 'base.html' %}
+{% from 'macros.html' import single_slide %}
+{% from 'macros.html' import single_cours %}
 
 
 {% block content %}
 <div class="hero-slider">
     <div class="hero-slider-active owl-carousel">
-        <div class="singleSlide" data-black-overlay="3">
-            <div class="itemBg">
-                <img src="{{ url_for('static', filename='images/slider/background-image-1.jpg') }}" alt="" />
-            </div>
-            <div class="container">
-                <div class="hero-content-one">
-                    <div class="row">
-                        <div class="col">
-                            <div class="slider-text-info">
-                                <h1><span>Record it</span></h1>
-                                <h1>{{ _('Just click & submit') }}</h1>
-                                <a href="{{ url_for('auth.login') }}" class="btn slider-btn uppercase">
-                                    <span>Sign in Now</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="singleSlide" data-black-overlay="3">
-            <div class="itemBg">
-                <img src="{{ url_for('static', filename='images/slider/background-image-2.jpg') }}" alt="" />
-            </div>
-            <div class="container">
-                <div class="hero-content-one">
-                    <div class="row">
-                        <div class="col">
-                            <div class="slider-text-info">
-                                <h1><span>Record it</span></h1>
-                                <h1>{{ _('For Class') }}</h1>
-                                <a href="{{ url_for('auth.login') }}" class="btn slider-btn uppercase">
-                                    <span>Sign in Now</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="singleSlide" data-black-overlay="3">
-            <div class="itemBg">
-                <img src="{{ url_for('static', filename='images/slider/background-image-3.jpg') }}" alt="" />
-            </div>
-            <div class="container">
-                <div class="hero-content-one">
-                    <div class="row">
-                        <div class="col">
-                            <div class="slider-text-info">
-                                <h1><span>Record it</span></h1>
-                                <h1>{{ _('For Everyone') }}</h1>
-                                <a href="{{ url_for('front.about') }}" class="btn slider-btn uppercase">
-                                    <span>About us</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        {{ single_slide(filename='images/slider/background-image-1.jpg', content=_('Just click & submit'), button=_('Sign in Now'), btn_link='auth.login') }}
+        {{ single_slide(filename='images/slider/background-image-2.jpg', content=_('For Class'), button=_('Sign in Now'), btn_link='auth.login') }}
+        {{ single_slide(filename='images/slider/background-image-3.jpg', content=_('For Everyone'), button=_('About us'), btn_link='front.about') }}
     </div>
 </div>
 
@@ -79,44 +22,10 @@
                 </div>
             </div>
         </div>
-
         <div class="row">
-            <div class="col-lg-4 col-sm-6">
-                <div class="single-course-categories malachite">
-                    <div class="item-inner">
-                        <div class="cours-icon">
-                            <img src="{{ url_for('static', filename='images/icon/icon-01.png') }}" alt="" />
-                        </div>
-                        <div class="cours-title">
-                            <h5>Coding</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-sm-6">
-                <div class="single-course-categories brilliantrose">
-                    <div class="item-inner">
-                        <div class="cours-icon">
-                            <img src="{{ url_for('static', filename='images/icon/icon-04.png') }}" alt="" />
-                        </div>
-                        <div class="cours-title">
-                            <h5>HTML & CSS</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-sm-6">
-                <div class="single-course-categories shakespeare">
-                    <div class="item-inner">
-                        <div class="cours-icon">
-                            <img src="{{ url_for('static', filename='images/icon/icon-05.png') }}" alt="" />
-                        </div>
-                        <div class="cours-title">
-                            <h5>Development</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {{ single_cours(filename='images/icon/icon-01.png', title=_('Coding'), color='malachite') }}
+            {{ single_cours(filename='images/icon/icon-02.png', title=_('HTML & CSS'), color='brilliantrose') }}
+            {{ single_cours(filename='images/icon/icon-03.png', title=_('Development'), color='shakespeare') }}
         </div>
     </div>
 </div>

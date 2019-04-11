@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
+{% from 'macros.html' import single_counter %}
+
 
 {% block title %}About{% endblock %}
+
 
 {% block breadcrumb %}
 <div class="breadcrumb-area" data-bgimage="{{ url_for('static', filename='images/bg/breadcrumb-bg-01.jpg') }}"
@@ -12,7 +15,7 @@
                     <h3>About Us</h3>
                     <ul class="breadcrumb-list">
                         <li class="breadcrumb-item">
-                            <a href="/">Home</a>
+                            <a href="{{ url_for('front.index') }}">Home</a>
                         </li>
                         <li class="breadcrumb-item active">
                             About Us
@@ -63,30 +66,10 @@
                 <div class="row">
                     <div class="col-lg-10 ml-auto mr-auto">
                         <div class="row">
-                            <div class="col-lg-3 col-sm-6">
-                                <div class="counter text-center">
-                                    <h3 class="counter-active">50</h3>
-                                    <p>Teacher</p>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-sm-6">
-                                <div class="counter text-center">
-                                    <h3 class="counter-active">65</h3>
-                                    <p>Students</p>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-sm-6">
-                                <div class="counter text-center">
-                                    <h3 class="counter-active">160</h3>
-                                    <p>Courses</p>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-sm-6">
-                                <div class="counter text-center">
-                                    <h3 class="counter-active">82</h3>
-                                    <p>Reports</p>
-                                </div>
-                            </div>
+                            {{ single_counter('Teachers', 50) }}
+                            {{ single_counter('Students', 50) }}
+                            {{ single_counter('Courses', 50) }}
+                            {{ single_counter('Reports', 50) }}
                         </div>
                     </div>
                 </div>

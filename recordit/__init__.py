@@ -12,14 +12,13 @@ from flask_wtf.csrf import CSRFError
 
 from recordit.blueprints.auth import auth_bp
 from recordit.blueprints.front import front_bp
-from recordit.extensions import babel, cache, csrf, db, login_manager, scheduler, toolbar, bootstrap
+from recordit.extensions import (babel, bootstrap, cache, ckeditor, csrf, db,
+                                 login_manager, scheduler, toolbar)
+from recordit.models import Course, RecordTable, Report, User, Role
 from recordit.settings import basedir, config
 
 
 def create_app(config_name=None):
-    """Using flask factory method to create flask app
-    """
-
     if config_name is None:
         config_name = os.getenv('FLASK_CONFIG', 'development')
 
@@ -42,9 +41,6 @@ def create_app(config_name=None):
 
 
 def register_logging(app):
-    """register log for flask
-    """
-
     class RequestFormatter(logging.Formatter):
 
         def format(self, record):
@@ -60,7 +56,8 @@ def register_logging(app):
     if not app.debug:
         file_handler = RotatingFileHandler(
             os.path.join(basedir, 'logs/recordit.log'),
-            maxBytes=10 * 1024 * 1024, backupCount=10)
+            maxBytes=10 * 1024 * 1024, backupCount=10
+        )
 
         mail_handler = SMTPHandler(
             mailhost=app.config['MAIL_SERVER'],
@@ -68,47 +65,35 @@ def register_logging(app):
             toaddrs=app.config['ADMIN_EMAIL'],
             subject='recordit Application Error',
             credentials=('apikey', app.config['MAIL_PASSWORD']))
+
+        file_handler.setLevel(logging.INFO)
+        file_handler.setFormatter(request_formatter)
+        app.logger.addHandler(file_handler)
+
         mail_handler.setLevel(logging.INFO)
         mail_handler.setFormatter(request_formatter)
         app.logger.addHandler(mail_handler)
 
-    else:
-        file_handler = RotatingFileHandler(
-            os.path.join(basedir, 'logs/recordit-dev.log'),
-            maxBytes=10 * 1024 * 1024, backupCount=10)
-
-    file_handler.setFormatter(request_formatter)
-    file_handler.setLevel(logging.INFO)
-    app.logger.addHandler(file_handler)
-
 
 def register_extensions(app):
-    """register all extensions for flask
-    """
-
     bootstrap.init_app(app)
     db.init_app(app)
     login_manager.init_app(app)
     csrf.init_app(app)
     babel.init_app(app)
     cache.init_app(app)
+    ckeditor.init_app(app)
     # toolbar.init_app(app)
-    scheduler.init_app(app)
-    scheduler.start()
+    # scheduler.init_app(app)
+    # scheduler.start()
 
 
 def register_blueprints(app):
-    """register all views for flask
-    """
-
     app.register_blueprint(front_bp)
     app.register_blueprint(auth_bp, url_prefix='/auth')
 
 
 def register_errors(app):
-    """register all errors for flask
-    """
-
     @app.errorhandler(400)
     def bad_request(e):
         code = 400
@@ -159,44 +144,22 @@ def register_errors(app):
 
 
 def register_shell_context(app):
-    """register shell context for flask
-    """
-
     @app.shell_context_processor
     def make_shell_context():
         return dict()
 
 
 def register_global_func(app):
-    """register function for jinja
-    """
-
     pass
 
 
 def register_commands(app):
-    """register command for flask
-    """
-
-    @app.cli.command()
-    @click.option('--drop', is_flag=True, help='Create after drop.')
-    def initdb(drop):
-        """Initialize the database."""
-        if drop:
-            click.confirm(
-                'This operation will delete the database, do you want to continue?', abort=True)
-            db.drop_all()
-            click.echo('Drop tables.')
-
-        db.create_all()
-        click.echo('Initialized database.')
-
     @app.cli.command()
     @click.option('--drop', is_flag=True, help='Create after drop.')
     def init(drop):
         """Initialize recordit."""
 
-        from recordit.fakes import fake_root
+        from recordit.fakes import fake_admin
 
         if drop:
             click.confirm(
@@ -207,8 +170,11 @@ def register_commands(app):
         click.echo('Initializing the database...')
         db.create_all()
 
-        fake_root()
-        click.echo('Generating the default root administrator...')
+        click.echo('Initializing the roles and permissions...')
+        Role.init_role()
+
+        click.echo('Generating the default administrator...')
+        fake_admin()
 
         if os.system('pybabel compile -d recordit/translations'):
             raise RuntimeError('compile command failed')
@@ -216,12 +182,23 @@ def register_commands(app):
         click.echo('Done.')
 
     @app.cli.command()
-    @click.option('--teacher', default=10, help='Quantity of teacher, default is 10.')
-    @click.option('--solution', default=30, help='Quantity of solution, default is 30.')
-    def forge(teacher, solution):
+    @click.option('--students', default=50, help='Quantity of students, default is 50.')
+    def forge(student):
         """Generate fake data."""
 
-        pass
+        from recordit.fakes import fake_admin, fake_student
+
+        db.drop_all()
+        db.create_all()
+
+        click.echo('Initializing the roles and permissions...')
+        Role.init_role()
+
+        click.echo('Generating the administrator...')
+        fake_admin()
+
+        click.echo('Generating %d students...' % student)
+        fake_student(student)
 
         click.echo('Done.')
 

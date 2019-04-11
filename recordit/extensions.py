@@ -6,6 +6,7 @@ from flask_babel import Babel
 from flask_babel import lazy_gettext as _l
 from flask_bootstrap import Bootstrap
 from flask_caching import Cache
+from flask_ckeditor import CKEditor
 from flask_debugtoolbar import DebugToolbarExtension
 from flask_login import AnonymousUserMixin, LoginManager, current_user
 from flask_sqlalchemy import SQLAlchemy
@@ -19,6 +20,7 @@ toolbar = DebugToolbarExtension()
 babel = Babel()
 cache = Cache()
 scheduler = APScheduler()
+ckeditor = CKEditor()
 
 
 @login_manager.user_loader

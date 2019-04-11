@@ -4,7 +4,6 @@ import os
 import sys
 from uuid import uuid4
 
-
 basedir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 
 # SQLite URI compatible
@@ -18,12 +17,23 @@ else:
 class BaseConfig(object):
     SECRET_KEY = os.getenv('SECRET_KEY', 'secret key')
 
+    UPLOAD_PATH = os.path.join(basedir, 'uploads')
+
+    FILE_CACHE_PATH = os.path.join(basedir, 'cache')
+
+    ADMIN_NUMBER = os.getenv('ADMIN_NUMBER')
+    ADMIN_EMAIL = os.getenv('ADMIN_EMAIL')
+
+    MAIL_SERVER = os.getenv('MAIL_SERVER', 'smtp.sendgrid.net')
+    MAIL_PORT = os.getenv('MAIL_PORT', 587)
+    MAIL_USERNAME = os.getenv('MAIL_USERNAME')
+    MAIL_PASSWORD = os.getenv('SENDGRID_API_KEY')
+
     DEBUG_TB_INTERCEPT_REDIRECTS = False
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_RECORD_QUERIES = True
 
-    UPLOAD_PATH = os.path.join(basedir, 'uploads')
     # file size exceed to 17 Mb will return a 413 error response.
     MAX_CONTENT_LENGTH = 17 * 1024 * 1024
 
@@ -31,19 +41,12 @@ class BaseConfig(object):
     BABEL_DEFAULT_LOCALE = LOCALES[0]
 
     MAIL_USE_SSL = True
-    MAIL_SERVER = os.getenv('MAIL_SERVER', 'smtp.sendgrid.net')
-    MAIL_PORT = os.getenv('MAIL_PORT', 587)
-    MAIL_USERNAME = os.getenv('MAIL_USERNAME')
-    MAIL_PASSWORD = os.getenv('SENDGRID_API_KEY')
     MAIL_DEFAULT_SENDER = MAIL_USERNAME
-    ADMIN_EMAIL = os.getenv('ADMIN_EMAIL')
 
     SENDGRID_DEFAULT_FROM = MAIL_USERNAME
     SENDGRID_API_KEY = MAIL_PASSWORD
 
     CACHE_TYPE = 'simple'
-
-    FILE_CACHE_PATH = os.path.join(basedir, 'cache')
 
 
 class DevelopmentConfig(BaseConfig):

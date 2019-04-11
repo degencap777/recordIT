@@ -22,6 +22,7 @@ wait for adding.
 -   [x] login page
 -   [x] error page
 -   [ ] user page
+-   [x] settings page
 -   [ ] management page
 
 ### Backstage

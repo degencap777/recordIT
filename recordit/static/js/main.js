@@ -220,7 +220,7 @@
     $.scrollUp({
         scrollText: '<i class="zmdi zmdi-long-arrow-up"></i>',
         easingType: 'linear',
-        scrollSpeed: 2000,
+        scrollSpeed: 1000,
         animation: 'fade'
     });
 

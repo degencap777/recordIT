@@ -26,7 +26,7 @@ wait for adding.
 
 ### Backstage
 
--   [ ] database
+-   [x] database
 -   [ ] personnel management
 -   [ ] report management
 -   [ ] auto record

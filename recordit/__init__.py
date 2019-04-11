@@ -182,7 +182,7 @@ def register_commands(app):
         click.echo('Done.')
 
     @app.cli.command()
-    @click.option('--students', default=50, help='Quantity of students, default is 50.')
+    @click.option('--student', default=50, help='Quantity of students, default is 50.')
     def forge(student):
         """Generate fake data."""
 

@@ -22,7 +22,7 @@ def fake_admin():
 
 def fake_student(count=50):
     for _ in range(count):
-        number = '2016' + fake.random_number(digits=8, fix_len=True)
+        number = '2016' + str(fake.random_number(digits=8, fix_len=True))
         user = User(
             name=fake.name(),
             number=number,

@@ -23,8 +23,18 @@ def login():
         if user is not None and user.validate_password(form.password.data):
             if login_user(user, form.remember_me.data):
                 flash(_('Login success.'), 'info')
-                return redirect_back()
+
+                return redirect(url_for('user.index'))
 
         flash(_('Invalid email or password.'), 'warning')
 
     return render_template('auth/login.html', form=form)
+
+
+@auth_bp.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    flash(_('Logout success.'), 'info')
+
+    return redirect(url_for('front.index'))

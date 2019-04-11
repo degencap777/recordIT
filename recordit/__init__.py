@@ -11,6 +11,8 @@ from flask_babel import _
 from flask_wtf.csrf import CSRFError
 
 from recordit.blueprints.auth import auth_bp
+from recordit.blueprints.admin import admin_bp
+from recordit.blueprints.user import user_bp
 from recordit.blueprints.front import front_bp
 from recordit.extensions import (babel, bootstrap, cache, ckeditor, csrf, db,
                                  login_manager, scheduler, toolbar)
@@ -90,7 +92,9 @@ def register_extensions(app):
 
 def register_blueprints(app):
     app.register_blueprint(front_bp)
+    app.register_blueprint(user_bp, url_prefix='/user')
     app.register_blueprint(auth_bp, url_prefix='/auth')
+    app.register_blueprint(admin_bp, url_prefix='/admin')
 
 
 def register_errors(app):
@@ -150,7 +154,11 @@ def register_shell_context(app):
 
 
 def register_global_func(app):
-    pass
+
+    @app.template_global()
+    def now():
+        from datetime import datetime
+        return datetime.now().time()
 
 
 def register_commands(app):

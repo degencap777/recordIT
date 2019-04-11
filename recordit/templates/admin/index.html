@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% from 'macros.html' import render_breadcrumb_item %}
+
+{% block title %}Dashboard{% endblock %}
+
+
+{% block breadcrumb %}
+<div class="breadcrumb-area" data-bgimage="{{ url_for('static', filename='images/bg/breadcrumb-bg.jpg') }}"
+    data-black-overlay="4">
+    <div class="container">
+        <div class="in-breadcrumb">
+            <div class="row">
+                <div class="col">
+                    <h3>Dashboard</h3>
+                    <ul class="breadcrumb-list">
+                        {{ render_breadcrumb_item(endpoint='front.index', name='Home') }}
+                        <li class="breadcrumb-item active">
+                            Dashboard
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock breadcrumb %}
+
+
+{% block content %}
+<div class="section-ptb">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card border-secondary mb-3">
+                    <div class="card-header">
+                        <span class="oi oi-people"></span> Users
+                    </div>
+                    <div class="card-body">
+                        <h4 class="card-title">Total: {{ user_count|default('0') }}</h4>
+                        <p class="card-text">Locked: {{ locked_user_count|default('0') }}
+                            Blocked: {{ blocked_user_count|default('0') }}</p>
+                        <a class="btn btn-primary text-white" href="#">Manage</a>
+                        <a class="btn btn-secondary text-white" href="#">View
+                            Locked</a>
+                        <a class="btn btn-secondary text-white" href="#">View
+                            Blocked</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card border-primary mb-3">
+                    <div class="card-header">
+                        <span class="oi oi-image"></span> Courses
+                    </div>
+                    <div class="card-body">
+                        <h4 class="card-title">Total: {{ photo_count|default('0') }}</h4>
+                        <p class="card-text">Reported: {{ reported_photo_count|default('0') }}</p>
+                        <a class="btn btn-primary text-white" href="#">Manage</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card border-danger mb-3">
+                    <div class="card-header">
+                        <span class="oi oi-comment-square"></span> Reports
+                    </div>
+                    <div class="card-body">
+                        <h4 class="card-title">Total: {{ comment_count|default('0') }}</h4>
+                        <p class="card-text">Reported: {{ reported_comments_count|default('0') }}</p>
+                        <a class="btn btn-primary text-white" href="#">Manage</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card border-success mb-3">
+                    <div class="card-header">
+                        <span class="oi oi-tag"></span> Record Tables
+                    </div>
+                    <div class="card-body">
+                        <h4 class="card-title">Total: {{ tag_count|default('0') }}</h4>
+                        <p class="card-text">&nbsp;</p>
+                        <a class="btn btn-primary text-white" href="#">Manage</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card border-info mb-3">
+                    <div class="card-header">
+                        <span class="oi oi-comment-square"></span> Logs
+                    </div>
+                    <div class="card-body">
+                        <h4 class="card-title">Total: {{ comment_count|default('0') }}</h4>
+                        <p class="card-text">Reported: {{ reported_comments_count|default('0') }}</p>
+                        <a class="btn btn-primary text-white" href="#">Manage</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

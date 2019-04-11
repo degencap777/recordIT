@@ -224,6 +224,4 @@
         animation: 'fade'
     });
 
-    $("[data-toggle='tooltip']").tooltip();
-
 })(jQuery);

@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
-{% from 'macros.html' import single_slide %}
-{% from 'macros.html' import single_cours %}
+{% from 'macros.html' import render_slide %}
+{% from 'macros.html' import render_cours %}
 
 
 {% block content %}
 <div class="hero-slider">
     <div class="hero-slider-active owl-carousel">
-        {{ single_slide(filename='images/slider/background-image-1.jpg', content=_('Just click & submit'), button=_('Sign in Now'), btn_link='auth.login') }}
-        {{ single_slide(filename='images/slider/background-image-2.jpg', content=_('For Class'), button=_('Sign in Now'), btn_link='auth.login') }}
-        {{ single_slide(filename='images/slider/background-image-3.jpg', content=_('For Everyone'), button=_('About us'), btn_link='front.about') }}
+        {{ render_slide(filename='images/slider/background-image-1.jpg', content=_('Just click & submit'), button=_('Sign in Now'), btn_link='auth.login') }}
+        {{ render_slide(filename='images/slider/background-image-2.jpg', content=_('For Class'), button=_('Sign in Now'), btn_link='auth.login') }}
+        {{ render_slide(filename='images/slider/background-image-3.jpg', content=_('For Everyone'), button=_('About us'), btn_link='front.about') }}
     </div>
 </div>
 
@@ -23,9 +23,9 @@
             </div>
         </div>
         <div class="row">
-            {{ single_cours(filename='images/icon/icon-01.png', title=_('Coding'), color='malachite') }}
-            {{ single_cours(filename='images/icon/icon-02.png', title=_('HTML & CSS'), color='brilliantrose') }}
-            {{ single_cours(filename='images/icon/icon-03.png', title=_('Development'), color='shakespeare') }}
+            {{ render_cours(filename='images/icon/icon-01.png', title=_('Coding'), color='malachite') }}
+            {{ render_cours(filename='images/icon/icon-02.png', title=_('HTML & CSS'), color='brilliantrose') }}
+            {{ render_cours(filename='images/icon/icon-03.png', title=_('Development'), color='shakespeare') }}
         </div>
     </div>
 </div>

@@ -5,7 +5,9 @@
  / _, _/  __/ /__/ /_/ / /  / /_/ /  / / /_  
 /_/ |_|\___/\___/\____/_/   \__,_/  /_/\__/  
 -->
-{% from 'macros.html' import link_field %}
+{% from 'macros.html' import render_link %}
+{% from 'macros.html' import render_nav_item %}
+{% from 'macros.html' import render_toast %}
 <!DOCTYPE html>
 <html lang="zh">
 
@@ -40,6 +42,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css" />
         <link rel="stylesheet" href="{{ url_for('static', filename='css/plugins.css') }}" />
         <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/my.css') }}">
         {% endblock styles %}
 
         {% block headscript %}
@@ -61,15 +64,22 @@
                                     </a>
                                 </div>
                             </div>
-
                             <div class="col-lg-9 col-md-7 col-6">
                                 <div class="header-bottom-right">
                                     <div class="main-menu">
                                         <nav class="main-navigation">
                                             <ul>
-                                                <li><a href="{{ url_for('front.index') }}">HOME</a></li>
-                                                <li><a href="{{ url_for('front.about') }}">ABOUT</a></li>
-                                                <li><a href="{{ url_for('auth.login') }}">LOGIN</a></li>
+                                                {{ render_nav_item(endpoint='front.index', name='HOME') }}
+                                                {{ render_nav_item(endpoint='front.about', name='ABOUT') }}
+                                                {% if current_user.is_authenticated %}
+                                                {% if current_user.is_authenticated %}
+                                                {{ render_nav_item(endpoint='admin.index', name='DASHBOARD') }}
+                                                {% endif %}
+                                                {{ render_nav_item(endpoint='user.settings', name='SETTINGS') }}
+                                                {{ render_nav_item(endpoint='auth.logout', name='LOGOUT') }}
+                                                {% else %}
+                                                {{ render_nav_item(endpoint='auth.login', name='LOGIN') }}
+                                                {% endif %}
                                                 <li class="active">
                                                     <a href="#local">LANGUAGE</a>
                                                     <ul class="sub-menu">
@@ -82,7 +92,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="col">
                                 <div class="mobile-menu d-block d-lg-none">
                                 </div>
@@ -98,6 +107,14 @@
             {% block breadcrumb %}
             {% endblock breadcrumb %}
 
+            <div aria-live="polite" class="d-flex justify-content-center align-items-center">
+                <div class="toast-style">
+                    {% for message in get_flashed_messages(with_categories=True) %}
+                    {{ render_toast(message[1]) }}
+                    {% endfor %}
+                </div>
+            </div>
+
             {% block content %}
             {% endblock content %}
 
@@ -108,9 +125,9 @@
                             <div class="col-lg-12">
                                 <div class="copy-right pt--10 pb--10 text-center text-white">
                                     <p>&copy; 2019
-                                        {{ link_field("NCUST-AI", "/", _('North China University of Science and Technology University AI Profession'), True) }}
+                                        {{ render_link("NCUST-AI", "/", _('North China University of Science and Technology University AI Profession'), True) }}
                                         /
-                                        {{ link_field("Zero", "https://github.com/Zeroto521", "Written by Zeroto521", True) }}
+                                        {{ render_link("Zero", "https://github.com/Zeroto521", "Written by Zeroto521", True) }}
                                     </p>
                                 </div>
                             </div>
@@ -125,14 +142,15 @@
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/scrollup/2.4.1/jquery.scrollUp.min.js"></script>
         <script
             src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/scrollup/2.4.1/jquery.scrollUp.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
         <script src="{{ url_for('static', filename='js/plugins.js') }}"></script>
         <script src="{{ url_for('static', filename='js/ajax-mail.js') }}"></script>
         <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/my.js') }}"></script>
         {% endblock scripts %}
     </body>
 

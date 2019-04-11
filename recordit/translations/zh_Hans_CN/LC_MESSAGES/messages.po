@@ -1,0 +1,90 @@
+# Chinese (Simplified, China) translations for PROJECT.
+# Copyright (C) 2019 NCUST-AI
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <zeroto521@gmail.com>, 2019.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: zeroto521@gmail.com\n"
+"POT-Creation-Date: 2019-04-11 16:00+0800\n"
+"PO-Revision-Date: 2019-04-11 15:57+0800\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_Hans_CN\n"
+"Language-Team: zh_Hans_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.6.0\n"
+
+#: recordit/__init__.py:100
+msgid "Bad Request"
+msgstr ""
+
+#: recordit/__init__.py:106
+msgid "Unauthorized"
+msgstr ""
+
+#: recordit/__init__.py:112
+msgid "Forbidden"
+msgstr ""
+
+#: recordit/__init__.py:118
+msgid "Page Not Found"
+msgstr ""
+
+#: recordit/__init__.py:124
+msgid "Method not allowed"
+msgstr ""
+
+#: recordit/__init__.py:130
+msgid "Upload too large"
+msgstr ""
+
+#: recordit/__init__.py:136
+msgid "Internal Server Error Explained"
+msgstr ""
+
+#: recordit/__init__.py:142
+msgid "Handle CSRF Error"
+msgstr ""
+
+#: recordit/extensions.py:33
+msgid "Please log in to access this page."
+msgstr ""
+
+#: recordit/extensions.py:36
+msgid "In order to protect your account security, please log in again."
+msgstr ""
+
+#: recordit/templates/base.html:104
+msgid "North China University of Science and Technology University AI Profession"
+msgstr ""
+
+#: recordit/templates/errors.html:37
+msgid ""
+"Sorry, the page you are looking for does not exist, have been removed, "
+"name changed or is temporarity unavailable."
+msgstr ""
+
+#: recordit/templates/errors.html:40
+msgid "Back to home page"
+msgstr ""
+
+#: recordit/templates/front/about.html:57
+msgid "SOME IMPORTANT FACTS"
+msgstr ""
+
+#: recordit/templates/front/index.html:17
+msgid "Just click & submit"
+msgstr ""
+
+#: recordit/templates/front/index.html:38
+msgid "For Class"
+msgstr ""
+
+#: recordit/templates/front/index.html:59
+msgid "For Everyone"
+msgstr ""
+

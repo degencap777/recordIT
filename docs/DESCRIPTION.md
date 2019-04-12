@@ -21,5 +21,5 @@
 | :------: | :-----------: | :---------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------: |
 |   访客   |     Guest     |                                               仅可以浏览页面                                                |                         未登入用户                         |
 |   学生   |    Student    |                                               RECORD, UPLOAD                                                |                  注册后用户获得的默认角色                  |
-|   教师   |    Teacher    |              RECORD, UPLOAD, MODERATOR_RECORD_TABLE, MODERATOR_REPORT, MODERATOR_RECORD_TABLE               | 除了普通用户的权限外，还可以管理所开设的课程，报告和记录表 |
-|  管理员  | Administrator | RECORD, UPLOAD, MODERATOR_RECORD_TABLE, MODERATOR_REPORT, MODERATOR_RECORD_TABLE, MODERATOR_LOG, ADMINISTER |                  拥有所有权限的网站管理员                  |
+|   教师   |    Teacher    |              RECORD, UPLOAD, MODERATOR_COURSE, MODERATOR_REPORT, MODERATOR_RECORD_TABLE               | 除了普通用户的权限外，还可以管理所开设的课程，报告和记录表 |
+|  管理员  | Administrator | RECORD, UPLOAD, MODERATOR_COURSE, MODERATOR_REPORT, MODERATOR_RECORD_TABLE, MODERATOR_LOG, ADMINISTER |                  拥有所有权限的网站管理员                  |

@@ -48,6 +48,8 @@ class BaseConfig(object):
 
     CACHE_TYPE = 'simple'
 
+    MANAGE_USER_PER_PAGE = 30
+
 
 class DevelopmentConfig(BaseConfig):
     FLASK_ENV = 'development'

@@ -6,5 +6,4 @@
     $(document).ready(function () {
         $('.toast').toast('show');
     });
-
 })(jQuery);

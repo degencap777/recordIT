@@ -31,10 +31,10 @@ wait for adding.
 -   [ ] personnel management
 -   [ ] report management
 -   [ ] auto record
--   [ ] login
+-   [x] login
 -   [ ] upload
 -   [ ] log
--   [ ] settings
+-   [x] settings
 
 ### Other
 

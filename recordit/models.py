@@ -34,8 +34,8 @@ class Role(db.Model):
     def init_role():
         roles_permissions_map = {
             'Student': ['RECORD', 'UPLOAD'],
-            'Teacher': ['RECORD', 'UPLOAD', 'MODERATOR_RECORD_TABLE', 'MODERATOR_REPORT', 'MODERATOR_RECORD_TABLE'],
-            'Administrator': ['RECORD', 'UPLOAD', 'MOD2ERATOR_RECORD_TABLE', 'MODERATOR_REPORT', 'MODERATOR_RECORD_TABLE', 'MODERATOR_LOG', 'ADMINISTER']
+            'Teacher': ['RECORD', 'UPLOAD', 'MODERATOR_COURSE', 'MODERATOR_REPORT', 'MODERATOR_RECORD_TABLE'],
+            'Administrator': ['RECORD', 'UPLOAD', 'MODERATOR_COURSE', 'MODERATOR_REPORT', 'MODERATOR_RECORD_TABLE', 'MODERATOR_LOG', 'ADMINISTER']
         }
 
         for role_name in roles_permissions_map:
@@ -70,7 +70,7 @@ class User(db.Model, UserMixin):
 
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)
-        self.set_role()
+        self.init_role()
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -78,13 +78,16 @@ class User(db.Model, UserMixin):
     def validate_password(self, password):
         return check_password_hash(self.password_hash, password)
 
-    def set_role(self):
+    def init_role(self):
         if self.role is None:
             if self.number == current_app.config['ADMIN_NUMBER']:
                 self.role = Role.query.filter_by(name='Administrator').first()
             else:
                 self.role = Role.query.filter_by(name='Student').first()
             db.session.commit()
+
+    def set_role(self, role):
+        self.role = Role.query.filter_by(name=role).first()
 
     @property
     def username(self):
@@ -111,13 +114,22 @@ class User(db.Model, UserMixin):
         permission = Permission.query.filter_by(name=permission_name).first()
         return permission is not None and self.role is not None and permission in self.role.permissions
 
+    def whoami(self, role):
+        return self.role.name == role
+
 
 class Course(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     teacher_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     name = db.Column(db.String, nullable=False)
 
+    active = db.Column(db.Boolean, default=True)
+    date = db.Column(db.Date, index=True, default=datetime.date.today)
     remark = db.Column(db.Text)
+
+    @property
+    def is_active(self):
+        return self.active
 
 
 class Report(db.Model):
@@ -127,8 +139,14 @@ class Report(db.Model):
     name = db.Column(db.String, nullable=False)
     score = db.Column(db.Integer)
 
+    active = db.Column(db.Boolean, default=True)
+
     date = db.Column(db.Date, index=True, default=datetime.date.today)
     remark = db.Column(db.Text)
+
+    @property
+    def is_active(self):
+        return Course.query.get(course_id).is_active() and self.active
 
 
 class RecordTable(db.Model):
@@ -137,7 +155,12 @@ class RecordTable(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     score = db.Column(db.Integer, nullable=False)
 
+    time = db.Column(db.DateTime, index=True, default=datetime.datetime.utcnow)
     remark = db.Column(db.Text)
+
+    @property
+    def is_active(self):
+        return Report.query.get(report_id).is_active()
 
 
 class Log(db.Model):
@@ -145,5 +168,5 @@ class Log(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     ip = db.Column(db.String(128))
-    time = db.Column(db.DateTime, index=True, default=datetime.datetime.now)
+    time = db.Column(db.DateTime, index=True, default=datetime.datetime.utcnow)
     content = db.Column(db.String)

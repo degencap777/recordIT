@@ -55,10 +55,21 @@
 {% endmacro %}
 
 
-{% macro render_nav_item(endpoint, name) %}
+{% macro render_nav_item(endpoint, name, disabled=False) %}
 {% set req = request.endpoint %}
 <li class="nav-item">
-    <a href="{{ url_for(endpoint) }}" class="nav-link {% if req and req == endpoint %}active{% endif %}">
+    <a href="{{ url_for(endpoint) }}"
+        class="nav-link {% if req and req == endpoint %}active{% endif %} {% if disabled %}disabled{% endif %}">
+        {{ name }}
+    </a>
+</li>
+{% endmacro %}
+
+
+{% macro render_tab_item(link, name, tag, disabled=False) %}
+<li class="nav-item">
+    <a class="nav-link {% if request.args.get('filter') == tag %}active{% endif %} {% if disabled %}disabled{% endif %}"
+        href="{{ link }}" role="tab">
         {{ name }}
     </a>
 </li>
@@ -72,12 +83,13 @@
 </li>
 {% endmacro %}
 
-{% macro render_toast(message) %}
+
+{% macro render_toast(message, info='info') %}
 <div class="toast" role="alert" data-delay="1500">
     <div class="toast-header">
         <img src="{{ url_for('static', filename='favicon/favicon-16x16.png') }}" class="rounded mr-2" alt="Logo">
         <strong class="mr-auto">Record it</strong>
-        <small>{{ now() }}</small>
+        <small>{{ info }}</small>
         <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>

@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
-{% from 'macros.html' import render_counter %}
-{% from 'macros.html' import render_breadcrumb_item %}
+{% from 'macros/macros.html' import render_counter %}
+{% from 'macros/macros.html' import render_breadcrumb_item %}
 
 
 {% block title %}About{% endblock %}
@@ -29,7 +29,7 @@
 
 
 {% block content %}
-<main class="page-content">
+<div class="page-content">
     <div class="about-us-area section-ptb">
         <div class="container">
             <div class="row align-items-center">
@@ -47,7 +47,6 @@
             </div>
         </div>
     </div>
-
 
     <div class="project-count-area section-ptb-160 project-count-bg">
         <div class="container">
@@ -75,5 +74,5 @@
             </div>
         </div>
     </div>
-</main>
+</div>
 {% endblock content %}

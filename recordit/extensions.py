@@ -9,8 +9,10 @@ from flask_caching import Cache
 from flask_ckeditor import CKEditor
 from flask_debugtoolbar import DebugToolbarExtension
 from flask_login import AnonymousUserMixin, LoginManager, current_user
+from flask_moment import Moment
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import CSRFProtect
+
 
 bootstrap = Bootstrap()
 db = SQLAlchemy()
@@ -21,6 +23,7 @@ babel = Babel()
 cache = Cache()
 scheduler = APScheduler()
 ckeditor = CKEditor()
+moment = Moment()
 
 
 @login_manager.user_loader
@@ -33,7 +36,8 @@ login_manager.login_view = 'auth.login'
 login_manager.login_message = _l('Please log in to access this page.')
 login_manager.login_message_category = 'warning'
 login_manager.refresh_view = 'auth.re_authenticate'
-login_manager.needs_refresh_message = _l('In order to protect your account security, please log in again.')
+login_manager.needs_refresh_message = _l(
+    'In order to protect your account security, please log in again.')
 login_manager.needs_refresh_message_category = 'warning'
 login_manager.session_protection = "strong"
 
@@ -43,8 +47,19 @@ class Guest(AnonymousUserMixin):
     def can(self, permission_name):
         return False
 
+    def whoami(self, role):
+        return False
+
     @property
     def is_admin(self):
+        return False
+
+    @property
+    def is_teacher(self):
+        return False
+
+    @property
+    def is_student(self):
         return False
 
 

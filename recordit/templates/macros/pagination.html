@@ -1,0 +1,70 @@
+{#  This file was part of Flask-Bootstrap and was modified under the terms of
+ its BSD License. Copyright (c) 2013, Marc Brinkmann. All rights reserved. #}
+
+{% macro _arg_url_for(endpoint, base) %}
+{# calls url_for() with a given endpoint and **base as the parameters,
+   additionally passing on all keyword_arguments (may overwrite existing ones)
+ #}
+{%- with kargs = base.copy() -%}
+{%- do kargs.update(kwargs) -%}
+{{ url_for(endpoint, **kargs) }}
+{%- endwith %}
+{%- endmacro %}
+
+{% macro render_pagination(pagination,
+                           endpoint=None,
+                           size=None,
+                           ellipses='…',
+                           args={},
+                           fragment='',
+                           align=''
+                           )-%}
+{% if fragment != '' and not fragment.startswith('#') %}{% set fragment = '#' + fragment %}{% endif %}
+{% with url_args = {} %}
+{%- do url_args.update(request.view_args if not endpoint else {}),
+       url_args.update(request.args if not endpoint else {}),
+       url_args.update(args) -%}
+{% with endpoint = endpoint or request.endpoint %}
+<div class="paginatoin-area">
+    <div class="row">
+        <div class="col-lg-12">
+            <ul class="pagination-box pagination{% if size %} pagination-{{ size }}{% endif %} {% if align == 'center' %}justify-content-center{% elif align == 'right' %}justify-content-end{% endif %}"
+                {{ kwargs|xmlattr }}>
+                <li class="{% if not pagination.has_prev %}disabled{% endif %}">
+                    <a class="Previous"
+                        href="{{ _arg_url_for(endpoint, url_args, page=pagination.prev_num) if pagination.has_prev else '#' }}{{ fragment }}"><i
+                            class="zmdi zmdi-chevron-left"></i>
+                    </a>
+                </li>
+
+                {% for page in pagination.iter_pages() %}
+                {% if page %}
+                {% if page != pagination.page %}
+                <li>
+                    <a href="{{ _arg_url_for(endpoint, url_args, page=page) }}{{ fragment }}">{{ page }}</a>
+                </li>
+                {% else %}
+                <li class="active">
+                    <a href="#">{{ page }} <span class="sr-only">(current)</span></a>
+                </li>
+                {% endif %}
+                {% elif ellipses != None %}
+                <li class="disabled">
+                    <a href="#">{{ ellipses }}</a>
+                </li>
+                {% endif %}
+                {%- endfor %}
+
+                <li class="{% if not pagination.has_next %}disabled{% endif %}">
+                    <a class="Next"
+                        href="{{ _arg_url_for(endpoint, url_args, page=pagination.next_num) if pagination.has_next else '#' }}{{ fragment }}">
+                        <i class="zmdi zmdi-chevron-right"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endwith %}
+{% endwith %}
+{% endmacro %}

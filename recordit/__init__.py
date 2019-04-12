@@ -15,8 +15,8 @@ from recordit.blueprints.admin import admin_bp
 from recordit.blueprints.user import user_bp
 from recordit.blueprints.front import front_bp
 from recordit.extensions import (babel, bootstrap, cache, ckeditor, csrf, db,
-                                 login_manager, scheduler, toolbar)
-from recordit.models import Course, RecordTable, Report, User, Role
+                                 login_manager, scheduler, toolbar, moment)
+from recordit.models import Course, RecordTable, Report, User, Role, Log
 from recordit.settings import basedir, config
 
 
@@ -85,6 +85,7 @@ def register_extensions(app):
     babel.init_app(app)
     cache.init_app(app)
     ckeditor.init_app(app)
+    moment.init_app(app)
     # toolbar.init_app(app)
     # scheduler.init_app(app)
     # scheduler.start()
@@ -190,11 +191,15 @@ def register_commands(app):
         click.echo('Done.')
 
     @app.cli.command()
+    @click.option('--teacher', default=1, help='Quantity of teachers, default is 1.')
     @click.option('--student', default=50, help='Quantity of students, default is 50.')
-    def forge(student):
+    @click.option('--course', default=3, help='Quantity of courses, default is 3.')
+    @click.option('--report', default=3, help='Quantity of reports, default is 3.')
+    @click.option('--record', default=10, help='Quantity of records, default is 10.')
+    def forge(teacher, student, course, report, record):
         """Generate fake data."""
 
-        from recordit.fakes import fake_admin, fake_student
+        from recordit.fakes import fake_admin, fake_teacher, fake_student, fake_course, fake_report, fake_record
 
         db.drop_all()
         db.create_all()
@@ -205,8 +210,20 @@ def register_commands(app):
         click.echo('Generating the administrator...')
         fake_admin()
 
+        click.echo('Generating %d teachers...' % teacher)
+        fake_teacher(teacher)
+
         click.echo('Generating %d students...' % student)
         fake_student(student)
+
+        click.echo('Generating %d courses...' % course)
+        fake_course(course)
+
+        click.echo('Generating %d reports...' % report)
+        fake_report(report)
+
+        click.echo('Generating %d records...' % record)
+        fake_record(record)
 
         click.echo('Done.')
 
@@ -247,4 +264,4 @@ def register_hook(app):
     @app.before_request
     def before_request():
         session.permanent = True
-        app.permanent_session_lifetime = timedelta(minutes=3)
+        app.permanent_session_lifetime = timedelta(minutes=10)

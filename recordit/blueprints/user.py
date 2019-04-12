@@ -5,7 +5,8 @@ from flask_babel import _
 from flask_login import current_user, fresh_login_required, login_required
 
 from recordit.extensions import db
-from recordit.forms.user import ChangePasswordForm, EditProfileForm
+from recordit.forms.user import (ChangePasswordForm, EditAdministratorForm,
+                                 EditStudenteForm, EditTeacherForm)
 from recordit.utils import redirect_back
 
 user_bp = Blueprint('user', __name__)
@@ -29,7 +30,13 @@ def settings():
 
 @user_bp.route('/settings/profile', methods=['GET', 'POST'])
 def edit_profile():
-    form = EditProfileForm()
+    if current_user.is_admin:
+        form = EditAdministratorForm()
+    elif current_user.is_teacher:
+        form = EditTeacherForm()
+    else:
+        form = EditStudenteForm()
+
     if form.validate_on_submit():
         current_user.remark = form.remark.data
         db.session.commit()
@@ -37,7 +44,7 @@ def edit_profile():
         flash(_('Profile updated.'), 'success')
         redirect_back()
 
-    form.number.data = current_user.number
+    form.username.data = current_user.number
     form.name.data = current_user.name
     form.remark.data = current_user.remark
 
@@ -48,13 +55,10 @@ def edit_profile():
 def change_password():
     form = ChangePasswordForm()
     if form.validate_on_submit():
-        if current_user.validate_password(form.old_password.data):
-            current_user.set_password(form.password.data)
-            db.session.commit()
+        current_user.set_password(form.password.data)
+        db.session.commit()
 
-            flash(_('Password updated.'), 'success')
-            redirect_back()
-        else:
-            flash(_('Old password is incorrect.'), 'warning')
+        flash(_('Password updated.'), 'success')
+        redirect_back()
 
     return render_template('user/settings/change_password.html', form=form)

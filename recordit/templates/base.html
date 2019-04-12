@@ -5,9 +5,9 @@
  / _, _/  __/ /__/ /_/ / /  / /_/ /  / / /_  
 /_/ |_|\___/\___/\____/_/   \__,_/  /_/\__/  
 -->
-{% from 'macros.html' import render_link %}
-{% from 'macros.html' import render_nav_item %}
-{% from 'macros.html' import render_toast %}
+{% from 'macros/macros.html' import render_link %}
+{% from 'macros/macros.html' import render_nav_item %}
+{% from 'macros/macros.html' import render_toast %}
 <!DOCTYPE html>
 <html lang="zh">
 
@@ -40,6 +40,8 @@
         <link rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/plugins.css') }}" />
         <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/my.css') }}">
@@ -69,16 +71,16 @@
                                     <div class="main-menu">
                                         <nav class="main-navigation">
                                             <ul>
-                                                {{ render_nav_item(endpoint='front.index', name='HOME') }}
-                                                {{ render_nav_item(endpoint='front.about', name='ABOUT') }}
+                                                {{ render_nav_item('front.index', name='HOME') }}
+                                                {{ render_nav_item('front.about', name='ABOUT') }}
                                                 {% if current_user.is_authenticated %}
                                                 {% if current_user.is_authenticated %}
-                                                {{ render_nav_item(endpoint='admin.index', name='DASHBOARD') }}
+                                                {{ render_nav_item('admin.index', name='DASHBOARD') }}
                                                 {% endif %}
-                                                {{ render_nav_item(endpoint='user.settings', name='SETTINGS') }}
-                                                {{ render_nav_item(endpoint='auth.logout', name='LOGOUT') }}
+                                                {{ render_nav_item('user.settings', name='SETTINGS') }}
+                                                {{ render_nav_item('auth.logout', name='LOGOUT') }}
                                                 {% else %}
-                                                {{ render_nav_item(endpoint='auth.login', name='LOGIN') }}
+                                                {{ render_nav_item('auth.login', name='LOGIN') }}
                                                 {% endif %}
                                                 <li class="active">
                                                     <a href="#local">LANGUAGE</a>
@@ -110,7 +112,7 @@
             <div aria-live="polite" class="d-flex justify-content-center align-items-center">
                 <div class="toast-style">
                     {% for message in get_flashed_messages(with_categories=True) %}
-                    {{ render_toast(message[1]) }}
+                    {{ render_toast(message=message[1], info=message[0]) }}
                     {% endfor %}
                 </div>
             </div>
@@ -147,6 +149,8 @@
             src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"></script>
+        {{ moment.locale(auto_detect=True) }}
         <script src="{{ url_for('static', filename='js/plugins.js') }}"></script>
         <script src="{{ url_for('static', filename='js/ajax-mail.js') }}"></script>
         <script src="{{ url_for('static', filename='js/main.js') }}"></script>

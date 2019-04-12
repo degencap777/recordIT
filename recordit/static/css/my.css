@@ -5,7 +5,7 @@
     background-color: #fafbfc;
     border: 5px solid #e1e4e8;
     border-radius: 3px;
-    box-shadow: inset 5px 5px 10px rgba(27, 31, 35, 0.05);
+    box-shadow: inset 5 5 10px rgba(27, 31, 35, 0.05);
 }
 
 .toast-style {
@@ -14,4 +14,9 @@
     right: 0;
     margin-top: 10px;
     margin-right: 10px;
+    min-width: 200px;
+}
+
+.nav .nav-pills .nav-item .nav-link.active {
+    color: #ff5951;
 }

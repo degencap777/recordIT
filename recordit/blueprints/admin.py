@@ -8,7 +8,7 @@ from flask import (Blueprint, current_app, flash, render_template, request,
 from flask_babel import _
 from flask_login import current_user, fresh_login_required, login_required
 
-from recordit.decorators import permission_required
+from recordit.decorators import permission_required, role_required
 from recordit.extensions import db
 from recordit.forms.admin import (AddCourseForm, AddReportForm,
                                   ChangePasswordForm, DeleteRecordForm,
@@ -23,6 +23,7 @@ admin_bp = Blueprint('admin', __name__)
 
 
 @admin_bp.before_request
+@role_required(['Teacher', 'Administrator'])
 @fresh_login_required
 @login_required
 def login_protect():

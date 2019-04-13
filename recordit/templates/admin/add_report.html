@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'admin/base.html' %}
 {% from 'bootstrap/form.html' import render_form %}
 {% from 'macros/macros.html' import render_breadcrumb_item %}
 
@@ -6,47 +6,25 @@
 {% block title %}Add Report{% endblock %}
 
 
-{% block breadcrumb %}
-<div class="breadcrumb-area" data-bgimage="{{ url_for('static', filename='images/bg/breadcrumb-bg.jpg') }}"
-    data-black-overlay="4">
-    <div class="container">
-        <div class="in-breadcrumb">
-            <div class="row">
-                <div class="col">
-                    <h3>{{ _('Add Report') }}</h3>
-                    <ul class="breadcrumb-list">
-                        {{ render_breadcrumb_item(endpoint='front.index', name='Home') }}
-                        {{ render_breadcrumb_item(endpoint='admin.index', name='Dashboard') }}
-                        {{ render_breadcrumb_item(endpoint='admin.manage_course', name='Manage Course') }}
-                        <li class="breadcrumb-item active">Add Report</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-{% endblock breadcrumb %}
+{% block breadcrumb_title %}
+    <h3>{{ _('Add Report') }}</h3>
+{% endblock breadcrumb_title %}
 
 
-{% block content %}
-<div class="page-content section-ptb">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="account-dashboard">
-                    <div class="dashboard-content">
-                        <h3>{{ _('Add Report') }}</h3>
-                        <p>{{ render_form(form) }}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-{% endblock content %}
+{% block breadcrumb_item_list %}
+    {{ render_breadcrumb_item(endpoint='admin.index', name='Dashboard') }}
+    {{ render_breadcrumb_item(endpoint='admin.manage_course', name='Manage Course') }}
+    <li class="breadcrumb-item active">Add Report</li>
+{% endblock breadcrumb_item_list %}
+
+
+{% block dashboard_content %}
+    <h3>{{ _('Add Report') }}</h3>
+    <p>{{ render_form(form) }}</p>
+{% endblock dashboard_content %}
 
 
 {% block scripts %}
-{{ super() }}
-{{ ckeditor.load() }}
+    {{ super() }}
+    {{ ckeditor.load() }}
 {% endblock %}

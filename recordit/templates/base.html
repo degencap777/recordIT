@@ -11,151 +11,149 @@
 <!DOCTYPE html>
 <html lang="zh">
 
-    <head>
-        <meta charset="utf-8" />
-        <meta http-equiv="x-ua-compatible" content="ie=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-        <title>{% block title %}Record it{% endblock %}</title>
+    <title>{% block title %}Record it{% endblock %}</title>
 
-        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon/favicon.ico') }}">
-        <link rel="apple-touch-icon" sizes="180x180"
-            href="{{ url_for('static', filename='favicon/apple-touch-icon.png') }}">
-        <link rel="android-chrome" type="image/png" sizes="192x192"
-            href="{{ url_for('static', filename='favicon/android-chrome-192x192.png') }}">
-        <link rel="android-chrome" type="image/png" sizes="512x512"
-            href="{{ url_for('static', filename='favicon/android-chrome-512x512.png') }}">
-        <link rel="icon" type="image/png" sizes="16x16"
-            href="{{ url_for('static', filename='favicon/favicon-16x16.ico') }}">
-        <link rel="icon" type="image/png" sizes="32x32"
-            href="{{ url_for('static', filename='favicon/favicon-32x32.ico') }}">
-        <link rel="manifest" href="{{ url_for('static', filename='favicon/site.webmanifest') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon/favicon.ico') }}">
+    <link rel="apple-touch-icon" sizes="180x180"
+          href="{{ url_for('static', filename='favicon/apple-touch-icon.png') }}">
+    <link rel="android-chrome" type="image/png" sizes="192x192"
+          href="{{ url_for('static', filename='favicon/android-chrome-192x192.png') }}">
+    <link rel="android-chrome" type="image/png" sizes="512x512"
+          href="{{ url_for('static', filename='favicon/android-chrome-512x512.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16"
+          href="{{ url_for('static', filename='favicon/favicon-16x16.ico') }}">
+    <link rel="icon" type="image/png" sizes="32x32"
+          href="{{ url_for('static', filename='favicon/favicon-32x32.ico') }}">
+    <link rel="manifest" href="{{ url_for('static', filename='favicon/site.webmanifest') }}">
 
-        {% block styles %}
+    {% block styles %}
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
         <link rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+              href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
         <link rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+              href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"/>
         <link rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css" />
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+              href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css"/>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/plugins.css') }}" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/plugins.css') }}"/>
         <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/my.css') }}">
-        {% endblock styles %}
+    {% endblock styles %}
 
-        {% block headscript %}
+    {% block headscript %}
         <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
-        {% endblock headscript %}
-    </head>
+    {% endblock headscript %}
+</head>
 
-    <body>
-        <nav class="main-wrapper">
-            {% block header %}
-            <header class="header-area">
-                <div class="header-bottom-area header-sticky header-sticky">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-3 col-md-5 col-6">
-                                <div class="logo-area">
-                                    <a href="{{ url_for('front.index') }}">
-                                        <img src="{{ url_for('static', filename='logo.png') }}" alt="Record it">
-                                    </a>
-                                </div>
+<body>
+<nav class="main-wrapper">
+    {% block header %}
+        <header class="header-area">
+            <div class="header-bottom-area header-sticky header-sticky">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-5 col-6">
+                            <div class="logo-area">
+                                <a href="{{ url_for('front.index') }}">
+                                    <img src="{{ url_for('static', filename='logo.png') }}" alt="Record it">
+                                </a>
                             </div>
-                            <div class="col-lg-9 col-md-7 col-6">
-                                <div class="header-bottom-right">
-                                    <div class="main-menu">
-                                        <nav class="main-navigation">
-                                            <ul>
-                                                {{ render_nav_item('front.index', name='HOME') }}
-                                                {{ render_nav_item('front.about', name='ABOUT') }}
-                                                {% if current_user.is_authenticated %}
-                                                {% if current_user.is_authenticated %}
-                                                {{ render_nav_item('admin.index', name='DASHBOARD') }}
+                        </div>
+                        <div class="col-lg-9 col-md-7 col-6">
+                            <div class="header-bottom-right">
+                                <div class="main-menu">
+                                    <nav class="main-navigation">
+                                        <ul>
+                                            {{ render_nav_item('front.index', name='HOME') }}
+                                            {{ render_nav_item('front.about', name='ABOUT') }}
+                                            {% if current_user.is_authenticated %}
+                                                {% if current_user.is_teacher or current_user.is_admin %}
+                                                    {{ render_nav_item('admin.index', name='DASHBOARD') }}
                                                 {% endif %}
                                                 {{ render_nav_item('user.settings', name='SETTINGS') }}
                                                 {{ render_nav_item('auth.logout', name='LOGOUT', next=request.full_path) }}
-                                                {% else %}
+                                            {% else %}
                                                 {{ render_nav_item('auth.login', name='LOGIN', next=request.full_path) }}
-                                                {% endif %}
-                                                <li class="active">
-                                                    <a href="#local">LANGUAGE</a>
-                                                    <ul class="sub-menu">
-                                                        <li><a href="#">简体中文</a></li>
-                                                        <li><a href="#">English</a></li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </nav>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="mobile-menu d-block d-lg-none">
+                                            {% endif %}
+                                            <li class="active">
+                                                <a href="#local">LANGUAGE</a>
+                                                <ul class="sub-menu">
+                                                    <li><a href="#">简体中文</a></li>
+                                                    <li><a href="#">English</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </nav>
                                 </div>
                             </div>
                         </div>
+                        <div class="col">
+                            <div class="mobile-menu d-block d-lg-none">
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </header>
-            {% endblock header %}
-        </nav>
-
-        <main class="main-wrapper">
-            {% block breadcrumb %}
-            {% endblock breadcrumb %}
-
-            <div aria-live="polite" class="d-flex justify-content-center align-items-center">
-                <div class="toast-style">
-                    {% for message in get_flashed_messages(with_categories=True) %}
-                    {{ render_toast(message=message[1], info=message[0]) }}
-                    {% endfor %}
                 </div>
             </div>
+        </header>
+    {% endblock header %}
+</nav>
 
-            {% block content %}
-            {% endblock content %}
+<main class="main-wrapper">
+    {% block breadcrumb %}
+    {% endblock breadcrumb %}
 
-            <footer class="footer-area">
-                <div class="footer-bottom">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="copy-right pt--10 pb--10 text-center text-white">
-                                    <p>&copy; 2019
-                                        {{ render_link("NCUST-AI", "/", _('North China University of Science and Technology University AI Profession'), True) }}
-                                        /
-                                        {{ render_link("Zero", "https://github.com/Zeroto521", "Written by Zeroto521", True) }}
-                                    </p>
-                                </div>
-                            </div>
+    <div aria-live="polite" class="d-flex justify-content-center align-items-center">
+        <div class="toast-style">
+            {% for message in get_flashed_messages(with_categories=True) %}
+                {{ render_toast(message=message[1], info=message[0]) }}
+            {% endfor %}
+        </div>
+    </div>
+
+    {% block content %}
+    {% endblock content %}
+
+    <footer class="footer-area">
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="copy-right pt--10 pb--10 text-center text-white">
+                            <p>&copy; 2019
+                                {{ render_link("NCUST-AI", "/", _('North China University of Science and Technology University AI Profession'), True) }}
+                                /
+                                {{ render_link("Zero", "https://github.com/Zeroto521", "Written by Zeroto521", True) }}
+                            </p>
                         </div>
                     </div>
                 </div>
-            </footer>
-        </main>
+            </div>
+        </div>
+    </footer>
+</main>
 
 
-        {% block scripts %}
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/scrollup/2.4.1/jquery.scrollUp.min.js"></script>
-        <script
-            src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"></script>
-        {{ moment.locale(auto_detect=True) }}
-        <script src="{{ url_for('static', filename='js/plugins.js') }}"></script>
-        <script src="{{ url_for('static', filename='js/ajax-mail.js') }}"></script>
-        <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-        <script src="{{ url_for('static', filename='js/my.js') }}"></script>
-        {% endblock scripts %}
-    </body>
+{% block scripts %}
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/scrollup/2.4.1/jquery.scrollUp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"></script>
+    {{ moment.locale(auto_detect=True) }}
+    <script src="{{ url_for('static', filename='js/plugins.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/ajax-mail.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/my.js') }}"></script>
+{% endblock scripts %}
+</body>
 
 </html>

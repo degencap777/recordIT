@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'admin/base.html' %}
 {% from 'macros/macros.html' import render_breadcrumb_item %}
 {% from 'macros/macros.html' import render_tab_item %}
 {% from 'macros/pagination.html' import render_pagination %}
@@ -7,114 +7,106 @@
 {% block title %}Manage User{% endblock %}
 
 
-{% block breadcrumb %}
-<div class="breadcrumb-area" data-bgimage="{{ url_for('static', filename='images/bg/breadcrumb-bg.jpg') }}"
-    data-black-overlay="4">
-    <div class="container">
-        <div class="in-breadcrumb">
-            <div class="row">
-                <div class="col-12">
-                    <h3>{{ _('Manage Users') }}</h3>
-                    <ul class="breadcrumb-list">
-                        {{ render_breadcrumb_item(endpoint='front.index', name='Home') }}
-                        {{ render_breadcrumb_item(endpoint='admin.index', name='Dashboard') }}
-                        <li class="breadcrumb-item active">Manage User</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-{% endblock breadcrumb %}
+{% block breadcrumb_title %}
+    <h3>{{ _('Manage Users') }}</h3>
+{% endblock breadcrumb_title %}
+
+
+{% block breadcrumb_item_list %}
+    {{ render_breadcrumb_item(endpoint='admin.index', name='Dashboard') }}
+    <li class="breadcrumb-item active">Manage User</li>
+{% endblock breadcrumb_item_list %}
 
 
 {% block content %}
-<div class="section-ptb">
-    <div class="container">
-        <div class="row course-details-tab-area">
-            <div class="col-12 ">
-                <div class="popular-courses-contnet">
-                    <h4>
-                        {{ _('Users') }}
-                        <small class="text-muted">{{ pagination.total }}</small>
-                    </h4>
+    <div class="section-ptb">
+        <div class="container">
+            <div class="row course-details-tab-area">
+                <div class="col-12 ">
+                    <div class="popular-courses-contnet">
+                        <h4>
+                            {{ _('Users') }}
+                            <small class="text-muted">{{ pagination.total }}</small>
+                        </h4>
+                    </div>
                 </div>
-            </div>
-            <div class="col-12">
-                <div class="details-tabs-list">
-                    <ul class="nav" role="tablist">
-                        {{ render_tab_item(url_for('admin.manage_user', filter='all'), name='All', tag='all') }}
-                        {{ render_tab_item(url_for('admin.manage_user', filter='student'), name='Student', tag='student') }}
-                        {{ render_tab_item(url_for('admin.manage_user', filter='teacher'), name='Teacher', tag='teacher') }}
-                        {{ render_tab_item(url_for('admin.manage_user', filter='administrator'), name='Administrator', tag='administrator') }}
-                    </ul>
+                <div class="col-12">
+                    <div class="details-tabs-list">
+                        <ul class="nav" role="tablist">
+                            {{ render_tab_item(url_for('admin.manage_user', filter='all'), name='All', tag='all') }}
+                            {{ render_tab_item(url_for('admin.manage_user', filter='student'), name='Student', tag='student') }}
+                            {{ render_tab_item(url_for('admin.manage_user', filter='teacher'), name='Teacher', tag='teacher') }}
+                            {{ render_tab_item(url_for('admin.manage_user', filter='administrator'), name='Administrator', tag='administrator') }}
+                        </ul>
+                    </div>
                 </div>
-            </div>
-            <div class="col-12">
-                <div class="courses-details-tab-panel">
-                    <div class="tab-content">
-                        <div class="tab-pane active">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="comments-reply-area tow-revew">
-                                        {% if pagination.items %}
-                                        <table class="table table-striped table-hover table-sm">
-                                            <thead>
-                                                <tr class="text-center">
-                                                    <th>#</th>
-                                                    <th>{{ _('Number') }}</th>
-                                                    <th>{{ _('Name') }}</th>
-                                                    <th>{{ _('Role') }}</th>
-                                                    <th>{{ _('Remark') }}</th>
-                                                    <th>{{ _('Actions') }}</th>
-                                                </tr>
-                                            </thead>
-                                            {% for user in pagination.items %}
-                                            <tr class="text-center">
-                                                <td>
-                                                    {% set page = request.args.get('page', 1) %}
-                                                    {{ pagination.total - (config['MANAGE_USER_PER_PAGE'] * (page|int - 1) + loop.index) + 1 }}
-                                                </td>
-                                                <td>{{ user.number }}</td>
-                                                <td>{{ user.name }}</td>
-                                                <td>
-                                                    {% if user.role.name == 'Teacher' %}
-                                                    <span
-                                                        class="badge badge-pill badge-warning">{{ user.role.name }}</span>
-                                                    {% elif user.role.name == 'Administrator' %}
-                                                    <span
-                                                        class="badge badge-pill badge-danger">{{ user.role.name }}</span>
-                                                    {% else %}
-                                                    <span
-                                                        class="badge badge-pill badge-light">{{ user.role.name }}</span>
-                                                    {% endif %}
-                                                </td>
-                                                <td>{{ user.remark|truncate(config['TABLE_MAX_WORDS']) }}</td>
-                                                <td>
-                                                    <div class="button-block">
-                                                        <a href="{{ url_for('admin.edit_profile', user_id=user.id) }}"
-                                                            class="btn">
-                                                            {{ _('Profile') }}
-                                                        </a>
-                                                        <a href="{{ url_for('admin.change_password', user_id=user.id) }}"
-                                                            class="btn">
-                                                            {{ _('Password') }}
-                                                        </a>
-                                                        <form action="{{ url_for('admin.delete_user', user_id=user.id) }}" method="post">
-                                                            {{ form.csrf_token() }}
-                                                            {{ form.delete(class="btn") }}
-                                                        </form>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            {% endfor %}
-                                        </table>
-                                        {{ render_pagination(pagination, align='center') }}
-                                        {% else %}
-                                        <div class="tip">
-                                            <h5><i class="fas fa-ban"></i> No users.</h5>
+                <div class="col-12">
+                    <div class="courses-details-tab-panel">
+                        <div class="tab-content">
+                            <div class="tab-pane active">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="comments-reply-area tow-revew">
+                                            {% if pagination.items %}
+                                                <table class="table table-striped table-hover table-sm">
+                                                    <thead>
+                                                    <tr class="text-center">
+                                                        <th>#</th>
+                                                        <th>{{ _('Number') }}</th>
+                                                        <th>{{ _('Name') }}</th>
+                                                        <th>{{ _('Role') }}</th>
+                                                        <th>{{ _('Remark') }}</th>
+                                                        <th>{{ _('Actions') }}</th>
+                                                    </tr>
+                                                    </thead>
+                                                    {% for user in pagination.items %}
+                                                        <tr class="text-center">
+                                                            <td>
+                                                                {% set page = request.args.get('page', 1) %}
+                                                                {{ pagination.total - (config['MANAGE_USER_PER_PAGE'] * (page|int - 1) + loop.index) + 1 }}
+                                                            </td>
+                                                            <td>{{ user.number }}</td>
+                                                            <td>{{ user.name }}</td>
+                                                            <td>
+                                                                {% if user.role.name == 'Teacher' %}
+                                                                    <span
+                                                                            class="badge badge-pill badge-warning">{{ user.role.name }}</span>
+                                                                {% elif user.role.name == 'Administrator' %}
+                                                                    <span
+                                                                            class="badge badge-pill badge-danger">{{ user.role.name }}</span>
+                                                                {% else %}
+                                                                    <span
+                                                                            class="badge badge-pill badge-light">{{ user.role.name }}</span>
+                                                                {% endif %}
+                                                            </td>
+                                                            <td>{{ user.remark|truncate(config['TABLE_MAX_WORDS']) }}</td>
+                                                            <td>
+                                                                <div class="button-block">
+                                                                    <a href="{{ url_for('admin.edit_profile', user_id=user.id) }}"
+                                                                       class="btn">
+                                                                        {{ _('Profile') }}
+                                                                    </a>
+                                                                    <a href="{{ url_for('admin.change_password', user_id=user.id) }}"
+                                                                       class="btn">
+                                                                        {{ _('Password') }}
+                                                                    </a>
+                                                                    <form action="{{ url_for('admin.delete_user', user_id=user.id) }}"
+                                                                          method="post">
+                                                                        {{ form.csrf_token() }}
+                                                                        {{ form.delete(class="btn") }}
+                                                                    </form>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </table>
+                                                {{ render_pagination(pagination, align='center') }}
+                                            {% else %}
+                                                <div class="tip">
+                                                    <h5><i class="fas fa-ban"></i> No users.</h5>
+                                                </div>
+                                            {% endif %}
                                         </div>
-                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
@@ -124,6 +116,5 @@
             </div>
         </div>
     </div>
-</div>
-</div>
+    </div>
 {% endblock content %}

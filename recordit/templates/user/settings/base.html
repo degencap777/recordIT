@@ -6,22 +6,23 @@
 
 
 {% block content %}
-<div class="page-content section-ptb">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="account-dashboard">
-                    <div class="row">
-                        <div class="col-md-12 col-lg-2">
-                            <ul role="tablist" class="nav flex-column dashboard-list">
-                                {{ render_nav_item(endpoint='user.edit_profile', name=_('Edit Profile')) }}
-                                {{ render_nav_item(endpoint='user.change_password', name=_('Change Password')) }}
-                            </ul>
-                        </div>
-                        <div class="col-md-12 col-lg-10">
-                            <div class="tab-content dashboard-content">
-                                {% block setting_content %}
-                                {% endblock %}
+    <div class="page-content section-ptb">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="account-dashboard">
+                        <div class="row">
+                            <div class="col-md-12 col-lg-2">
+                                <ul role="tablist" class="nav flex-column dashboard-list">
+                                    {{ render_nav_item(endpoint='user.edit_profile', name=_('Edit Profile')) }}
+                                    {{ render_nav_item(endpoint='user.change_password', name=_('Change Password')) }}
+                                </ul>
+                            </div>
+                            <div class="col-md-12 col-lg-10">
+                                <div class="tab-content dashboard-content">
+                                    {% block setting_content %}
+                                    {% endblock %}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -29,5 +30,4 @@
             </div>
         </div>
     </div>
-</div>
 {% endblock content %}

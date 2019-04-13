@@ -1,150 +1,141 @@
-{% extends 'base.html' %}
+{% extends 'admin/base.html' %}
 {% from 'macros/macros.html' import render_breadcrumb_item %}
 
 
 {% block title %}Dashboard{% endblock %}
 
 
-{% block breadcrumb %}
-<div class="breadcrumb-area" data-bgimage="{{ url_for('static', filename='images/bg/breadcrumb-bg.jpg') }}"
-    data-black-overlay="4">
-    <div class="container">
-        <div class="in-breadcrumb">
-            <div class="row">
-                <div class="col">
-                    <h3>Dashboard</h3>
-                    <ul class="breadcrumb-list">
-                        {{ render_breadcrumb_item(endpoint='front.index', name='Home') }}
-                        <li class="breadcrumb-item active">Dashboard</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-{% endblock breadcrumb %}
+{% block breadcrumb_title %}
+    <h3>{{ _('Dashboard') }}</h3>
+{% endblock breadcrumb_title %}
+
+
+{% block breadcrumb_item_list %}
+    <li class="breadcrumb-item active">Dashboard</li>
+{% endblock breadcrumb_item_list %}
+
+
+{% block dashboard_content %}
+    <h3>{{ _('Edit Profile') }}</h3>
+    <p>{{ render_form(form) }}</p>
+{% endblock dashboard_content %}
 
 
 {% block content %}
-<main class="page-content">
-    <div class="most-popular-courses-area section-pb section-pt-90">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4 col-md-6 col-12">
-                    <div class="single-popular-courses mt--30">
-                        <div class="popular-courses-contnet">
-                            <h5>
-                                <i class="fas fa-chalkboard-teacher"></i>
-                                Courses
-                            </h5>
-                            <div class="post_meta">
-                                <ul>
-                                    <li>Total
-                                        <span class="badge badge-light">{{ course_count|default(0) }}</span>
-                                    </li>
-                                </ul>
-                            </div>
-                            <p>{{ lipsum(1, min=5, max=10) }}</p>
-                            <div class="button-block">
-                                <a href="{{ url_for('admin.manage_course') }}"
-                                    class="botton-border">{{ _('Manage') }}</a>
-                                <a href="{{ url_for('admin.add_course') }}" class="botton-border">{{ _('Add') }}</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-12">
-                    <div class="single-popular-courses mt--30">
-                        <div class="popular-courses-contnet">
-                            <h5>
-                                <i class="fas fa-users"></i>
-                                {{ _('Users') }}
-                            </h5>
-                            <div class="post_meta">
-                                <ul>
-                                    <li>
-                                        <a href="{{ url_for('admin.manage_user', filter='all') }}">
-                                            Total
-                                        </a>
-                                        <span class="badge badge-light">{{ user_count|default(0) }}</span>
-                                    </li>
-                                    <li>
-                                        <a href="{{ url_for('admin.manage_user', filter='student') }}">
-                                            Students
-                                        </a>
-                                        <span class="badge badge-light">{{ student_count|default(0) }}</span>
-                                    </li>
-                                    <li>
-                                        <a href="{{ url_for('admin.manage_user', filter='teacher') }}">
-                                            Teachers
-                                        </a>
-                                        <span class="badge badge-light">{{ teacher_count|default(0) }}</span>
-                                    </li>
-                                    <li>
-                                        <a href="{{ url_for('admin.manage_user', filter='administrator') }}">
-                                            Administrators
-                                        </a>
-                                        <span class="badge badge-light">{{ admin_count|default(0) }}</span>
-                                    </li>
-                                </ul>
-                            </div>
-                            <p>{{ lipsum(1, min=5, max=10) }}</p>
-                            <div class="button-block">
-                                <a href="{{ url_for('admin.manage_user', filter='all') }}" class="botton-border">
-                                    {{ _('Manage') }}
-                                </a>
+    <div class="page-content">
+        <div class="most-popular-courses-area section-pb section-pt-90">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 col-12">
+                        <div class="single-popular-courses mt--30">
+                            <div class="popular-courses-contnet">
+                                <h5>
+                                    <i class="fas fa-chalkboard-teacher"></i>
+                                    Courses
+                                </h5>
+                                <div class="post_meta">
+                                    <ul>
+                                        <li>Total
+                                            <span class="badge badge-light">
+                                                {{ course_count|default(0) }}
+                                            </span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <p>{{ lipsum(1, min=5, max=10) }}</p>
+                                <div class="button-block">
+                                    <a href="{{ url_for('admin.manage_course') }}" class="botton-border">
+                                        {{ _('Manage') }}</a>
+                                    <a href="{{ url_for('admin.add_course') }}" class="botton-border">
+                                        {{ _('Add') }}</a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-12">
-                    <div class="single-popular-courses mt--30">
-                        <div class="popular-courses-contnet">
-                            <h5>
-                                <i class="far fa-registered"></i>
-                                {{ _('Register') }}
-                            </h5>
-                            <p>{{ lipsum(1, min=5, max=10) }}</p>
-                            <div class="button-block">
-                                <a href="{{ url_for('admin.register_student') }}" class="botton-border">
-                                    {{ _('Student') }}
-                                </a>
-                                <a href="{{ url_for('admin.register_teacher') }}" class="botton-border">
-                                    {{ _('Teacher') }}
-                                </a>
-                                <a href="{{ url_for('admin.register_administrator') }}" class="botton-border">
-                                    {{ _('Administrator') }}
-                                </a>
+                    {% if current_user.is_admin %}
+                        <div class="col-lg-4 col-md-6 col-12">
+                            <div class="single-popular-courses mt--30">
+                                <div class="popular-courses-contnet">
+                                    <h5>
+                                        <i class="fas fa-users"></i> {{ _('Users') }}
+                                    </h5>
+                                    <div class="post_meta">
+                                        <ul>
+                                            <li>
+                                                <a href="{{ url_for('admin.manage_user', filter='all') }}">
+                                                    Total</a>
+                                                <span class="badge badge-light">{{ user_count|default(0) }}</span>
+                                            </li>
+                                            <li>
+                                                <a href="{{ url_for('admin.manage_user', filter='student') }}">
+                                                    Students</a>
+                                                <span class="badge badge-light">{{ student_count|default(0) }}</span>
+                                            </li>
+                                            <li>
+                                                <a href="{{ url_for('admin.manage_user', filter='teacher') }}">
+                                                    Teachers</a>
+                                                <span class="badge badge-light">{{ teacher_count|default(0) }}</span>
+                                            </li>
+                                            <li>
+                                                <a href="{{ url_for('admin.manage_user', filter='administrator') }}">
+                                                    Administrators</a>
+                                                <span class="badge badge-light">{{ admin_count|default(0) }}</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <p>{{ lipsum(1, min=5, max=10) }}</p>
+                                    <div class="button-block">
+                                        <a href="{{ url_for('admin.manage_user', filter='all') }}"
+                                           class="botton-border">
+                                            {{ _('Manage') }}</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-12">
-                    <div class="single-popular-courses mt--30">
-                        <div class="popular-courses-contnet">
-                            <h5>
-                                <i class="fas fa-file-medical-alt"></i>
-                                Logs
-                            </h5>
-                            <div class="post_meta">
-                                <ul>
-                                    <li>Total
-                                        <span class="badge badge-light">{{ log_count|default(0) }}</span>
-                                    </li>
-                                </ul>
-                            </div>
-                            <p>{{ lipsum(1, min=5, max=10) }}</p>
-                            <div class="button-block">
-                                <a class="botton-border" href="{{ url_for('admin.system_log') }}">
-                                    {{ _('System logs') }}</a>
-                                <a class="botton-border" href="{{ url_for('admin.user_log') }}">
-                                    {{ _('User logs') }}</a>
+                        <div class="col-lg-4 col-md-6 col-12">
+                            <div class="single-popular-courses mt--30">
+                                <div class="popular-courses-contnet">
+                                    <h5>
+                                        <i class="far fa-registered"></i>
+                                        {{ _('Register') }}</h5>
+                                    <p>{{ lipsum(1, min=5, max=10) }}</p>
+                                    <div class="button-block">
+                                        <a href="{{ url_for('admin.register_student') }}" class="botton-border">
+                                            {{ _('Student') }}</a>
+                                        <a href="{{ url_for('admin.register_teacher') }}" class="botton-border">
+                                            {{ _('Teacher') }}</a>
+                                        <a href="{{ url_for('admin.register_administrator') }}" class="botton-border">
+                                            {{ _('Administrator') }}</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                        <div class="col-lg-4 col-md-6 col-12">
+                            <div class="single-popular-courses mt--30">
+                                <div class="popular-courses-contnet">
+                                    <h5>
+                                        <i class="fas fa-file-medical-alt"></i>
+                                        Logs</h5>
+                                    <div class="post_meta">
+                                        <ul>
+                                            <li>Total
+                                                <span class="badge badge-light">{{ log_count|default(0) }}</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <p>{{ lipsum(1, min=5, max=10) }}</p>
+                                    <div class="button-block">
+                                        <a class="botton-border" href="{{ url_for('admin.system_log') }}">
+                                            {{ _('System logs') }}</a>
+                                        <a class="botton-border" href="{{ url_for('admin.user_log') }}">
+                                            {{ _('User logs') }}</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
     </div>
-</main>
 {% endblock content %}

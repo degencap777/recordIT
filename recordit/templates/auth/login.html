@@ -7,43 +7,43 @@
 
 
 {% block breadcrumb %}
-<div class="breadcrumb-area" data-bgimage="{{ url_for('static', filename='images/bg/breadcrumb-bg.jpg') }}"
-    data-black-overlay="4">
-    <div class="container">
-        <div class="in-breadcrumb">
-            <div class="row">
-                <div class="col">
-                    <h3>Login</h3>
-                    <ul class="breadcrumb-list">
-                        {{ render_breadcrumb_item(endpoint='front.index', name='Home') }}
-                        <li class="breadcrumb-item active">
-                            Login
-                        </li>
-                    </ul>
+    <div class="breadcrumb-area" data-bgimage="{{ url_for('static', filename='images/bg/breadcrumb-bg.jpg') }}"
+         data-black-overlay="4">
+        <div class="container">
+            <div class="in-breadcrumb">
+                <div class="row">
+                    <div class="col">
+                        <h3>Login</h3>
+                        <ul class="breadcrumb-list">
+                            {{ render_breadcrumb_item(endpoint='front.index', name='Home') }}
+                            <li class="breadcrumb-item active">
+                                Login
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 {% endblock breadcrumb %}
 
 
 {% block content %}
-<main class="page-content">
-    <div class="register-page section-ptb">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-7 col-md-12 ml-auto mr-auto">
-                    <div class="login-register-wrapper">
-                        <div class="login-form-container">
-                            <div class="login-register-form">
-                                {{ render_form(form) }}
+    <main class="page-content">
+        <div class="register-page section-ptb">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-7 col-md-12 ml-auto mr-auto">
+                        <div class="login-register-wrapper">
+                            <div class="login-form-container">
+                                <div class="login-register-form">
+                                    {{ render_form(form) }}
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</main>
+    </main>
 {% endblock content %}

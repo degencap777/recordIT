@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: zeroto521@gmail.com\n"
-"POT-Creation-Date: 2019-04-11 16:00+0800\n"
+"POT-Creation-Date: 2019-04-13 16:44+0800\n"
 "PO-Revision-Date: 2019-04-11 15:57+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_Hans_CN\n"
@@ -18,73 +18,428 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.6.0\n"
 
-#: recordit/__init__.py:100
+#: recordit/__init__.py:105
 msgid "Bad Request"
 msgstr ""
 
-#: recordit/__init__.py:106
+#: recordit/__init__.py:111
 msgid "Unauthorized"
 msgstr ""
 
-#: recordit/__init__.py:112
+#: recordit/__init__.py:117
 msgid "Forbidden"
 msgstr ""
 
-#: recordit/__init__.py:118
+#: recordit/__init__.py:123
 msgid "Page Not Found"
 msgstr ""
 
-#: recordit/__init__.py:124
+#: recordit/__init__.py:129
 msgid "Method not allowed"
 msgstr ""
 
-#: recordit/__init__.py:130
+#: recordit/__init__.py:135
 msgid "Upload too large"
 msgstr ""
 
-#: recordit/__init__.py:136
+#: recordit/__init__.py:141
 msgid "Internal Server Error Explained"
 msgstr ""
 
-#: recordit/__init__.py:142
+#: recordit/__init__.py:147
 msgid "Handle CSRF Error"
 msgstr ""
 
-#: recordit/extensions.py:33
+#: recordit/extensions.py:35
 msgid "Please log in to access this page."
 msgstr ""
 
-#: recordit/extensions.py:36
+#: recordit/extensions.py:38
 msgid "In order to protect your account security, please log in again."
 msgstr ""
 
-#: recordit/templates/base.html:104
+#: recordit/blueprints/admin.py:94
+msgid "User deleted."
+msgstr ""
+
+#: recordit/blueprints/admin.py:121 recordit/blueprints/user.py:47
+msgid "Profile updated."
+msgstr ""
+
+#: recordit/blueprints/admin.py:146 recordit/blueprints/user.py:67
+msgid "Password updated."
+msgstr ""
+
+#: recordit/blueprints/admin.py:149
+msgid "Old password is incorrect."
+msgstr ""
+
+#: recordit/blueprints/admin.py:173 recordit/blueprints/admin.py:198
+#: recordit/blueprints/admin.py:223
+msgid "Register success."
+msgstr ""
+
+#: recordit/blueprints/admin.py:260
+msgid "Add course success."
+msgstr ""
+
+#: recordit/blueprints/admin.py:302
+msgid "Add Report success."
+msgstr ""
+
+#: recordit/blueprints/admin.py:304
+msgid "The reporter is not belong to this course."
+msgstr ""
+
+#: recordit/blueprints/admin.py:324
+msgid "Report deleted."
+msgstr ""
+
+#: recordit/blueprints/admin.py:356
+msgid "Record Table deleted."
+msgstr ""
+
+#: recordit/blueprints/admin.py:369
+msgid "System logs dowdloaded."
+msgstr ""
+
+#: recordit/blueprints/admin.py:393
+msgid "User logs dowdloaded."
+msgstr ""
+
+#: recordit/blueprints/auth.py:27
+msgid "Login success."
+msgstr ""
+
+#: recordit/blueprints/auth.py:30
+msgid "Invalid email or password."
+msgstr ""
+
+#: recordit/blueprints/auth.py:41
+msgid "Logout success."
+msgstr ""
+
+#: recordit/blueprints/front.py:17
+msgid "Welcome~"
+msgstr ""
+
+#: recordit/blueprints/front.py:23
+msgid "This is about page, make you know more about us."
+msgstr ""
+
+#: recordit/blueprints/user.py:22
+#, python-format
+msgid "Welcome~ %(name)s"
+msgstr ""
+
+#: recordit/forms/admin.py:19 recordit/forms/admin.py:43
+#: recordit/forms/admin.py:67 recordit/forms/auth.py:19
+#: recordit/forms/auth.py:20
+msgid "Username"
+msgstr ""
+
+#: recordit/forms/admin.py:21 recordit/forms/admin.py:45
+#: recordit/forms/admin.py:95 recordit/forms/admin.py:114
+#: recordit/forms/user.py:18 recordit/forms/user.py:39
+msgid "The username should only contain 0-9."
+msgstr ""
+
+#: recordit/forms/admin.py:23 recordit/forms/admin.py:47
+#: recordit/forms/admin.py:72 recordit/forms/admin.py:98
+#: recordit/forms/admin.py:117 recordit/forms/admin.py:136
+#: recordit/forms/admin.py:165 recordit/forms/user.py:22
+#: recordit/forms/user.py:43 recordit/forms/user.py:63
+#: recordit/templates/admin/manage_course.html:42
+#: recordit/templates/admin/manage_report.html:43
+#: recordit/templates/admin/manage_user.html:66
+msgid "Name"
+msgstr ""
+
+#: recordit/forms/admin.py:26 recordit/forms/admin.py:50
+#: recordit/forms/admin.py:76 recordit/forms/auth.py:29
+#: recordit/forms/auth.py:30 recordit/templates/admin/manage_user.html:101
+msgid "Password"
+msgstr ""
+
+#: recordit/forms/admin.py:30 recordit/forms/admin.py:54
+#: recordit/forms/admin.py:80
+msgid "Confirm password"
+msgstr ""
+
+#: recordit/forms/admin.py:33 recordit/forms/admin.py:57
+#: recordit/forms/admin.py:83 recordit/forms/admin.py:101
+#: recordit/forms/admin.py:120 recordit/forms/admin.py:139
+#: recordit/forms/admin.py:177 recordit/forms/admin.py:206
+#: recordit/forms/user.py:26 recordit/forms/user.py:47
+#: recordit/forms/user.py:66 recordit/templates/admin/manage_course.html:48
+#: recordit/templates/admin/manage_record.html:47
+#: recordit/templates/admin/manage_report.html:51
+#: recordit/templates/admin/manage_user.html:68
+msgid "Remark"
+msgstr ""
+
+#: recordit/forms/admin.py:34 recordit/forms/admin.py:58
+#: recordit/forms/admin.py:84 recordit/templates/admin/index.html:105
+msgid "Register"
+msgstr ""
+
+#: recordit/forms/admin.py:69 recordit/forms/admin.py:133
+#: recordit/forms/user.py:60
+msgid "The username should only contain a-z, A-Z and 0-9."
+msgstr ""
+
+#: recordit/forms/admin.py:93 recordit/forms/admin.py:112
+#: recordit/forms/admin.py:131 recordit/forms/user.py:16
+#: recordit/forms/user.py:37 recordit/forms/user.py:58
+#: recordit/templates/admin/manage_user.html:65
+msgid "Number"
+msgstr ""
+
+#: recordit/forms/admin.py:103 recordit/forms/admin.py:122
+#: recordit/forms/admin.py:141 recordit/forms/user.py:28
+#: recordit/forms/user.py:49 recordit/forms/user.py:68
+msgid "Edit"
+msgstr ""
+
+#: recordit/forms/admin.py:150 recordit/forms/user.py:79
+msgid "New Password"
+msgstr ""
+
+#: recordit/forms/admin.py:153 recordit/forms/user.py:82
+msgid "Confirm Password"
+msgstr ""
+
+#: recordit/forms/admin.py:156 recordit/forms/user.py:85
+msgid "Change"
+msgstr ""
+
+#: recordit/forms/admin.py:160 recordit/forms/admin.py:194
+#: recordit/forms/admin.py:218
+msgid "Delete"
+msgstr ""
+
+#: recordit/forms/admin.py:169 recordit/templates/admin/manage_course.html:44
+#: recordit/templates/admin/manage_report.html:47
+msgid "Teacher Number"
+msgstr ""
+
+#: recordit/forms/admin.py:173
+msgid "Student Grade"
+msgstr ""
+
+#: recordit/forms/admin.py:178 recordit/forms/admin.py:207
+#: recordit/templates/admin/index.html:51
+msgid "Add"
+msgstr ""
+
+#: recordit/forms/admin.py:199
+msgid "Report Name"
+msgstr ""
+
+#: recordit/forms/admin.py:203 recordit/templates/admin/manage_report.html:45
+msgid "Reporter Number"
+msgstr ""
+
+#: recordit/forms/auth.py:34
+msgid "Remember me"
+msgstr ""
+
+#: recordit/forms/auth.py:35
+msgid "Login"
+msgstr ""
+
+#: recordit/forms/auth.py:39
+msgid "The username is not existed."
+msgstr ""
+
+#: recordit/forms/user.py:77
+msgid "Old Password"
+msgstr ""
+
+#: recordit/templates/base.html:130
 msgid "North China University of Science and Technology University AI Profession"
 msgstr ""
 
-#: recordit/templates/errors.html:37
+#: recordit/templates/errors.html:36
 msgid ""
-"Sorry, the page you are looking for does not exist, have been removed, "
-"name changed or is temporarity unavailable."
+"Sorry,<br /> the page you are looking for does not exist,<br /> have been"
+" removed, name changed or is temporarity unavailable."
 msgstr ""
 
-#: recordit/templates/errors.html:40
+#: recordit/templates/errors.html:39
 msgid "Back to home page"
 msgstr ""
 
-#: recordit/templates/front/about.html:57
+#: recordit/templates/admin/add_course.html:16
+#: recordit/templates/admin/add_course.html:38
+msgid "Add Course"
+msgstr ""
+
+#: recordit/templates/admin/add_report.html:16
+#: recordit/templates/admin/add_report.html:38
+#: recordit/templates/admin/manage_course.html:71
+msgid "Add Report"
+msgstr ""
+
+#: recordit/templates/admin/change_password.html:16
+#: recordit/templates/admin/change_password.html:38
+#: recordit/templates/user/settings/base.html:18
+#: recordit/templates/user/settings/change_password.html:29
+msgid "Change Password"
+msgstr ""
+
+#: recordit/templates/admin/edit_profile.html:16
+#: recordit/templates/admin/edit_profile.html:38
+#: recordit/templates/user/settings/base.html:17
+#: recordit/templates/user/settings/edit_profile.html:31
+msgid "Edit Profile"
+msgstr ""
+
+#: recordit/templates/admin/index.html:50
+#: recordit/templates/admin/index.html:94
+msgid "Manage"
+msgstr ""
+
+#: recordit/templates/admin/index.html:61
+#: recordit/templates/admin/manage_user.html:38
+msgid "Users"
+msgstr ""
+
+#: recordit/templates/admin/index.html:110
+msgid "Student"
+msgstr ""
+
+#: recordit/templates/admin/index.html:113
+#: recordit/templates/admin/manage_course.html:43
+#: recordit/templates/admin/manage_report.html:46
+msgid "Teacher"
+msgstr ""
+
+#: recordit/templates/admin/index.html:116
+msgid "Administrator"
+msgstr ""
+
+#: recordit/templates/admin/index.html:139
+msgid "System logs"
+msgstr ""
+
+#: recordit/templates/admin/index.html:141
+msgid "User logs"
+msgstr ""
+
+#: recordit/templates/admin/manage_course.html:17
+msgid "Manage Course"
+msgstr ""
+
+#: recordit/templates/admin/manage_course.html:45
+msgid "Grade"
+msgstr ""
+
+#: recordit/templates/admin/manage_course.html:46
+#: recordit/templates/admin/manage_report.html:49
+msgid "Date"
+msgstr ""
+
+#: recordit/templates/admin/manage_course.html:47
+#: recordit/templates/admin/manage_report.html:50
+msgid "Active"
+msgstr ""
+
+#: recordit/templates/admin/manage_course.html:49
+#: recordit/templates/admin/manage_record.html:48
+#: recordit/templates/admin/manage_report.html:52
+#: recordit/templates/admin/manage_user.html:69
+msgid "Actions"
+msgstr ""
+
+#: recordit/templates/admin/manage_course.html:68
+#: recordit/templates/admin/manage_record.html:17
+#: recordit/templates/admin/manage_report.html:17
+msgid "Manage Report"
+msgstr ""
+
+#: recordit/templates/admin/manage_record.html:43
+msgid "Reviewer Name"
+msgstr ""
+
+#: recordit/templates/admin/manage_record.html:44
+msgid "Reviewer Number"
+msgstr ""
+
+#: recordit/templates/admin/manage_record.html:45
+#: recordit/templates/admin/manage_report.html:48
+msgid "Score"
+msgstr ""
+
+#: recordit/templates/admin/manage_record.html:46
+msgid "Time"
+msgstr ""
+
+#: recordit/templates/admin/manage_report.html:44
+msgid "Reporter"
+msgstr ""
+
+#: recordit/templates/admin/manage_report.html:73
+msgid "Manage Record"
+msgstr ""
+
+#: recordit/templates/admin/manage_user.html:17
+msgid "Manage Users"
+msgstr ""
+
+#: recordit/templates/admin/manage_user.html:67
+msgid "Role"
+msgstr ""
+
+#: recordit/templates/admin/manage_user.html:97
+msgid "Profile"
+msgstr ""
+
+#: recordit/templates/admin/register_user.html:16
+msgid "Register User"
+msgstr ""
+
+#: recordit/templates/front/about.html:58
 msgid "SOME IMPORTANT FACTS"
 msgstr ""
 
-#: recordit/templates/front/index.html:17
+#: recordit/templates/front/index.html:9
 msgid "Just click & submit"
 msgstr ""
 
-#: recordit/templates/front/index.html:38
+#: recordit/templates/front/index.html:9
+msgid "Sign in Now"
+msgstr ""
+
+#: recordit/templates/front/index.html:10
 msgid "For Class"
 msgstr ""
 
-#: recordit/templates/front/index.html:59
+#: recordit/templates/front/index.html:10
+#: recordit/templates/front/index.html:11
+msgid "About us"
+msgstr ""
+
+#: recordit/templates/front/index.html:11
 msgid "For Everyone"
 msgstr ""
+
+#: recordit/templates/front/index.html:26
+msgid "Coding"
+msgstr ""
+
+#: recordit/templates/front/index.html:27
+msgid "HTML & CSS"
+msgstr ""
+
+#: recordit/templates/front/index.html:28
+msgid "Development"
+msgstr ""
+
+#~ msgid ""
+#~ "Sorry, the page you are looking "
+#~ "for does not exist, have been "
+#~ "removed, name changed or is temporarity"
+#~ " unavailable."
+#~ msgstr ""
 

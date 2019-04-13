@@ -4,29 +4,29 @@
 
 
 {% block content %}
-<div class="hero-slider">
-    <div class="hero-slider-active owl-carousel">
-        {{ render_slide(filename='images/slider/background-image-1.jpg', content=_('Just click & submit'), button=_('Sign in Now'), btn_link='auth.login', next=request.full_path) }}
-        {{ render_slide(filename='images/slider/background-image-2.jpg', content=_('For Class'), button=_('About us'), btn_link='front.about') }}
-        {{ render_slide(filename='images/slider/background-image-3.jpg', content=_('For Everyone'), button=_('About us'), btn_link='front.about') }}
+    <div class="hero-slider">
+        <div class="hero-slider-active owl-carousel">
+            {{ render_slide(filename='images/slider/background-image-1.jpg', content=_('Just click & submit'), button=_('Sign in Now'), btn_link='auth.login', next=request.full_path) }}
+            {{ render_slide(filename='images/slider/background-image-2.jpg', content=_('For Class'), button=_('About us'), btn_link='front.about') }}
+            {{ render_slide(filename='images/slider/background-image-3.jpg', content=_('For Everyone'), button=_('About us'), btn_link='front.about') }}
+        </div>
     </div>
-</div>
 
-<div class="our-course-categories-area section-ptb">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 ml-auto mr-auto">
-                <div class="section-title-three">
-                    <h4>Just Record it</h4>
-                    <p>{{ lipsum(1) }}</p>
+    <div class="our-course-categories-area section-ptb">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 ml-auto mr-auto">
+                    <div class="section-title-three">
+                        <h4>Just Record it</h4>
+                        <p>{{ lipsum(1) }}</p>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            {{ render_cours(filename='images/icon/icon-01.png', title=_('Coding'), color='malachite') }}
-            {{ render_cours(filename='images/icon/icon-02.png', title=_('HTML & CSS'), color='brilliantrose') }}
-            {{ render_cours(filename='images/icon/icon-03.png', title=_('Development'), color='shakespeare') }}
+            <div class="row">
+                {{ render_cours(filename='images/icon/icon-01.png', title=_('Coding'), color='malachite') }}
+                {{ render_cours(filename='images/icon/icon-02.png', title=_('HTML & CSS'), color='brilliantrose') }}
+                {{ render_cours(filename='images/icon/icon-03.png', title=_('Development'), color='shakespeare') }}
+            </div>
         </div>
     </div>
-</div>
 {% endblock content %}

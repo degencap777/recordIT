@@ -21,7 +21,11 @@ def role_required(role):
     def decorator(func):
         @wraps(func)
         def decorated_function(*args, **kwargs):
-            if not current_user.whoami(role):
+            if isinstance(role, (list, tuple)):
+                flag = any(current_user.whoami(i) for i in role)
+            else:
+                flag = current_user.whoami(role)
+            if not flag:
                 abort(403)
             return func(*args, **kwargs)
         return decorated_function

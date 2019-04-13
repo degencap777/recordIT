@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from flask import Blueprint, flash, redirect, render_template, url_for
+from flask import (Blueprint, abort, current_app, flash, make_response,
+                   redirect, render_template, url_for)
 from flask_babel import _
 from flask_login import current_user, login_required
 
-from recordit.models import Course, Report, User, Role
+from recordit.extensions import db
+from recordit.models import Course, Report, Role, User
 from recordit.utils import log_user, redirect_back
 
 front_bp = Blueprint('front', __name__)
@@ -33,3 +35,20 @@ def about():
     return render_template(
         'front/about.html', teacher_count=teacher_count, student_count=student_count,
         course_count=course_count, report_count=report_count)
+
+
+@front_bp.route('/set-locale/<locale>')
+def set_locale(locale):
+    if locale not in current_app.config['LOCALES']:
+        abort(404)
+
+    response = make_response(redirect_back())
+    response.set_cookie('locale', locale, max_age=60 * 60 * 24 * 7)
+
+    if current_user.is_authenticated:
+        current_user.locale = locale
+        db.session.commit()
+
+    flash(_('Setting updated.'), 'success')
+
+    return response

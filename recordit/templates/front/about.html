@@ -13,7 +13,7 @@
             <div class="in-breadcrumb">
                 <div class="row">
                     <div class="col">
-                        <h3>About Us</h3>
+                        <h3>{{ _("About Us") }}</h3>
                         <ul class="breadcrumb-list">
                             {{ render_breadcrumb_item(endpoint='front.index', name='Home') }}
                             <li class="breadcrumb-item active">About Us</li>
@@ -51,7 +51,7 @@
                 <div class="row">
                     <div class="col-lg-8  ml-auto mr-auto">
                         <div class="section-title">
-                            <h4>about us</h4>
+                            <h4>{{ _('about us') }}</h4>
                             <h3 class="text-white">
                                 {{ _('SOME IMPORTANT FACTS') }}
                             </h3>
@@ -62,10 +62,10 @@
                     <div class="row">
                         <div class="col-lg-10 ml-auto mr-auto">
                             <div class="row">
-                                {{ render_counter('Teachers', teacher_count) }}
-                                {{ render_counter('Students', student_count) }}
-                                {{ render_counter('Courses', course_count) }}
-                                {{ render_counter('Reports', report_count) }}
+                                {{ render_counter(_('Teachers'), teacher_count|default(10)) }}
+                                {{ render_counter(_('Students'), student_count|default(50)) }}
+                                {{ render_counter(_('Courses'), course_count|default(3)) }}
+                                {{ render_counter(_('Reports'), report_count|default(100)) }}
                             </div>
                         </div>
                     </div>

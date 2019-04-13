@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% from 'macros/macros.html' import render_breadcrumb_item %}
 
+
 {% block title %}Home{% endblock %}
 
 
@@ -11,7 +12,7 @@
             <div class="in-breadcrumb">
                 <div class="row">
                     <div class="col">
-                        <h3>Home</h3>
+                        <h3>{{ _('Home') }}</h3>
                         <ul class="breadcrumb-list">
                             {{ render_breadcrumb_item(endpoint='front.index', name='Home') }}
                         </ul>

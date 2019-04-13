@@ -7,439 +7,522 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: zeroto521@gmail.com\n"
-"POT-Creation-Date: 2019-04-13 16:44+0800\n"
-"PO-Revision-Date: 2019-04-11 15:57+0800\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: zh_Hans_CN\n"
+"POT-Creation-Date: 2019-04-13 20:28+0800\n"
+"PO-Revision-Date: 2019-04-13 20:31+0800\n"
+"Last-Translator: \n"
+"Language: zh_CN\n"
 "Language-Team: zh_Hans_CN <LL@li.org>\n"
-"Plural-Forms: nplurals=1; plural=0\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.6.0\n"
+"X-Generator: Poedit 2.2.1\n"
 
 #: recordit/__init__.py:105
 msgid "Bad Request"
-msgstr ""
+msgstr "请求无效"
 
 #: recordit/__init__.py:111
 msgid "Unauthorized"
-msgstr ""
+msgstr "未授权"
 
 #: recordit/__init__.py:117
 msgid "Forbidden"
-msgstr ""
+msgstr "禁止访问"
 
 #: recordit/__init__.py:123
 msgid "Page Not Found"
-msgstr ""
+msgstr "页面未找到"
 
 #: recordit/__init__.py:129
 msgid "Method not allowed"
-msgstr ""
+msgstr "方法不允许"
 
 #: recordit/__init__.py:135
 msgid "Upload too large"
-msgstr ""
+msgstr "上传文件过大"
 
 #: recordit/__init__.py:141
 msgid "Internal Server Error Explained"
-msgstr ""
+msgstr "服务器出错"
 
 #: recordit/__init__.py:147
 msgid "Handle CSRF Error"
-msgstr ""
+msgstr "CSRF验证错误"
 
 #: recordit/extensions.py:35
 msgid "Please log in to access this page."
-msgstr ""
+msgstr "请登录后访问这个页面。"
 
 #: recordit/extensions.py:38
 msgid "In order to protect your account security, please log in again."
-msgstr ""
+msgstr "为了保护您的帐户安全, 请重新登录。"
 
-#: recordit/blueprints/admin.py:94
+#: recordit/blueprints/admin.py:95
 msgid "User deleted."
-msgstr ""
+msgstr "账号已删除。"
 
-#: recordit/blueprints/admin.py:121 recordit/blueprints/user.py:47
+#: recordit/blueprints/admin.py:122 recordit/blueprints/user.py:47
 msgid "Profile updated."
-msgstr ""
+msgstr "账户已更新。"
 
-#: recordit/blueprints/admin.py:146 recordit/blueprints/user.py:67
+#: recordit/blueprints/admin.py:147 recordit/blueprints/user.py:67
 msgid "Password updated."
-msgstr ""
+msgstr "密码已更新。"
 
-#: recordit/blueprints/admin.py:149
+#: recordit/blueprints/admin.py:150
 msgid "Old password is incorrect."
-msgstr ""
+msgstr "旧密码不正确。"
 
-#: recordit/blueprints/admin.py:173 recordit/blueprints/admin.py:198
-#: recordit/blueprints/admin.py:223
+#: recordit/blueprints/admin.py:174 recordit/blueprints/admin.py:199
+#: recordit/blueprints/admin.py:224
 msgid "Register success."
-msgstr ""
+msgstr "注册成功."
 
-#: recordit/blueprints/admin.py:260
+#: recordit/blueprints/admin.py:261
 msgid "Add course success."
-msgstr ""
+msgstr "课程创建成功。"
 
-#: recordit/blueprints/admin.py:302
+#: recordit/blueprints/admin.py:303
 msgid "Add Report success."
-msgstr ""
+msgstr "报告创建成功。"
 
-#: recordit/blueprints/admin.py:304
+#: recordit/blueprints/admin.py:305
 msgid "The reporter is not belong to this course."
-msgstr ""
+msgstr "主讲人不在这门课程中。"
 
-#: recordit/blueprints/admin.py:324
+#: recordit/blueprints/admin.py:325
 msgid "Report deleted."
-msgstr ""
+msgstr "报告已删除。"
 
-#: recordit/blueprints/admin.py:356
+#: recordit/blueprints/admin.py:357
 msgid "Record Table deleted."
-msgstr ""
+msgstr "记录表已删除。"
 
-#: recordit/blueprints/admin.py:369
+#: recordit/blueprints/admin.py:370
 msgid "System logs dowdloaded."
-msgstr ""
+msgstr "系统日志已下载。"
 
-#: recordit/blueprints/admin.py:393
+#: recordit/blueprints/admin.py:394
 msgid "User logs dowdloaded."
-msgstr ""
+msgstr "用户日志已下载。"
 
 #: recordit/blueprints/auth.py:27
 msgid "Login success."
-msgstr ""
+msgstr "登入成功。"
 
 #: recordit/blueprints/auth.py:30
 msgid "Invalid email or password."
-msgstr ""
+msgstr "无效的电子邮件或密码。"
 
 #: recordit/blueprints/auth.py:41
 msgid "Logout success."
-msgstr ""
+msgstr "注销成功。"
 
-#: recordit/blueprints/front.py:17
+#: recordit/blueprints/front.py:20
 msgid "Welcome~"
-msgstr ""
+msgstr "欢迎 ~"
 
-#: recordit/blueprints/front.py:23
+#: recordit/blueprints/front.py:34
 msgid "This is about page, make you know more about us."
-msgstr ""
+msgstr "这是关于页面, 让你对我们有更多的了解。"
+
+#: recordit/blueprints/front.py:52
+msgid "Setting updated."
+msgstr "设置已更新。"
 
 #: recordit/blueprints/user.py:22
 #, python-format
 msgid "Welcome~ %(name)s"
-msgstr ""
+msgstr "欢迎~ %(name)s"
 
 #: recordit/forms/admin.py:19 recordit/forms/admin.py:43
-#: recordit/forms/admin.py:67 recordit/forms/auth.py:19
-#: recordit/forms/auth.py:20
+#: recordit/forms/admin.py:67 recordit/forms/auth.py:19 recordit/forms/auth.py:20
 msgid "Username"
-msgstr ""
+msgstr "账户"
 
 #: recordit/forms/admin.py:21 recordit/forms/admin.py:45
 #: recordit/forms/admin.py:95 recordit/forms/admin.py:114
 #: recordit/forms/user.py:18 recordit/forms/user.py:39
 msgid "The username should only contain 0-9."
-msgstr ""
+msgstr "用户名应只包含0-9。"
 
 #: recordit/forms/admin.py:23 recordit/forms/admin.py:47
 #: recordit/forms/admin.py:72 recordit/forms/admin.py:98
 #: recordit/forms/admin.py:117 recordit/forms/admin.py:136
 #: recordit/forms/admin.py:165 recordit/forms/user.py:22
 #: recordit/forms/user.py:43 recordit/forms/user.py:63
-#: recordit/templates/admin/manage_course.html:42
-#: recordit/templates/admin/manage_report.html:43
-#: recordit/templates/admin/manage_user.html:66
+#: recordit/templates/admin/manage_course.html:27
+#: recordit/templates/admin/manage_report.html:28
+#: recordit/templates/admin/manage_user.html:56
 msgid "Name"
-msgstr ""
+msgstr "名称"
 
 #: recordit/forms/admin.py:26 recordit/forms/admin.py:50
-#: recordit/forms/admin.py:76 recordit/forms/auth.py:29
-#: recordit/forms/auth.py:30 recordit/templates/admin/manage_user.html:101
+#: recordit/forms/admin.py:76 recordit/forms/auth.py:29 recordit/forms/auth.py:30
+#: recordit/templates/admin/manage_user.html:91
 msgid "Password"
-msgstr ""
+msgstr "密码"
 
 #: recordit/forms/admin.py:30 recordit/forms/admin.py:54
 #: recordit/forms/admin.py:80
 msgid "Confirm password"
-msgstr ""
+msgstr "密码确认"
 
 #: recordit/forms/admin.py:33 recordit/forms/admin.py:57
 #: recordit/forms/admin.py:83 recordit/forms/admin.py:101
 #: recordit/forms/admin.py:120 recordit/forms/admin.py:139
 #: recordit/forms/admin.py:177 recordit/forms/admin.py:206
-#: recordit/forms/user.py:26 recordit/forms/user.py:47
-#: recordit/forms/user.py:66 recordit/templates/admin/manage_course.html:48
-#: recordit/templates/admin/manage_record.html:47
-#: recordit/templates/admin/manage_report.html:51
-#: recordit/templates/admin/manage_user.html:68
+#: recordit/forms/user.py:26 recordit/forms/user.py:47 recordit/forms/user.py:66
+#: recordit/templates/admin/manage_course.html:33
+#: recordit/templates/admin/manage_record.html:32
+#: recordit/templates/admin/manage_report.html:36
+#: recordit/templates/admin/manage_user.html:58
 msgid "Remark"
-msgstr ""
+msgstr "备注"
 
 #: recordit/forms/admin.py:34 recordit/forms/admin.py:58
-#: recordit/forms/admin.py:84 recordit/templates/admin/index.html:105
+#: recordit/forms/admin.py:84 recordit/templates/admin/index.html:100
 msgid "Register"
-msgstr ""
+msgstr "注册"
 
 #: recordit/forms/admin.py:69 recordit/forms/admin.py:133
 #: recordit/forms/user.py:60
 msgid "The username should only contain a-z, A-Z and 0-9."
-msgstr ""
+msgstr "用户名应只包含 a-z、A-Z 和0-9。"
 
 #: recordit/forms/admin.py:93 recordit/forms/admin.py:112
 #: recordit/forms/admin.py:131 recordit/forms/user.py:16
 #: recordit/forms/user.py:37 recordit/forms/user.py:58
-#: recordit/templates/admin/manage_user.html:65
+#: recordit/templates/admin/manage_user.html:55
 msgid "Number"
-msgstr ""
+msgstr "编号"
 
 #: recordit/forms/admin.py:103 recordit/forms/admin.py:122
 #: recordit/forms/admin.py:141 recordit/forms/user.py:28
 #: recordit/forms/user.py:49 recordit/forms/user.py:68
 msgid "Edit"
-msgstr ""
+msgstr "编辑"
 
 #: recordit/forms/admin.py:150 recordit/forms/user.py:79
 msgid "New Password"
-msgstr ""
+msgstr "新密码"
 
 #: recordit/forms/admin.py:153 recordit/forms/user.py:82
 msgid "Confirm Password"
-msgstr ""
+msgstr "确认密码"
 
 #: recordit/forms/admin.py:156 recordit/forms/user.py:85
 msgid "Change"
-msgstr ""
+msgstr "更新"
 
 #: recordit/forms/admin.py:160 recordit/forms/admin.py:194
 #: recordit/forms/admin.py:218
 msgid "Delete"
-msgstr ""
+msgstr "删除"
 
-#: recordit/forms/admin.py:169 recordit/templates/admin/manage_course.html:44
-#: recordit/templates/admin/manage_report.html:47
+#: recordit/forms/admin.py:169 recordit/templates/admin/manage_course.html:29
+#: recordit/templates/admin/manage_report.html:32
 msgid "Teacher Number"
-msgstr ""
+msgstr "教师编号"
 
 #: recordit/forms/admin.py:173
 msgid "Student Grade"
-msgstr ""
+msgstr "年级"
 
 #: recordit/forms/admin.py:178 recordit/forms/admin.py:207
-#: recordit/templates/admin/index.html:51
+#: recordit/templates/admin/index.html:50
 msgid "Add"
-msgstr ""
+msgstr "添加"
 
 #: recordit/forms/admin.py:199
 msgid "Report Name"
-msgstr ""
+msgstr "报告题目"
 
-#: recordit/forms/admin.py:203 recordit/templates/admin/manage_report.html:45
+#: recordit/forms/admin.py:203 recordit/templates/admin/manage_report.html:30
 msgid "Reporter Number"
-msgstr ""
+msgstr "主讲人编号"
 
 #: recordit/forms/auth.py:34
 msgid "Remember me"
-msgstr ""
+msgstr "记住我"
 
-#: recordit/forms/auth.py:35
+#: recordit/forms/auth.py:35 recordit/templates/auth/login.html:16
 msgid "Login"
-msgstr ""
+msgstr "登录"
 
 #: recordit/forms/auth.py:39
 msgid "The username is not existed."
-msgstr ""
+msgstr "用户名不存在。"
 
 #: recordit/forms/user.py:77
 msgid "Old Password"
-msgstr ""
+msgstr "旧密码"
 
-#: recordit/templates/base.html:130
+#: recordit/templates/base.html:73
+msgid "HOME"
+msgstr "首页"
+
+#: recordit/templates/base.html:74
+msgid "ABOUT"
+msgstr "关于我们"
+
+#: recordit/templates/base.html:77
+msgid "DASHBOARD"
+msgstr "控制台"
+
+#: recordit/templates/base.html:79
+msgid "SETTINGS"
+msgstr "设置"
+
+#: recordit/templates/base.html:80
+msgid "LOGOUT"
+msgstr "注销"
+
+#: recordit/templates/base.html:82
+msgid "LOGIN"
+msgstr "登录"
+
+#: recordit/templates/base.html:129
 msgid "North China University of Science and Technology University AI Profession"
-msgstr ""
+msgstr "华北理工大学智能科学与技术专业"
 
-#: recordit/templates/errors.html:36
+#: recordit/templates/errors.html:4
+msgid "Error"
+msgstr "错误"
+
+#: recordit/templates/errors.html:34
 msgid ""
-"Sorry,<br /> the page you are looking for does not exist,<br /> have been"
-" removed, name changed or is temporarity unavailable."
-msgstr ""
+"Sorry,<br /> the page you are looking for does not exist,<br /> have been "
+"removed, name changed or is temporarity unavailable."
+msgstr "对不起<br>您要查找的页面不存在,<br>已被删除、名称更改或临时不可用。"
 
-#: recordit/templates/errors.html:39
+#: recordit/templates/errors.html:37
 msgid "Back to home page"
-msgstr ""
+msgstr "返回首页"
 
-#: recordit/templates/admin/add_course.html:16
-#: recordit/templates/admin/add_course.html:38
+#: recordit/templates/admin/add_course.html:10
+#: recordit/templates/admin/add_course.html:22
 msgid "Add Course"
-msgstr ""
+msgstr "添加课程"
 
-#: recordit/templates/admin/add_report.html:16
-#: recordit/templates/admin/add_report.html:38
-#: recordit/templates/admin/manage_course.html:71
+#: recordit/templates/admin/add_report.html:10
+#: recordit/templates/admin/add_report.html:22
+#: recordit/templates/admin/manage_course.html:58
 msgid "Add Report"
-msgstr ""
+msgstr "创建报告"
 
-#: recordit/templates/admin/change_password.html:16
-#: recordit/templates/admin/change_password.html:38
-#: recordit/templates/user/settings/base.html:18
-#: recordit/templates/user/settings/change_password.html:29
+#: recordit/templates/admin/change_password.html:10
+#: recordit/templates/admin/change_password.html:22
+#: recordit/templates/user/settings/base.html:42
+#: recordit/templates/user/settings/change_password.html:10
+#: recordit/templates/user/settings/change_password.html:24
 msgid "Change Password"
-msgstr ""
+msgstr "更改密码"
 
-#: recordit/templates/admin/edit_profile.html:16
-#: recordit/templates/admin/edit_profile.html:38
-#: recordit/templates/user/settings/base.html:17
-#: recordit/templates/user/settings/edit_profile.html:31
+#: recordit/templates/admin/edit_profile.html:10
+#: recordit/templates/admin/edit_profile.html:22
+#: recordit/templates/admin/index.html:19
+#: recordit/templates/user/settings/base.html:41
+#: recordit/templates/user/settings/edit_profile.html:10
+#: recordit/templates/user/settings/edit_profile.html:23
 msgid "Edit Profile"
-msgstr ""
+msgstr "账户设置"
 
-#: recordit/templates/admin/index.html:50
-#: recordit/templates/admin/index.html:94
-msgid "Manage"
-msgstr ""
+#: recordit/templates/admin/index.html:9
+msgid "Dashboard"
+msgstr "控制台"
 
-#: recordit/templates/admin/index.html:61
-#: recordit/templates/admin/manage_user.html:38
-msgid "Users"
-msgstr ""
+#: recordit/templates/admin/index.html:34 recordit/templates/front/about.html:67
+msgid "Courses"
+msgstr "课程"
 
-#: recordit/templates/admin/index.html:110
-msgid "Student"
-msgstr ""
+#: recordit/templates/admin/index.html:38 recordit/templates/admin/index.html:66
+#: recordit/templates/admin/index.html:121
+msgid "Total"
+msgstr "总计"
 
-#: recordit/templates/admin/index.html:113
-#: recordit/templates/admin/manage_course.html:43
-#: recordit/templates/admin/manage_report.html:46
-msgid "Teacher"
-msgstr ""
-
-#: recordit/templates/admin/index.html:116
-msgid "Administrator"
-msgstr ""
-
-#: recordit/templates/admin/index.html:139
-msgid "System logs"
-msgstr ""
-
-#: recordit/templates/admin/index.html:141
-msgid "User logs"
-msgstr ""
-
-#: recordit/templates/admin/manage_course.html:17
+#: recordit/templates/admin/index.html:45
+#: recordit/templates/admin/manage_course.html:11
 msgid "Manage Course"
-msgstr ""
+msgstr "课程管理"
 
-#: recordit/templates/admin/manage_course.html:45
+#: recordit/templates/admin/index.html:48 recordit/templates/admin/index.html:90
+msgid "Manage"
+msgstr "管理"
+
+#: recordit/templates/admin/index.html:60
+#: recordit/templates/admin/manage_user.html:28
+msgid "Users"
+msgstr "用户"
+
+#: recordit/templates/admin/index.html:71 recordit/templates/front/about.html:66
+msgid "Students"
+msgstr "学生"
+
+#: recordit/templates/admin/index.html:76 recordit/templates/front/about.html:65
+msgid "Teachers"
+msgstr "教师"
+
+#: recordit/templates/admin/index.html:81
+msgid "Administrators"
+msgstr "管理员"
+
+#: recordit/templates/admin/index.html:86
+msgid "Manage User"
+msgstr "用户管理"
+
+#: recordit/templates/admin/index.html:101
+msgid "User Register"
+msgstr "用户注册"
+
+#: recordit/templates/admin/index.html:104
+msgid "Student"
+msgstr "学生"
+
+#: recordit/templates/admin/index.html:106
+#: recordit/templates/admin/manage_course.html:28
+#: recordit/templates/admin/manage_report.html:31
+msgid "Teacher"
+msgstr "教师"
+
+#: recordit/templates/admin/index.html:108
+msgid "Administrator"
+msgstr "管理员"
+
+#: recordit/templates/admin/index.html:117
+msgid "Logs"
+msgstr "日志"
+
+#: recordit/templates/admin/index.html:126
+msgid "Download Logs"
+msgstr "日志下载"
+
+#: recordit/templates/admin/index.html:129
+msgid "System logs"
+msgstr "系统日志"
+
+#: recordit/templates/admin/index.html:131
+msgid "User logs"
+msgstr "用户日志"
+
+#: recordit/templates/admin/manage_course.html:30
 msgid "Grade"
-msgstr ""
+msgstr "等级"
 
-#: recordit/templates/admin/manage_course.html:46
-#: recordit/templates/admin/manage_report.html:49
+#: recordit/templates/admin/manage_course.html:31
+#: recordit/templates/admin/manage_report.html:34
 msgid "Date"
-msgstr ""
+msgstr "日期"
 
-#: recordit/templates/admin/manage_course.html:47
-#: recordit/templates/admin/manage_report.html:50
+#: recordit/templates/admin/manage_course.html:32
+#: recordit/templates/admin/manage_report.html:35
 msgid "Active"
-msgstr ""
+msgstr "启用"
 
-#: recordit/templates/admin/manage_course.html:49
-#: recordit/templates/admin/manage_record.html:48
-#: recordit/templates/admin/manage_report.html:52
-#: recordit/templates/admin/manage_user.html:69
+#: recordit/templates/admin/manage_course.html:34
+#: recordit/templates/admin/manage_record.html:33
+#: recordit/templates/admin/manage_report.html:37
+#: recordit/templates/admin/manage_user.html:59
 msgid "Actions"
-msgstr ""
+msgstr "操作"
 
-#: recordit/templates/admin/manage_course.html:68
-#: recordit/templates/admin/manage_record.html:17
-#: recordit/templates/admin/manage_report.html:17
+#: recordit/templates/admin/manage_course.html:54
+#: recordit/templates/admin/manage_record.html:11
+#: recordit/templates/admin/manage_report.html:11
 msgid "Manage Report"
-msgstr ""
+msgstr "报告管理"
 
-#: recordit/templates/admin/manage_record.html:43
+#: recordit/templates/admin/manage_record.html:28
 msgid "Reviewer Name"
-msgstr ""
+msgstr "评阅人姓名"
 
-#: recordit/templates/admin/manage_record.html:44
+#: recordit/templates/admin/manage_record.html:29
 msgid "Reviewer Number"
-msgstr ""
+msgstr "评阅人编号"
 
-#: recordit/templates/admin/manage_record.html:45
-#: recordit/templates/admin/manage_report.html:48
+#: recordit/templates/admin/manage_record.html:30
+#: recordit/templates/admin/manage_report.html:33
 msgid "Score"
-msgstr ""
+msgstr "分数"
 
-#: recordit/templates/admin/manage_record.html:46
+#: recordit/templates/admin/manage_record.html:31
 msgid "Time"
-msgstr ""
+msgstr "时间"
 
-#: recordit/templates/admin/manage_report.html:44
+#: recordit/templates/admin/manage_report.html:29
 msgid "Reporter"
-msgstr ""
+msgstr "主讲人"
 
-#: recordit/templates/admin/manage_report.html:73
+#: recordit/templates/admin/manage_report.html:59
 msgid "Manage Record"
-msgstr ""
+msgstr "记录表管理"
 
-#: recordit/templates/admin/manage_user.html:17
+#: recordit/templates/admin/manage_user.html:11
 msgid "Manage Users"
-msgstr ""
+msgstr "用户管理"
 
-#: recordit/templates/admin/manage_user.html:67
+#: recordit/templates/admin/manage_user.html:57
 msgid "Role"
-msgstr ""
+msgstr "角色"
 
-#: recordit/templates/admin/manage_user.html:97
+#: recordit/templates/admin/manage_user.html:87
 msgid "Profile"
-msgstr ""
+msgstr "账户资料"
 
-#: recordit/templates/admin/register_user.html:16
+#: recordit/templates/admin/register_user.html:10
 msgid "Register User"
-msgstr ""
+msgstr "用户注册"
 
-#: recordit/templates/front/about.html:58
+#: recordit/templates/front/about.html:16
+msgid "About Us"
+msgstr "关于我们"
+
+#: recordit/templates/front/about.html:54
+msgid "about us"
+msgstr "关于我们"
+
+#: recordit/templates/front/about.html:56
 msgid "SOME IMPORTANT FACTS"
-msgstr ""
+msgstr "一些重要的事实"
+
+#: recordit/templates/front/about.html:68
+msgid "Reports"
+msgstr "报告"
 
 #: recordit/templates/front/index.html:9
 msgid "Just click & submit"
-msgstr ""
+msgstr "只需“点击”与“提交”"
 
 #: recordit/templates/front/index.html:9
 msgid "Sign in Now"
-msgstr ""
+msgstr "立即登录"
 
 #: recordit/templates/front/index.html:10
 msgid "For Class"
-msgstr ""
+msgstr "适用于班级"
 
-#: recordit/templates/front/index.html:10
-#: recordit/templates/front/index.html:11
+#: recordit/templates/front/index.html:10 recordit/templates/front/index.html:11
 msgid "About us"
-msgstr ""
+msgstr "关于我们"
 
 #: recordit/templates/front/index.html:11
 msgid "For Everyone"
-msgstr ""
+msgstr "适用于任何人"
 
 #: recordit/templates/front/index.html:26
 msgid "Coding"
-msgstr ""
+msgstr "编程"
 
 #: recordit/templates/front/index.html:27
 msgid "HTML & CSS"
-msgstr ""
+msgstr "HTML 和 CSS"
 
 #: recordit/templates/front/index.html:28
 msgid "Development"
-msgstr ""
+msgstr "开发"
 
-#~ msgid ""
-#~ "Sorry, the page you are looking "
-#~ "for does not exist, have been "
-#~ "removed, name changed or is temporarity"
-#~ " unavailable."
-#~ msgstr ""
-
+#: recordit/templates/user/index.html:14
+msgid "Home"
+msgstr "首页"

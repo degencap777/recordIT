@@ -70,22 +70,22 @@
                                 <div class="main-menu">
                                     <nav class="main-navigation">
                                         <ul>
-                                            {{ render_nav_item('front.index', name='HOME') }}
-                                            {{ render_nav_item('front.about', name='ABOUT') }}
+                                            {{ render_nav_item('front.index', name=_('HOME')) }}
+                                            {{ render_nav_item('front.about', name=_('ABOUT')) }}
                                             {% if current_user.is_authenticated %}
                                                 {% if current_user.is_teacher or current_user.is_admin %}
-                                                    {{ render_nav_item('admin.index', name='DASHBOARD') }}
+                                                    {{ render_nav_item('admin.index', name=_('DASHBOARD')) }}
                                                 {% endif %}
-                                                {{ render_nav_item('user.settings', name='SETTINGS') }}
-                                                {{ render_nav_item('auth.logout', name='LOGOUT', next=request.full_path) }}
+                                                {{ render_nav_item('user.settings', name=_('SETTINGS')) }}
+                                                {{ render_nav_item('auth.logout', name=_('LOGOUT'), next=request.full_path) }}
                                             {% else %}
-                                                {{ render_nav_item('auth.login', name='LOGIN', next=request.full_path) }}
+                                                {{ render_nav_item('auth.login', name=_('LOGIN'), next=request.full_path) }}
                                             {% endif %}
                                             <li class="active">
                                                 <a href="#local">LANGUAGE</a>
                                                 <ul class="sub-menu">
-                                                    <li><a href="#">简体中文</a></li>
-                                                    <li><a href="#">English</a></li>
+                                                    <li><a href="{{ url_for('front.set_locale', locale='zh_Hans_CN') }}">简体中文</a></li>
+                                                    <li><a href="{{ url_for('front.set_locale', locale='en_US') }}">English</a></li>
                                                 </ul>
                                             </li>
                                         </ul>

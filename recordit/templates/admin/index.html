@@ -26,23 +26,23 @@
         <div class="most-popular-courses-area section-pb section-pt-90">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-4 col-md-6 col-12">
+                    <div class="col-lg-6 col-md-6 col-12">
                         <div class="single-popular-courses mt--30">
                             <div class="popular-courses-contnet">
                                 <h5>
                                     <i class="fas fa-chalkboard-teacher"></i>
-                                    Courses
+                                    {{ _('Courses') }}
                                 </h5>
                                 <div class="post_meta">
                                     <ul>
-                                        <li>Total
+                                        <li>{{ _('Total') }}
                                             <span class="badge badge-light">
                                                 {{ course_count|default(0) }}
                                             </span>
                                         </li>
                                     </ul>
                                 </div>
-                                <p>{{ lipsum(1, min=5, max=10) }}</p>
+                                <p>{{ _('Manage Course') }}</p>
                                 <div class="button-block">
                                     <a href="{{ url_for('admin.manage_course') }}" class="botton-border">
                                         {{ _('Manage') }}</a>
@@ -53,7 +53,7 @@
                         </div>
                     </div>
                     {% if current_user.is_admin %}
-                        <div class="col-lg-4 col-md-6 col-12">
+                        <div class="col-lg-6 col-md-6 col-12">
                             <div class="single-popular-courses mt--30">
                                 <div class="popular-courses-contnet">
                                     <h5>
@@ -63,27 +63,27 @@
                                         <ul>
                                             <li>
                                                 <a href="{{ url_for('admin.manage_user', filter='all') }}">
-                                                    Total</a>
+                                                    {{ _('Total') }}</a>
                                                 <span class="badge badge-light">{{ user_count|default(0) }}</span>
                                             </li>
                                             <li>
                                                 <a href="{{ url_for('admin.manage_user', filter='student') }}">
-                                                    Students</a>
+                                                    {{ _('Students') }}</a>
                                                 <span class="badge badge-light">{{ student_count|default(0) }}</span>
                                             </li>
                                             <li>
                                                 <a href="{{ url_for('admin.manage_user', filter='teacher') }}">
-                                                    Teachers</a>
+                                                    {{ _('Teachers') }}</a>
                                                 <span class="badge badge-light">{{ teacher_count|default(0) }}</span>
                                             </li>
                                             <li>
                                                 <a href="{{ url_for('admin.manage_user', filter='administrator') }}">
-                                                    Administrators</a>
+                                                    {{ _('Administrators') }}</a>
                                                 <span class="badge badge-light">{{ admin_count|default(0) }}</span>
                                             </li>
                                         </ul>
                                     </div>
-                                    <p>{{ lipsum(1, min=5, max=10) }}</p>
+                                    <p>{{ _('Manage User') }}</p>
                                     <div class="button-block">
                                         <a href="{{ url_for('admin.manage_user', filter='all') }}"
                                            class="botton-border">
@@ -92,13 +92,13 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-6 col-12">
+                        <div class="col-lg-6 col-md-6 col-12">
                             <div class="single-popular-courses mt--30">
                                 <div class="popular-courses-contnet">
                                     <h5>
                                         <i class="far fa-registered"></i>
                                         {{ _('Register') }}</h5>
-                                    <p>{{ lipsum(1, min=5, max=10) }}</p>
+                                    <p>{{ _('User Register') }}</p>
                                     <div class="button-block">
                                         <a href="{{ url_for('admin.register_student') }}" class="botton-border">
                                             {{ _('Student') }}</a>
@@ -110,20 +110,20 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-6 col-12">
+                        <div class="col-lg-6 col-md-6 col-12">
                             <div class="single-popular-courses mt--30">
                                 <div class="popular-courses-contnet">
                                     <h5>
-                                        <i class="fas fa-file-medical-alt"></i>
-                                        Logs</h5>
+                                        <i class="fas fa-file-medical-alt"></i> {{ _('Logs') }}
+                                    </h5>
                                     <div class="post_meta">
                                         <ul>
-                                            <li>Total
+                                            <li>{{ _('Total') }}
                                                 <span class="badge badge-light">{{ log_count|default(0) }}</span>
                                             </li>
                                         </ul>
                                     </div>
-                                    <p>{{ lipsum(1, min=5, max=10) }}</p>
+                                    <p>{{ _('Download Logs') }}</p>
                                     <div class="button-block">
                                         <a class="botton-border" href="{{ url_for('admin.system_log') }}">
                                             {{ _('System logs') }}</a>

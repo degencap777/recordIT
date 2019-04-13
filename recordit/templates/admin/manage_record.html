@@ -4,7 +4,7 @@
 {% from 'macros/pagination.html' import render_pagination %}
 
 
-{% block title %}Manage Course{% endblock %}
+{% block title %}Manage Report{% endblock %}
 
 
 {% block breadcrumb %}
@@ -14,11 +14,12 @@
         <div class="in-breadcrumb">
             <div class="row">
                 <div class="col">
-                    <h3>{{ _('Manage Course') }}</h3>
+                    <h3>{{ _('Manage Report') }}</h3>
                     <ul class="breadcrumb-list">
                         {{ render_breadcrumb_item(endpoint='front.index', name='Home') }}
                         {{ render_breadcrumb_item(endpoint='admin.index', name='Dashboard') }}
-                        <li class="breadcrumb-item active">Manage Course</li>
+                        {{ render_breadcrumb_item(endpoint='admin.manage_course', name='Manage Course') }}
+                        <li class="breadcrumb-item active">Manage Report</li>
                     </ul>
                 </div>
             </div>
@@ -39,37 +40,31 @@
                         <thead>
                             <tr class="text-center">
                                 <th>#</th>
-                                <th>{{ _('Name') }}</th>
-                                <th>{{ _('Teacher') }}</th>
-                                <th>{{ _('Teacher Number') }}</th>
-                                <th>{{ _('Grade') }}</th>
-                                <th>{{ _('Date') }}</th>
-                                <th>{{ _('Active') }}</th>
+                                <th>{{ _('Reviewer Name') }}</th>
+                                <th>{{ _('Reviewer Number') }}</th>
+                                <th>{{ _('Score') }}</th>
+                                <th>{{ _('Time') }}</th>
                                 <th>{{ _('Remark') }}</th>
                                 <th>{{ _('Actions') }}</th>
                             </tr>
                         </thead>
-                        {% for course in pagination.items %}
+                        {% for record in pagination.items %}
                         <tr class="text-center">
                             <td class="text-center">
                                 {% set page = request.args.get('page', 1) %}
-                                {{ pagination.total - (config['MANAGE_COURSE_PER_PAGE'] * (page|int - 1) + loop.index) + 1 }}
+                                {{ pagination.total - (config['MANAGE_REPORT_PER_PAGE'] * (page|int - 1) + loop.index) + 1 }}
                             </td>
-                            <td>{{ course.name }}</td>
-                            <td>{{ course.teacher_name }}</td>
-                            <td>{{ course.teacher_number }}</td>
-                            <td>{{ course.grade }}</td>
-                            <td>{{ course.date }}</td>
-                            <td>{{ course.is_active }}</td>
-                            <td>{{ course.remark|truncate(config['TABLE_MAX_WORDS']) }}</td>
+                            <td>{{ record.reviewer_name }}</td>
+                            <td>{{ record.reviewer_number }}</td>
+                            <td>{{ record.score }}</td>
+                            <td>{{ record.time }}</td>
+                            <td>{{ record.remark|truncate(config['TABLE_MAX_WORDS']) }}</td>
                             <td>
                                 <div class="button-block">
-                                    <a href="{{ url_for('admin.manage_report', course_id=course.id) }}" class="btn">
-                                        {{ _('Manage Report') }}
-                                    </a>
-                                    <a href="{{ url_for('admin.add_report', course_id=course.id) }}" class="btn">
-                                        {{ _('Add Report') }}
-                                    </a>
+                                    <form action="{{ url_for('admin.delete_record', record_id=record.id) }}" method="post">
+                                        {{ form.csrf_token() }}
+                                        {{ form.delete(class="btn") }}
+                                    </form>
                                 </div>
                             </td>
                         </tr>
@@ -78,7 +73,7 @@
                     {{ render_pagination(pagination, align='center') }}
                     {% else %}
                     <div class="tip">
-                        <h5><i class="fas fa-ban"></i> No Courses.</h5>
+                        <h5><i class="fas fa-ban"></i> No Record Tabels.</h5>
                     </div>
                     {% endif %}
                 </div>

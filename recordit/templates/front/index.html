@@ -6,8 +6,8 @@
 {% block content %}
 <div class="hero-slider">
     <div class="hero-slider-active owl-carousel">
-        {{ render_slide(filename='images/slider/background-image-1.jpg', content=_('Just click & submit'), button=_('Sign in Now'), btn_link='auth.login') }}
-        {{ render_slide(filename='images/slider/background-image-2.jpg', content=_('For Class'), button=_('Sign in Now'), btn_link='auth.login') }}
+        {{ render_slide(filename='images/slider/background-image-1.jpg', content=_('Just click & submit'), button=_('Sign in Now'), btn_link='auth.login', next=request.full_path) }}
+        {{ render_slide(filename='images/slider/background-image-2.jpg', content=_('For Class'), button=_('About us'), btn_link='front.about') }}
         {{ render_slide(filename='images/slider/background-image-3.jpg', content=_('For Everyone'), button=_('About us'), btn_link='front.about') }}
     </div>
 </div>

@@ -3,7 +3,7 @@
 {% from 'macros/macros.html' import render_breadcrumb_item %}
 
 
-{% block title %}Register Users{% endblock %}
+{% block title %}Register User{% endblock %}
 
 
 {% block breadcrumb %}
@@ -17,9 +17,8 @@
                     <ul class="breadcrumb-list">
                         {{ render_breadcrumb_item(endpoint='front.index', name='Home') }}
                         {{ render_breadcrumb_item(endpoint='admin.index', name='Dashboard') }}
-                        <li class="breadcrumb-item active">
-                            Register user
-                        </li>
+                        {{ render_breadcrumb_item(endpoint='admin.manage_user', name='Manage User') }}
+                        <li class="breadcrumb-item active">Register user</li>
                     </ul>
                 </div>
             </div>
@@ -30,12 +29,14 @@
 
 
 {% block content %}
-<div class="section-ptb">
+<div class="page-content section-ptb">
     <div class="container">
         <div class="row">
-            <div class="col-lg-12">
-                <div class="courses-details-tab-panel">
-                    {{ render_form(form) }}
+            <div class="col-12">
+                <div class="account-dashboard">
+                    <div class="dashboard-content">
+                        {{ render_form(form) }}
+                    </div>
                 </div>
             </div>
         </div>

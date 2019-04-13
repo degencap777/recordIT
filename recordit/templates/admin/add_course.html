@@ -3,7 +3,7 @@
 {% from 'macros/macros.html' import render_breadcrumb_item %}
 
 
-{% block title %}Edit Profile{% endblock %}
+{% block title %}Add Course{% endblock %}
 
 
 {% block breadcrumb %}
@@ -13,12 +13,12 @@
         <div class="in-breadcrumb">
             <div class="row">
                 <div class="col">
-                    <h3>{{ _('Edit Profile') }}</h3>
+                    <h3>{{ _('Add Course') }}</h3>
                     <ul class="breadcrumb-list">
                         {{ render_breadcrumb_item(endpoint='front.index', name='Home') }}
                         {{ render_breadcrumb_item(endpoint='admin.index', name='Dashboard') }}
-                        {{ render_breadcrumb_item(endpoint='admin.manage_user', name='Manage User') }}
-                        <li class="breadcrumb-item active">Edit Profile</li>
+                        {{ render_breadcrumb_item(endpoint='admin.manage_course', name='Manage Course') }}
+                        <li class="breadcrumb-item active">Add Course</li>
                     </ul>
                 </div>
             </div>
@@ -35,7 +35,7 @@
             <div class="col-12">
                 <div class="account-dashboard">
                     <div class="dashboard-content">
-                        <h3>{{ _('Edit Profile') }}</h3>
+                        <h3>{{ _('Add Course') }}</h3>
                         <p>{{ render_form(form) }}</p>
                     </div>
                 </div>

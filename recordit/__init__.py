@@ -50,31 +50,31 @@ def register_logging(app):
             record.remote_addr = request.remote_addr
             return super(RequestFormatter, self).format(record)
 
-    request_formatter = RequestFormatter(
+    formatter = RequestFormatter(
         '[%(asctime)s] - %(name)s - %(remote_addr)s requested %(url)s\n'
         '%(levelname)s in %(module)s: %(message)s'
     )
 
+    file_handler = RotatingFileHandler(
+        app.config['SYSTEM_LOG_PATH'],
+        maxBytes=10 * 1024 * 1024, backupCount=10
+    )
+    file_handler.setFormatter(formatter)
+    file_handler.setLevel(logging.INFO)
+
+    mail_handler = SMTPHandler(
+        mailhost=app.config['MAIL_SERVER'],
+        fromaddr=app.config['MAIL_USERNAME'],
+        toaddrs=app.config['ADMIN_EMAIL'],
+        subject='recordit Application Error',
+        credentials=('apikey', app.config['MAIL_PASSWORD']))
+
+    mail_handler.setLevel(logging.ERROR)
+    mail_handler.setFormatter(formatter)
+
     if not app.debug:
-        file_handler = RotatingFileHandler(
-            os.path.join(basedir, 'logs/recordit.log'),
-            maxBytes=10 * 1024 * 1024, backupCount=10
-        )
-
-        mail_handler = SMTPHandler(
-            mailhost=app.config['MAIL_SERVER'],
-            fromaddr=app.config['MAIL_USERNAME'],
-            toaddrs=app.config['ADMIN_EMAIL'],
-            subject='recordit Application Error',
-            credentials=('apikey', app.config['MAIL_PASSWORD']))
-
-        file_handler.setLevel(logging.INFO)
-        file_handler.setFormatter(request_formatter)
-        app.logger.addHandler(file_handler)
-
-        mail_handler.setLevel(logging.INFO)
-        mail_handler.setFormatter(request_formatter)
         app.logger.addHandler(mail_handler)
+        app.logger.addHandler(file_handler)
 
 
 def register_extensions(app):
@@ -87,8 +87,8 @@ def register_extensions(app):
     ckeditor.init_app(app)
     moment.init_app(app)
     # toolbar.init_app(app)
-    # scheduler.init_app(app)
-    # scheduler.start()
+    scheduler.init_app(app)
+    scheduler.start()
 
 
 def register_blueprints(app):
@@ -192,7 +192,7 @@ def register_commands(app):
 
     @app.cli.command()
     @click.option('--teacher', default=1, help='Quantity of teachers, default is 1.')
-    @click.option('--student', default=50, help='Quantity of students, default is 50.')
+    @click.option('--student', default=30, help='Quantity of students, default is 30.')
     @click.option('--course', default=3, help='Quantity of courses, default is 3.')
     @click.option('--report', default=3, help='Quantity of reports, default is 3.')
     @click.option('--record', default=10, help='Quantity of records, default is 10.')

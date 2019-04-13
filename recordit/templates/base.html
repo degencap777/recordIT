@@ -78,9 +78,9 @@
                                                 {{ render_nav_item('admin.index', name='DASHBOARD') }}
                                                 {% endif %}
                                                 {{ render_nav_item('user.settings', name='SETTINGS') }}
-                                                {{ render_nav_item('auth.logout', name='LOGOUT') }}
+                                                {{ render_nav_item('auth.logout', name='LOGOUT', next=request.full_path) }}
                                                 {% else %}
-                                                {{ render_nav_item('auth.login', name='LOGIN') }}
+                                                {{ render_nav_item('auth.login', name='LOGIN', next=request.full_path) }}
                                                 {% endif %}
                                                 <li class="active">
                                                     <a href="#local">LANGUAGE</a>

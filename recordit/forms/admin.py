@@ -158,3 +158,61 @@ class ChangePasswordForm(FlaskForm):
 
 class DeleteUserForm(FlaskForm):
     delete = SubmitField(_l('Delete'))
+
+
+class AddCourseForm(FlaskForm):
+    name = StringField(
+        _l('Name'),
+        validators=[InputRequired(), DataRequired(), Length(1, 30)]
+    )
+    teacher = StringField(
+        _l('Teacher Number'),
+        validators=[InputRequired(), DataRequired(), Length(4, 12)]
+    )
+    grade = StringField(
+        _l('Student Grade'),
+        validators=[InputRequired(), DataRequired(), Length(4)]
+    )
+
+    remark = CKEditorField(_l('Remark'), validators=[Optional()])
+    submit = SubmitField(_l('Add'))
+
+    def validate_teacher(self, field):
+        user = User.query.filter_by(number=field.data).first()
+        if user is None:
+            raise ValidationError('The user is not existed.')
+        elif user.role.name != 'Teacher':
+            raise ValidationError('The user is not Teacher.')
+
+    def validate_grade(self, field):
+        grades = User.all_grade()
+        if field.data not in grades:
+            raise ValidationError('The grade is not existed.')
+
+
+class DeleteReportForm(FlaskForm):
+    delete = SubmitField(_l('Delete'))
+
+
+class AddReportForm(FlaskForm):
+    name = StringField(
+        _l('Report Name'),
+        validators=[DataRequired(), InputRequired(), Length(1, 30)]
+    )
+    reporter = StringField(
+        _l('Reporter Number'),
+        validators=[InputRequired(), DataRequired(), Length(1, 12)]
+    )
+    remark = CKEditorField(_l('Remark'), validators=[Optional()])
+    submit = SubmitField(_l('Add'))
+
+    def validate_reporter(self, field):
+        user = User.query.filter_by(number=field.data).first()
+        if user is None:
+            raise ValidationError('The reporter is not existed.')
+        elif user.role.name != 'Student':
+            raise ValidationError('The reporter is not Student.')
+
+
+class DeleteRecordForm(FlaskForm):
+    delete = SubmitField(_l('Delete'))

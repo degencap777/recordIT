@@ -8,10 +8,11 @@ except ImportError:
 
 import os
 
-from flask import (Markup, abort, current_app, flash, redirect,
-                   render_template_string, request, url_for)
-from flask_babel import _
+from flask import abort, redirect, request, url_for
 from flask_login import current_user
+
+from recordit.extensions import db, scheduler
+from recordit.models import Log
 
 
 def is_safe_url(target):
@@ -39,3 +40,31 @@ def log_user(content):
 
     db.session.add(log)
     db.session.commit()
+
+
+def packitup(input_path, output_path):
+    from zipfile import ZipFile
+
+    with ZipFile(output_path, 'w') as z:
+        if os.path.isdir(input_path):
+            for root, _, files in os.walk(input_path):
+                for file in files:
+                    if file == '.gitkeep':
+                        continue
+                    z.write(os.path.join(root, file), file)
+
+        elif os.path.isfile(input_path):
+            z.write(input_path, os.path.split(input_path)[1])
+        else:
+            abort(404)
+
+
+@scheduler.task('interval', id='clear_cache', weeks=1)
+def clear_cache():
+    with scheduler.app.app_context():
+        for root, _, files in os.walk(current_app.config['FILE_CACHE_PATH']):
+            for file in files:
+                if file == '.gitkeep':
+                    continue
+                path = os.path.join(root, file)
+                os.remove(path)

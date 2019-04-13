@@ -23,17 +23,17 @@ wait for adding.
 -   [x] error page
 -   [ ] user page
 -   [x] settings page
--   [ ] management page
+-   [x] management page
 
 ### Backstage
 
 -   [x] database
--   [ ] personnel management
--   [ ] report management
--   [ ] auto record
+-   [x] personnel management
+-   [x] report management
+-   [x] auto record
 -   [x] login
 -   [ ] upload
--   [ ] log
+-   [x] log
 -   [x] settings
 
 ### Other

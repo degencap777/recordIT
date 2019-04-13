@@ -5,7 +5,7 @@
 {% endmacro %}
 
 
-{% macro render_slide(filename, content, button, btn_link, alt='slide image', title='Record it') %}
+{% macro render_slide(filename, content, button, btn_link, alt='slide image', title='Record it', next=None) %}
 <div class="singleSlide" data-black-overlay="3">
     <div class="itemBg">
         <img src="{{ url_for('static', filename=filename) }}" alt="{{ alt }}" />
@@ -17,7 +17,11 @@
                     <div class="slider-text-info">
                         <h1><span>{{ title }}</span></h1>
                         <h1>{{ content }}</h1>
+                        {% if next %}
+                        <a href="{{ url_for(btn_link, next=next) }}" class="btn slider-btn uppercase">
+                        {% else %}
                         <a href="{{ url_for(btn_link) }}" class="btn slider-btn uppercase">
+                        {% endif %}
                             <span>{{ button }}</span>
                         </a>
                     </div>
@@ -55,11 +59,14 @@
 {% endmacro %}
 
 
-{% macro render_nav_item(endpoint, name, disabled=False) %}
+{% macro render_nav_item(endpoint, name, disabled=False, next=None) %}
 {% set req = request.endpoint %}
 <li class="nav-item">
-    <a href="{{ url_for(endpoint) }}"
-        class="nav-link {% if req and req == endpoint %}active{% endif %} {% if disabled %}disabled{% endif %}">
+    {% if next %}
+    <a href="{{ url_for(endpoint, next=next) }}" class="nav-link {% if req and req == endpoint %}active{% endif %} {% if disabled %}disabled{% endif %}">
+    {% else  %}
+    <a href="{{ url_for(endpoint) }}" class="nav-link {% if req and req == endpoint %}active{% endif %} {% if disabled %}disabled{% endif %}">
+    {% endif %}
         {{ name }}
     </a>
 </li>

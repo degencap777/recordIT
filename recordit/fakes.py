@@ -65,7 +65,8 @@ def fake_course(count=1):
             role_id=role.id).order_by(func.random()).first()
         course = Course(
             teacher_id=user.id,
-            name=fake.name(),
+            name=fake.text(max_nb_chars=10),
+            grade=2016,
             remark=fake.text()
         )
         db.session.add(course)
@@ -85,7 +86,7 @@ def fake_report(count=3):
         report = Report(
             course_id=course.id,
             reporter_id=user.id,
-            name=fake.name(),
+            name=fake.text(max_nb_chars=10),
             remark=fake.text()
         )
 

@@ -110,6 +110,13 @@ class User(db.Model, UserMixin):
         if self.is_student:
             return self.number[:4]
 
+    @classmethod
+    def all_grade(self):
+        role = Role.query.filter_by(name='Student').first()
+        studetns = User.query.filter_by(role_id=role.id).all()
+        studetn_grades = [user.grade for user in studetns]
+        return set(studetn_grades)
+
     def can(self, permission_name):
         permission = Permission.query.filter_by(name=permission_name).first()
         return permission is not None and self.role is not None and permission in self.role.permissions
@@ -121,7 +128,8 @@ class User(db.Model, UserMixin):
 class Course(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     teacher_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    name = db.Column(db.String, nullable=False)
+    name = db.Column(db.String(30), nullable=False)
+    grade = db.Column(db.Integer, nullable=False)
 
     active = db.Column(db.Boolean, default=True)
     date = db.Column(db.Date, index=True, default=datetime.date.today)
@@ -131,22 +139,53 @@ class Course(db.Model):
     def is_active(self):
         return self.active
 
+    @property
+    def teacher_name(self):
+        return User.query.get(self.teacher_id).name
+
+    @property
+    def teacher_number(self):
+        return User.query.get(self.teacher_id).number
+
 
 class Report(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     course_id = db.Column(db.Integer, db.ForeignKey('course.id'))
     reporter_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    name = db.Column(db.String, nullable=False)
+    name = db.Column(db.String(30), nullable=False)
     score = db.Column(db.Integer)
 
     active = db.Column(db.Boolean, default=True)
-
     date = db.Column(db.Date, index=True, default=datetime.date.today)
     remark = db.Column(db.Text)
 
     @property
+    def grade(self):
+        return Course.query.get(self.course_id).grade
+
+    @property
+    def course_name(self):
+        return Course.query.get(self.course_id).name
+
+    @property
     def is_active(self):
-        return Course.query.get(course_id).is_active() and self.active
+        return Course.query.get(self.course_id).is_active and self.active
+
+    @property
+    def reporter_name(self):
+        return User.query.get(self.reporter_id).name
+
+    @property
+    def reporter_number(self):
+        return User.query.get(self.reporter_id).number
+
+    @property
+    def teacher_name(self):
+        return Course.query.get(self.course_id).teacher_name
+
+    @property
+    def teacher_number(self):
+        return Course.query.get(self.course_id).teacher_number
 
 
 class RecordTable(db.Model):
@@ -160,7 +199,19 @@ class RecordTable(db.Model):
 
     @property
     def is_active(self):
-        return Report.query.get(report_id).is_active()
+        return Report.query.get(self.report_id).is_active
+
+    @property
+    def report_name(self):
+        return Report.query.get(self.report_id).name
+
+    @property
+    def reviewer_name(self):
+        return User.query.get(self.user_id).name
+
+    @property
+    def reviewer_number(self):
+        return User.query.get(self.user_id).number
 
 
 class Log(db.Model):
@@ -169,4 +220,4 @@ class Log(db.Model):
 
     ip = db.Column(db.String(128))
     time = db.Column(db.DateTime, index=True, default=datetime.datetime.utcnow)
-    content = db.Column(db.String)
+    content = db.Column(db.String(50))

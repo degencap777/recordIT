@@ -4,7 +4,7 @@
 {% from 'macros/pagination.html' import render_pagination %}
 
 
-{% block title %}Manage Users{% endblock %}
+{% block title %}Manage User{% endblock %}
 
 
 {% block breadcrumb %}
@@ -13,14 +13,12 @@
     <div class="container">
         <div class="in-breadcrumb">
             <div class="row">
-                <div class="col">
+                <div class="col-12">
                     <h3>{{ _('Manage Users') }}</h3>
                     <ul class="breadcrumb-list">
                         {{ render_breadcrumb_item(endpoint='front.index', name='Home') }}
                         {{ render_breadcrumb_item(endpoint='admin.index', name='Dashboard') }}
-                        <li class="breadcrumb-item active">
-                            Manage Users
-                        </li>
+                        <li class="breadcrumb-item active">Manage User</li>
                     </ul>
                 </div>
             </div>
@@ -52,7 +50,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-lg-12">
+            <div class="col-12">
                 <div class="courses-details-tab-panel">
                     <div class="tab-content">
                         <div class="tab-pane active">
@@ -72,13 +70,14 @@
                                                 </tr>
                                             </thead>
                                             {% for user in pagination.items %}
-                                            <tr>
-                                                <td class="text-center">
-                                                    {{ pagination.total - (config['MANAGE_USER_PER_PAGE'] * (page - 1) + loop.index) + 1 }}
+                                            <tr class="text-center">
+                                                <td>
+                                                    {% set page = request.args.get('page', 1) %}
+                                                    {{ pagination.total - (config['MANAGE_USER_PER_PAGE'] * (page|int - 1) + loop.index) + 1 }}
                                                 </td>
-                                                <td class="text-center">{{ user.number }}</td>
-                                                <td class="text-center">{{ user.name }}</td>
-                                                <td class="text-center">
+                                                <td>{{ user.number }}</td>
+                                                <td>{{ user.name }}</td>
+                                                <td>
                                                     {% if user.role.name == 'Teacher' %}
                                                     <span
                                                         class="badge badge-pill badge-warning">{{ user.role.name }}</span>
@@ -90,8 +89,8 @@
                                                         class="badge badge-pill badge-light">{{ user.role.name }}</span>
                                                     {% endif %}
                                                 </td>
-                                                <td>{{ user.remark }}</td>
-                                                <td class="text-center">
+                                                <td>{{ user.remark|truncate(config['TABLE_MAX_WORDS']) }}</td>
+                                                <td>
                                                     <div class="button-block">
                                                         <a href="{{ url_for('admin.edit_profile', user_id=user.id) }}"
                                                             class="btn">
@@ -102,8 +101,8 @@
                                                             {{ _('Password') }}
                                                         </a>
                                                         <form action="{{ url_for('admin.delete_user', user_id=user.id) }}" method="post">
-                                                            {{ delForm.csrf_token() }}
-                                                            {{ delForm.delete(class="btn") }}
+                                                            {{ form.csrf_token() }}
+                                                            {{ form.delete(class="btn") }}
                                                         </form>
                                                     </div>
                                                 </td>

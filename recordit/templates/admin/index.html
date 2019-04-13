@@ -15,9 +15,7 @@
                     <h3>Dashboard</h3>
                     <ul class="breadcrumb-list">
                         {{ render_breadcrumb_item(endpoint='front.index', name='Home') }}
-                        <li class="breadcrumb-item active">
-                            Dashboard
-                        </li>
+                        <li class="breadcrumb-item active">Dashboard</li>
                     </ul>
                 </div>
             </div>
@@ -48,7 +46,8 @@
                             </div>
                             <p>{{ lipsum(1, min=5, max=10) }}</p>
                             <div class="button-block">
-                                <a href="{{ url_for('admin.manage_course') }}" class="botton-border">{{ _('Manage') }}</a>
+                                <a href="{{ url_for('admin.manage_course') }}"
+                                    class="botton-border">{{ _('Manage') }}</a>
                                 <a href="{{ url_for('admin.add_course') }}" class="botton-border">{{ _('Add') }}</a>
                             </div>
                         </div>
@@ -136,8 +135,10 @@
                             </div>
                             <p>{{ lipsum(1, min=5, max=10) }}</p>
                             <div class="button-block">
-                                <a class="botton-border" href="#">{{ _('System logs') }}</a>
-                                <a class="botton-border" href="#">{{ _('User logs') }}</a>
+                                <a class="botton-border" href="{{ url_for('admin.system_log') }}">
+                                    {{ _('System logs') }}</a>
+                                <a class="botton-border" href="{{ url_for('admin.user_log') }}">
+                                    {{ _('User logs') }}</a>
                             </div>
                         </div>
                     </div>

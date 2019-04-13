@@ -49,6 +49,13 @@ class BaseConfig(object):
     CACHE_TYPE = 'simple'
 
     MANAGE_USER_PER_PAGE = 30
+    MANAGE_COURSE_PER_PAGE = 5
+    MANAGE_REPORT_PER_PAGE = 30
+    MANAGE_RECORD_TABLE_PER_PAGE = 30
+    TABLE_MAX_WORDS = 10
+
+    FILE_CACHE_PATH = os.path.join(basedir, 'cache')
+    SYSTEM_LOG_PATH = os.path.join(basedir, 'logs/recordit.log')
 
 
 class DevelopmentConfig(BaseConfig):

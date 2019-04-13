@@ -7,7 +7,7 @@ from flask_login import current_user, fresh_login_required, login_required
 from recordit.extensions import db
 from recordit.forms.user import (ChangePasswordForm, EditAdministratorForm,
                                  EditStudenteForm, EditTeacherForm)
-from recordit.utils import redirect_back
+from recordit.utils import redirect_back, log_user
 
 user_bp = Blueprint('user', __name__)
 
@@ -19,7 +19,7 @@ def login_protect():
 
 @user_bp.route('/')
 def index():
-    flash(_("Welcome %(name)s", name=current_user.name), 'info')
+    flash(_("Welcome~ %(name)s", name=current_user.name), 'info')
     return render_template('user/index.html')
 
 
@@ -38,6 +38,9 @@ def edit_profile():
         form = EditStudenteForm()
 
     if form.validate_on_submit():
+        log_user(
+            content=render_template('logs/user/settings/edit_profile.html'))
+
         current_user.remark = form.remark.data
         db.session.commit()
 
@@ -55,6 +58,9 @@ def edit_profile():
 def change_password():
     form = ChangePasswordForm()
     if form.validate_on_submit():
+        log_user(
+            content=render_template('logs/user/settings/change_password.html'))
+
         current_user.set_password(form.password.data)
         db.session.commit()
 

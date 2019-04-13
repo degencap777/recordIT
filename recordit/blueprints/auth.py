@@ -22,8 +22,9 @@ def login():
         user = User.query.filter_by(number=form.username.data).first()
         if user is not None and user.validate_password(form.password.data):
             if login_user(user, form.remember_me.data):
-                flash(_('Login success.'), 'info')
+                log_user(content=render_template('logs/auth/login.html'))
 
+                flash(_('Login success.'), 'info')
                 return redirect(url_for('user.index'))
 
         flash(_('Invalid email or password.'), 'warning')
@@ -34,6 +35,8 @@ def login():
 @auth_bp.route('/logout')
 @login_required
 def logout():
+    log_user(content=render_template('logs/auth/logout.html'))
+
     logout_user()
     flash(_('Logout success.'), 'info')
 

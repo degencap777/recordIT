@@ -1,31 +1,63 @@
-{% extends 'base.html' %}
+{% extends 'user/base.html' %}
 {% from 'macros/macros.html' import render_breadcrumb_item %}
 
 
 {% block title %}Home{% endblock %}
 
 
-{% block breadcrumb %}
-    <div class="breadcrumb-area" data-bgimage="{{ url_for('static', filename='images/bg/breadcrumb-bg.jpg') }}"
-         data-black-overlay="4">
+{% block breadcrumb_title %}
+    <h3>{{ _('Home') }}</h3>
+{% endblock breadcrumb_title %}
+
+
+{% block content %}
+    <div class="page-content section-ptb">
         <div class="container">
-            <div class="in-breadcrumb">
-                <div class="row">
-                    <div class="col">
-                        <h3>{{ _('Home') }}</h3>
-                        <ul class="breadcrumb-list">
-                            {{ render_breadcrumb_item(endpoint='front.index', name='Home') }}
-                        </ul>
+            <div class="row">
+                <div class="col-12">
+                    <div class="blog-top-bar">
+                        <div class="toolbar-amount">
+                        <span>
+                            {{ _('Reports') }}: <strong>{{ report_count|default(0) }}</strong>
+                        </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="blog-wrapper">
+                        <div class="tab-content">
+                            <div class="tab-pane active">
+                                <div class="row">
+                                    <div class="col-lg-6  col-md-6 col-12">
+                                        <div class="single-our-blog mt--30">
+                                            <div class="our-blog-contnet">
+                                                <h5><a href="blog-details.html">Fugiat nulla Pariatur All.</a></h5>
+                                                <div class="post_meta">
+                                                    <ul>
+                                                        <li>
+                                                            <p>By: <a href="#">Sekh Rana</a></p>
+                                                        </li>
+                                                        <li>
+                                                            <p>15 Fab 2018</p>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <p>Contrary to popular belief, Lor isnotimply random text. Duis aute
+                                                    irure
+                                                    d rehenderit in voluptate velit esse..</p>
+                                                <div class="button-block">
+                                                    <a href="#" class="botton-border">Read more</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-{% endblock breadcrumb %}
-
-
-{% block content %}
-    <div class="tip text-center">
-        {{ lipsum(1) }}
     </div>
 {% endblock content %}

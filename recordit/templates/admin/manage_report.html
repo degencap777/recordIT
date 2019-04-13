@@ -1,4 +1,4 @@
-{% extends 'admin/ase.html' %}
+{% extends 'admin/base.html' %}
 {% from 'bootstrap/form.html' import render_form %}
 {% from 'macros/macros.html' import render_breadcrumb_item %}
 {% from 'macros/pagination.html' import render_pagination %}
@@ -13,7 +13,7 @@
 
 
 {% block breadcrumb_item_list %}
-    {{ render_breadcrumb_item(endpoint='admin.index', name='Dashboard') }}
+    {{ super() }}
     {{ render_breadcrumb_item(endpoint='admin.manage_course', name='Manage Course') }}
     <li class="breadcrumb-item active">Manage Report</li>
 {% endblock breadcrumb_item_list %}

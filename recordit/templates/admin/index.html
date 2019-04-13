@@ -11,14 +11,8 @@
 
 
 {% block breadcrumb_item_list %}
-    <li class="breadcrumb-item active">Dashboard</li>
+    {{ super() }}
 {% endblock breadcrumb_item_list %}
-
-
-{% block dashboard_content %}
-    <h3>{{ _('Edit Profile') }}</h3>
-    <p>{{ render_form(form) }}</p>
-{% endblock dashboard_content %}
 
 
 {% block content %}

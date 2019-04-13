@@ -1310,7 +1310,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   display: inline-block;
 }
 .breadcrumb-list .breadcrumb-item.active {
-  color: #000000;
+  color: #ff5951;
 }
 .breadcrumb-list .breadcrumb-item a:hover {
   color: #ff5951;

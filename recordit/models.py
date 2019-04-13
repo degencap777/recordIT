@@ -33,9 +33,9 @@ class Role(db.Model):
     @staticmethod
     def init_role():
         roles_permissions_map = {
-            'Student': ['RECORD', 'UPLOAD'],
-            'Teacher': ['RECORD', 'UPLOAD', 'MODERATOR_COURSE', 'MODERATOR_REPORT', 'MODERATOR_RECORD_TABLE'],
-            'Administrator': ['RECORD', 'UPLOAD', 'MODERATOR_COURSE', 'MODERATOR_REPORT', 'MODERATOR_RECORD_TABLE', 'MODERATOR_LOG', 'ADMINISTER']
+            'Student': ['RECORD'],
+            'Teacher': ['RECORD', 'MODERATOR_COURSE', 'MODERATOR_REPORT', 'MODERATOR_RECORD_TABLE'],
+            'Administrator': ['RECORD', 'MODERATOR_COURSE', 'MODERATOR_REPORT', 'MODERATOR_RECORD_TABLE', 'MODERATOR_LOG', 'ADMINISTER']
         }
 
         for role_name in roles_permissions_map:
@@ -196,6 +196,10 @@ class RecordTable(db.Model):
 
     time = db.Column(db.DateTime, index=True, default=datetime.datetime.utcnow)
     remark = db.Column(db.Text)
+
+    @property
+    def course_id(self):
+        return Report.query.get(self.report_id).course_id
 
     @property
     def is_active(self):

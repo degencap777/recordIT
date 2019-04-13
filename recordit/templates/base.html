@@ -8,6 +8,7 @@
 {% from 'macros/macros.html' import render_link %}
 {% from 'macros/macros.html' import render_nav_item %}
 {% from 'macros/macros.html' import render_toast %}
+{% from 'macros/macros.html' import render_breadcrumb_item %}
 <!DOCTYPE html>
 <html lang="zh">
 
@@ -84,8 +85,11 @@
                                             <li class="active">
                                                 <a href="#local">LANGUAGE</a>
                                                 <ul class="sub-menu">
-                                                    <li><a href="{{ url_for('front.set_locale', locale='zh_Hans_CN') }}">简体中文</a></li>
-                                                    <li><a href="{{ url_for('front.set_locale', locale='en_US') }}">English</a></li>
+                                                    <li>
+                                                        <a href="{{ url_for('front.set_locale', locale='zh_Hans_CN') }}">简体中文</a>
+                                                    </li>
+                                                    <li><a href="{{ url_for('front.set_locale', locale='en_US') }}">English</a>
+                                                    </li>
                                                 </ul>
                                             </li>
                                         </ul>
@@ -106,7 +110,27 @@
 
 <main class="main-wrapper">
     {% block breadcrumb %}
+        <div class="breadcrumb-area" data-bgimage="{{ url_for('static', filename='images/bg/breadcrumb-bg.jpg') }}"
+             data-black-overlay="4">
+            <div class="container">
+                <div class="in-breadcrumb">
+                    <div class="row">
+                        <div class="col">
+                            {% block breadcrumb_title %}
+                                <h3>{{ _('Home') }}</h3>
+                            {% endblock breadcrumb_title %}
+                            <ul class="breadcrumb-list">
+                                {% block breadcrumb_item_list %}
+                                    {{ render_breadcrumb_item(endpoint='front.index', name='Home') }}
+                                {% endblock breadcrumb_item_list %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     {% endblock breadcrumb %}
+
 
     <div aria-live="polite" class="d-flex justify-content-center align-items-center">
         <div class="toast-style">
@@ -120,6 +144,79 @@
     {% endblock content %}
 
     <footer class="footer-area">
+        <div class="footer-top section-pb section-pt-60">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 mt--60">
+                        <div class="footer-single-block">
+                            <div class="footer-logo">
+                                <a href="{{ url_for('front.index') }}">
+                                    <img src="{{ url_for('static', filename='logo-white.png') }}" alt="Record it"></a>
+                            </div>
+                            <p class="footer-dec">
+                                Gravida pharetra netus quis eros dolor.
+                            </p>
+                            <ul class="footer-social-link">
+                                <li><a href="#"><i class="zmdi zmdi-facebook"></i></a></li>
+                                <li><a href="#"><i class="zmdi zmdi-rss"></i></a></li>
+                                <li><a href="#"><i class="zmdi zmdi-instagram"></i></a></li>
+                                <li><a href="#"><i class="zmdi zmdi-pinterest"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-6  mt--60">
+                        <div class="footer-block">
+                            <h5>Quick Links</h5>
+                            <ul class="footer-list">
+                                <li><a href="#">Privacy Statement</a></li>
+                                <li><a href="#">Teaching Staff</a></li>
+                                <li><a href="#">Report Copyright</a></li>
+                                <li><a href="#">Community</a></li>
+                                <li><a href="#">Schedule</a></li>
+                                <li><a href="#">Discount Program</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 mt--60">
+                        <div class="footer-block">
+                            <h5>Popular Courses</h5>
+                            <ul class="footer-courses">
+                                <li>
+                                    <div class="courses-nifo">
+                                        <h5><a href="#">Department of
+                                            Science.</a></h5>
+                                        <p>Duration : 4 Yr</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="courses-nifo">
+                                        <h5><a href="#">Combined With
+                                            a Handfull</a></h5>
+                                        <p>Duration : 2 Yr</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 mt--60">
+                        <div class="footer-block">
+                            <h5>NEWSLETTER</h5>
+                            <div class="newsletter-wrap">
+                                <p>Enter your email and we'll send you more information of.</p>
+                                <div class="newsletter-input-box">
+                                    <form action="#">
+                                        <label>
+                                            <input type="text" placeholder="Your email address">
+                                        </label>
+                                        <button class="newsletter-button"><i class="zmdi zmdi-mail-send"></i></button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="footer-bottom">
             <div class="container">
                 <div class="row">

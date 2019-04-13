@@ -6,26 +6,15 @@
 {% block title %}Login{% endblock %}
 
 
-{% block breadcrumb %}
-    <div class="breadcrumb-area" data-bgimage="{{ url_for('static', filename='images/bg/breadcrumb-bg.jpg') }}"
-         data-black-overlay="4">
-        <div class="container">
-            <div class="in-breadcrumb">
-                <div class="row">
-                    <div class="col">
-                        <h3>{{ _('Login') }}</h3>
-                        <ul class="breadcrumb-list">
-                            {{ render_breadcrumb_item(endpoint='front.index', name='Home') }}
-                            <li class="breadcrumb-item active">
-                                Login
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-{% endblock breadcrumb %}
+{% block breadcrumb_title %}
+    <h3>{{ _('Login') }}</h3>
+{% endblock breadcrumb_title %}
+
+
+{% block breadcrumb_item_list %}
+    {{ super() }}
+    {{ render_breadcrumb_item(endpoint='auth.login', name='Login') }}
+{% endblock breadcrumb_item_list %}
 
 
 {% block content %}
@@ -35,6 +24,11 @@
                 <div class="row">
                     <div class="col-lg-7 col-md-12 ml-auto mr-auto">
                         <div class="login-register-wrapper">
+                            <div class="login-register-tab-list nav">
+                                <a class="active">
+                                    <h4>{{ _('Login') }}</h4>
+                                </a>
+                            </div>
                             <div class="login-form-container">
                                 <div class="login-register-form">
                                     {{ render_form(form) }}

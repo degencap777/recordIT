@@ -13,9 +13,10 @@
 
 
 {% block breadcrumb_item_list %}
-    {{ render_breadcrumb_item(endpoint='admin.index', name='Dashboard') }}
+    {{ super() }}
     {{ render_breadcrumb_item(endpoint='admin.manage_course', name='Manage Course') }}
-    <li class="breadcrumb-item active">Manage Report</li>
+    <li class="breadcrumb-item">Manage Report</li>
+    <li class="breadcrumb-item active">Manage Record</li>
 {% endblock breadcrumb_item_list %}
 
 

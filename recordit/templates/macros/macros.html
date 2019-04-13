@@ -1,7 +1,7 @@
 {% macro render_link(link_name, link_url, link_title, is_newpage=False) %}
     <a href="{{ link_url }}" title="{{ link_title }}" {% if is_newpage %}target="_blank" {% endif %}
        data-toggle="tooltip">
-        {{ link_name }}
+        <span>{{ link_name }}</span>
     </a>
 {% endmacro %}
 
@@ -86,11 +86,27 @@
 {% endmacro %}
 
 
-{% macro render_breadcrumb_item(endpoint, name) %}
+{% macro _arg_url_for(endpoint, base) %}
+    {% with kargs = base.copy() %}
+        {% do kargs.update(kwargs) %}
+        {{ url_for(endpoint, **kargs) }}
+    {% endwith %}
+{% endmacro %}
+
+
+
+{% macro render_breadcrumb_item(endpoint, name, args={}) %}
     {% set req = request.endpoint %}
-    <li class="breadcrumb-item {% if req and req == endpoint %}active{% endif %}">
-        <a href="{{ url_for(endpoint) }}">{{ name }}</a>
-    </li>
+    {% with url_args = {} %}
+        {% do url_args.update(request.view_args if not endpoint else {}),
+              url_args.update(request.args if not endpoint else {}),
+              url_args.update(args) %}
+        {% with endpoint = endpoint or request.endpoint %}
+            <li class="breadcrumb-item {% if req and req == endpoint %}active{% endif %}">
+                <a href="{{ _arg_url_for(endpoint, url_args) }}">{{ name }}</a>
+            </li>
+        {% endwith %}
+    {% endwith %}
 {% endmacro %}
 
 

@@ -3,6 +3,11 @@
 {% from 'macros/macros.html' import render_cours %}
 
 
+{% block breadcrumb %}
+{% endblock breadcrumb %}
+
+
+
 {% block content %}
     <div class="hero-slider">
         <div class="hero-slider-active owl-carousel">
@@ -11,7 +16,6 @@
             {{ render_slide(filename='images/slider/background-image-3.jpg', content=_('For Everyone'), button=_('About us'), btn_link='front.about') }}
         </div>
     </div>
-
     <div class="our-course-categories-area section-ptb">
         <div class="container">
             <div class="row">

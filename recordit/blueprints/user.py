@@ -12,6 +12,7 @@ from recordit.utils import redirect_back, log_user
 user_bp = Blueprint('user', __name__)
 
 
+@user_bp.before_request
 @login_required
 def login_protect():
     pass

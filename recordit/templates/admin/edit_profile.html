@@ -12,7 +12,7 @@
 
 
 {% block breadcrumb_item_list %}
-    {{ render_breadcrumb_item(endpoint='admin.index', name='Dashboard') }}
+    {{ super() }}
     {{ render_breadcrumb_item(endpoint='admin.manage_user', name='Manage User') }}
     <li class="breadcrumb-item active">Edit Profile</li>
 {% endblock breadcrumb_item_list %}

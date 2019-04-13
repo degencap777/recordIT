@@ -1,25 +1,10 @@
 {% extends 'base.html' %}
 
-{% block breadcrumb %}
-    <div class="breadcrumb-area" data-bgimage="{{ url_for('static', filename='images/bg/breadcrumb-bg.jpg') }}"
-         data-black-overlay="4">
-        <div class="container">
-            <div class="in-breadcrumb">
-                <div class="row">
-                    <div class="col">
-                        {% block breadcrumb_title %}
-                        {% endblock breadcrumb_title %}
-                        <ul class="breadcrumb-list">
-                            {{ render_breadcrumb_item(endpoint='front.index', name='Home') }}
-                            {% block breadcrumb_item_list %}
-                            {% endblock breadcrumb_item_list %}
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-{% endblock breadcrumb %}
+
+{% block breadcrumb_item_list %}
+    {{ super() }}
+    {{ render_breadcrumb_item(endpoint='admin.index', name='Dashboard') }}
+{% endblock breadcrumb_item_list %}
 
 
 {% block content %}

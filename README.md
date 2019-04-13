@@ -21,7 +21,7 @@ wait for adding.
 -   [x] about page
 -   [x] login page
 -   [x] error page
--   [ ] user page
+-   [x] user page
 -   [x] settings page
 -   [x] management page
 

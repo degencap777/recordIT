@@ -13,7 +13,7 @@
             <div class="in-breadcrumb">
                 <div class="row">
                     <div class="col">
-                        <h3>{{ _('About Us') }}</h3>
+                        <h3>About Us</h3>
                         <ul class="breadcrumb-list">
                             {{ render_breadcrumb_item(endpoint='front.index', name='Home') }}
                             <li class="breadcrumb-item active">About Us</li>
@@ -61,10 +61,12 @@
                 <div class="project-count-inner">
                     <div class="row">
                         <div class="col-lg-10 ml-auto mr-auto">
-                            {{ render_counter('Teachers', teacher_count|defalut(3)) }}
-                            {{ render_counter('Students', student_count|defalut(50)) }}
-                            {{ render_counter('Courses', course_count|defalut(10)) }}
-                            {{ render_counter('Reports', report_count|defalut(100)) }}
+                            <div class="row">
+                                {{ render_counter('Teachers', teacher_count) }}
+                                {{ render_counter('Students', student_count) }}
+                                {{ render_counter('Courses', course_count) }}
+                                {{ render_counter('Reports', report_count) }}
+                            </div>
                         </div>
                     </div>
                 </div>

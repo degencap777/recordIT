@@ -8,33 +8,27 @@
 
 <p align="center"><img src="assets/indexPage.png" alt="IndexPage"></p>
 
+```bash
+$ git clone https://github.com/Zeroto521/recordit.git
+$ cd recordit
+$ pipenv install --dev
+$ pipenv shell
+$ pipenv init
+$ flask forge
+$ flask run
+* Running on http://127.0.0.1:5000/
+```
+
 ## Feature
 
 wait for adding.
 
 ## TODO
 
-### UI
-
--   [x] base page
--   [x] index page
--   [x] about page
--   [x] login page
--   [x] error page
--   [x] user page
--   [x] settings page
--   [x] management page
-
 ### Backstage
 
--   [x] database
--   [x] personnel management
--   [x] report management
--   [x] auto record
--   [x] login
 -   [ ] upload
--   [x] log
--   [x] settings
+-   [ ] role & permission control
 
 ### Other
 

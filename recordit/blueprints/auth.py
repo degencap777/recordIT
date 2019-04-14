@@ -41,3 +41,19 @@ def logout():
     flash(_('Logout success.'), 'info')
 
     return redirect(url_for('front.index'))
+
+
+@auth_bp.route('/re-authenticate', methods=['GET', 'POST'])
+@login_required
+def re_authenticate():
+    if login_fresh():
+        return redirect(url_for('front.index'))
+
+    form = LoginForm()
+    if form.validate_on_submit() and current_user.validate_password(form.password.data):
+        confirm_login()
+        log_user(content=render_template('logs/auth/login.html'))
+
+        return redirect_back()
+
+    return render_template('auth/login.html', form=form)

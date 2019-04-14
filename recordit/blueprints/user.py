@@ -1,14 +1,16 @@
 # -*- coding: utf-8 -*-
 
-from flask import Blueprint, flash, redirect, render_template, url_for, current_app, request
+from flask import (Blueprint, abort, current_app, flash, redirect,
+                   render_template, request, url_for)
 from flask_babel import _
 from flask_login import current_user, fresh_login_required, login_required
 
+from recordit.decorators import permission_required
 from recordit.extensions import db
-from recordit.forms.user import (ChangePasswordForm, EditAdministratorForm, ReviewForm,
-                                 EditStudenteForm, EditTeacherForm)
-from recordit.utils import redirect_back, log_user
-from recordit.models import RecordTable, User, Role, Report, Course
+from recordit.forms.user import (ChangePasswordForm, EditAdministratorForm,
+                                 EditStudenteForm, EditTeacherForm, ReviewForm)
+from recordit.models import Course, RecordTable, Report, User
+from recordit.utils import log_user, redirect_back
 
 user_bp = Blueprint('user', __name__)
 
@@ -22,16 +24,15 @@ def login_protect():
 @user_bp.route('/')
 def index():
     page = request.args.get('page', 1, type=int)
-
     if current_user.is_admin:
         pagination = Report.query.filter_by(active=True).join(Course).filter(Course.active).order_by(
             Report.date).paginate(page, current_app.config['USER_REPORT_PER_PAGE'])
     elif current_user.is_teacher:
         pagination = Report.query.filter_by(active=True).join(Course).filter(
-            Course.grade == current_user.grade, Course.active).order_by(
+            Course.teacher_id == current_user.id, Course.active).order_by(
             Report.date).paginate(page, current_app.config['USER_REPORT_PER_PAGE'])
     else:
-        pagination = Report.query.filter_by(active=True).join(Course).filter(
+        pagination = Report.query.filter(Report.active, Report.speaker_id != current_user.id).join(Course).filter(
             Course.grade == current_user.grade, Course.active).order_by(
             Report.date).paginate(page, current_app.config['USER_REPORT_PER_PAGE'])
 
@@ -40,36 +41,49 @@ def index():
 
 
 @user_bp.route('/review/<int:report_id>', methods=['GET', 'POST'])
+@permission_required('RECORD')
+@fresh_login_required
 def review(report_id):
     form = ReviewForm()
     report = Report.query.get_or_404(report_id)
-    record = report.search_recordtabel(current_user.id)
-    if form.validate_on_submit():
-        upper = current_app.config['RECORD_TABLE_UPPER_LIMIT']
-        lower = current_app.config['RECORD_TABLE_LOWER_LIMIT']
-        if lower <= form.score.data <= upper:
-            if record is None:
-                record = RecordTable(
-                    report_id=report.id,
-                    user_id=current_user.id,
-                    score=form.score.data,
-                    remark=form.remark.data
-                )
-                db.session.add(record)
+    if current_user.is_student and current_user.id == report.speaker_id:
+        abort(403)
+    elif current_user.is_teacher and current_user.id != report.teacher_id:
+        abort(403)
+    else:
+        record = report.search_recordtabel(current_user.id)
+        if form.validate_on_submit():
+            content = render_template(
+                'logs/user/reivew.html', course=report.course_name,
+                number=report.speaker_number, name=report.speaker_name, report=report.name)
+            log_user(content=content)
+
+            upper = current_app.config['RECORD_TABLE_UPPER_LIMIT']
+            lower = current_app.config['RECORD_TABLE_LOWER_LIMIT']
+            if lower <= form.score.data <= upper:
+                if record is None:
+                    record = RecordTable(
+                        report_id=report.id,
+                        user_id=current_user.id,
+                        score=form.score.data,
+                        remark=form.remark.data
+                    )
+                    db.session.add(record)
+                else:
+                    record.score = form.score.data
+                    record.remark = form.remark.data
+
+                db.session.commit()
+                flash(_('Reviewed success.'), 'success')
             else:
-                record.score = form.score.data
-                record.remark = form.remark.data
+                flash(_('The score out of range from %(lower)s to %(upper)s.',
+                        lower=lower, upper=upper), 'error')
 
-            db.session.commit()
-            flash(_('Reviewed success.'), 'success')
-        else:
-            flash(_('The score out of range from %(lower)s to %(upper)s.', lower=lower, upper=upper), 'error')
+            return redirect_back()
 
-        return redirect_back()
-
-    if record is not None:
-        form.score.data = record.score
-        form.remark.data = record.remark
+        if record is not None:
+            form.score.data = record.score
+            form.remark.data = record.remark
 
     return render_template('user/review.html', form=form)
 
@@ -80,6 +94,7 @@ def settings():
 
 
 @user_bp.route('/settings/profile', methods=['GET', 'POST'])
+@fresh_login_required
 def edit_profile():
     if current_user.is_admin:
         form = EditAdministratorForm()
@@ -106,6 +121,7 @@ def edit_profile():
 
 
 @user_bp.route('/settings/change-password', methods=['GET', 'POST'])
+@fresh_login_required
 def change_password():
     form = ChangePasswordForm()
     if form.validate_on_submit():

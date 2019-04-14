@@ -1,21 +1,22 @@
 # -*- coding: utf-8 -*-
 
 import os
-from uuid import uuid4
 
-from flask import (Blueprint, current_app, flash, render_template, request,
-                   send_file)
+from flask import (Blueprint, abort, current_app, flash, render_template,
+                   request, send_file)
 from flask_babel import _
 from flask_login import current_user, fresh_login_required, login_required
 
 from recordit.decorators import permission_required, role_required
 from recordit.extensions import db
-from recordit.forms.admin import (AddCourseForm, AddReportForm,
+from recordit.forms.admin import (AddCourseAdministratorForm,
+                                  AddCourseTeacherForm, AddReportForm,
                                   ChangePasswordForm, DeleteRecordForm,
                                   DeleteReportForm, DeleteUserForm,
                                   EditAdministratorForm, EditStudenteForm,
                                   EditTeacherForm, RegisterAdministratorForm,
-                                  RegisterStudentForm, RegisterTeacherForm)
+                                  RegisterStudentForm, RegisterTeacherForm,
+                                  SwitchStateForm)
 from recordit.models import Course, Log, RecordTable, Report, Role, User
 from recordit.utils import log_user, packitup, redirect_back
 
@@ -32,7 +33,7 @@ def login_protect():
 
 @admin_bp.route('/')
 def index():
-    log = log_user(content=render_template('logs/admin/index.html'))
+    log_user(content=render_template('logs/admin/index.html'))
 
     user_count = User.query.count()
     role_administrator = Role.query.filter_by(name='Administrator').first()
@@ -41,19 +42,23 @@ def index():
     teacher_count = User.query.filter_by(role_id=role_teacher.id).count()
     role_student = Role.query.filter_by(name='Student').first()
     student_count = User.query.filter_by(role_id=role_student.id).count()
-
-    course_count = Course.query.count()
     log_count = Log.query.count()
+    course_count = Course.query.count()
+
+    if current_user.is_teacher:
+        course_count = Course.query.filter_by(
+            teacher_id=current_user.id).count()
 
     return render_template(
         'admin/index.html', user_count=user_count, admin_count=admin_count,
-        teacher_count=teacher_count, student_count=student_count, course_count=course_count, log_count=log_count)
+        teacher_count=teacher_count, student_count=student_count,
+        course_count=course_count, log_count=log_count)
 
 
 @admin_bp.route('/manage/user')
 @permission_required('ADMINISTER')
 def manage_user():
-    log = log_user(content=render_template('logs/admin/manage_user.html'))
+    log_user(content=render_template('logs/admin/manage_user.html'))
 
     # 'all', 'student', 'teacher', 'administrator'
     filter_rule = request.args.get('filter', 'all')
@@ -87,7 +92,7 @@ def delete_user(user_id):
 
     content = render_template(
         'logs/admin/delete_user.html', username=user.username, name=user.name)
-    log = log_user(content)
+    log_user(content)
 
     db.session.delete(user)
     db.session.commit()
@@ -112,7 +117,7 @@ def edit_profile(user_id):
             'logs/admin/edit_profile.html',
             username_old=user.username, name_old=user.name,
             username_new=form.name.data, user_new=form.username.data)
-        log = log_user(content)
+        log_user(content)
 
         user.number = form.username.data
         user.name = form.name.data
@@ -139,7 +144,7 @@ def change_password(user_id):
             content = render_template(
                 'logs/admin/change_password.html',
                 username=user.username, name=user.name)
-            log = log_user(content)
+            log_user(content)
 
             user.set_password(form.password.data)
             db.session.commit()
@@ -160,7 +165,7 @@ def register_student():
         content = render_template(
             'logs/admin/register_user.html',
             username=form.username.data, name=form.name.data)
-        log = log_user(content)
+        log_user(content)
 
         user = User(
             number=form.username.data,
@@ -185,7 +190,7 @@ def register_teacher():
         content = render_template(
             'logs/admin/register_user.html',
             username=form.username.data, name=form.name.data)
-        log = log_user(content)
+        log_user(content)
 
         user = User(
             number=form.username.data,
@@ -210,7 +215,7 @@ def register_administrator():
         content = render_template(
             'logs/admin/register_user.html',
             username=form.username.data, name=form.name.data)
-        log = log_user(content)
+        log_user(content)
 
         user = User(
             number=form.username.data,
@@ -230,31 +235,68 @@ def register_administrator():
 @admin_bp.route('manage/course')
 @permission_required('MODERATOR_COURSE')
 def manage_course():
-    log = log_user(content=render_template('logs/admin/manage_course.html'))
+    log_user(content=render_template('logs/admin/manage_course.html'))
 
     per_page = current_app.config['MANAGE_COURSE_PER_PAGE']
     page = request.args.get('page', 1, type=int)
-    pagination = Course.query.order_by(
-        Course.date.desc()).paginate(page, per_page)
+    pagination = Course.query.filter_by(
+        teacher_id=current_user.id).order_by(Course.date.desc()).paginate(page, per_page)
+    if current_user.is_admin:
+        pagination = Course.query.order_by(
+            Course.date.desc()).paginate(page, per_page)
 
-    return render_template('admin/manage_course.html', pagination=pagination)
+    form = SwitchStateForm()
+    return render_template('admin/manage_course.html', pagination=pagination, form=form)
+
+
+@admin_bp.route('manage/course/<int:course_id>/switch-state', methods=['POST'])
+@permission_required('MODERATOR_COURSE')
+def switch_course_state(course_id):
+    course = Course.query.get_or_404(course_id)
+
+    content = render_template(
+        'logs/admin/switch_course_state.html', grade=course.grade, name=course.name)
+    log_user(content)
+
+    if current_user.is_teacher and course.teacher_id != current_user.id:
+        abort(403)
+    course.active = not course.active
+    db.session.commit()
+
+    for report in Report.query.filter_by(course_id=course.id).all():
+        report.active = not report.active
+    db.session.commit()
+
+    flash(_('Course state switched.'), 'success')
+    return redirect_back()
 
 
 @admin_bp.route('manage/course/add', methods=['GET', 'POST'])
 @permission_required('MODERATOR_COURSE')
 def add_course():
-    form = AddCourseForm()
+    form = AddCourseTeacherForm()
+    if current_user.is_admin:
+        form = AddCourseAdministratorForm()
+
     if form.validate_on_submit():
         content = render_template(
             'logs/admin/add_course.html', grade=form.grade.data, name=form.name.data)
-        log = log_user(content)
+        log_user(content)
 
-        course = Course(
-            teacher_id=form.teacher.data,
-            name=form.name.data,
-            grade=form.grade.data,
-            remark=form.remark.data
-        )
+        if current_user.is_teacher:
+            course = Course(
+                teacher_id=current_user.id,
+                name=form.name.data,
+                grade=form.grade.data,
+                remark=form.remark.data
+            )
+        else:
+            course = Course(
+                teacher_id=form.teacher.data,
+                name=form.name.data,
+                grade=form.grade.data,
+                remark=form.remark.data
+            )
         db.session.add(course)
         db.session.commit()
 
@@ -267,30 +309,59 @@ def add_course():
 @admin_bp.route('manage/report/<int:course_id>')
 @permission_required('MODERATOR_REPORT')
 def manage_report(course_id):
-    log = log_user(content=render_template('logs/admin/manage_report.html'))
+    if current_user.is_teacher:
+        course = Course.query.get_or_404(course_id)
+        if course.teacher_id != current_user.id:
+            abort(403)
+
+    log_user(content=render_template('logs/admin/manage_report.html'))
 
     per_page = current_app.config['MANAGE_REPORT_PER_PAGE']
     page = request.args.get('page', 1, type=int)
     pagination = Report.query.filter_by(course_id=course_id).order_by(
         Report.date.desc()).paginate(page, per_page)
 
-    form = DeleteReportForm()
+    deleteform = DeleteReportForm()
+    switchform = SwitchStateForm()
+    return render_template(
+        'admin/manage_report.html', pagination=pagination, deleteform=deleteform, switchform=switchform)
 
-    return render_template('admin/manage_report.html', pagination=pagination, form=form)
+
+@admin_bp.route('manage/report/<int:report_id>/switch-state', methods=['POST'])
+@permission_required('MODERATOR_REPORT')
+def switch_report_state(report_id):
+    report = Report.query.get_or_404(report_id)
+    content = render_template(
+        'logs/admin/switch_report_state.html',
+        grade=report.grade, course=report.course_name, report=report.name)
+    log_user(content)
+
+    if current_user.is_teacher and report.teacher_id != current_user.id:
+        abort(403)
+
+    report.active = not report.active
+    db.session.commit()
+    flash(_('Report state switched.'), 'success')
+    return redirect_back()
 
 
 @admin_bp.route('manage/report/<int:course_id>/add', methods=['GET', 'POST'])
 @permission_required('MODERATOR_REPORT')
 def add_report(course_id):
     form = AddReportForm()
+    if current_user.is_teacher:
+        course = Course.query.get_or_404(course_id)
+        if course.teacher_id != current_user.id:
+            abort(403)
+
     if form.validate_on_submit():
         course = Course.query.get_or_404(course_id)
-        user = User.query.get_or_404(form.reporter.data)
+        user = User.query.get_or_404(form.speaker.data)
         if course.grade == user.grade:
             content = render_template(
                 'logs/admin/add_report.html', course=course.name, grade=course.grade,
                 username=user.number, name=user.name, report=form.name.data)
-            log = log_user(content)
+            log_user(content)
 
             report = Report(
                 course_id=course_id,
@@ -302,7 +373,7 @@ def add_report(course_id):
 
             flash(_('Add Report success.'), 'success')
         else:
-            flash(_('The reporter is not belong to this course.'), 'error')
+            flash(_('The speaker is not belong to this course.'), 'error')
 
         return redirect_back()
 
@@ -313,11 +384,14 @@ def add_report(course_id):
 @permission_required('MODERATOR_REPORT')
 def delete_report(report_id):
     report = Report.query.get_or_404(report_id)
-
     content = render_template(
         'logs/admin/delete_report.html',
         grade=report.grade, course=report.course_name, report=report.name)
-    log = log_user(content)
+    log_user(content)
+
+    if current_user.is_teacher:
+        if report.teacher_id != current_user.id:
+            abort(403)
 
     db.session.delete(report)
     db.session.commit()
@@ -329,7 +403,12 @@ def delete_report(report_id):
 @admin_bp.route('manage/record-table/<int:report_id>')
 @permission_required('MODERATOR_RECORD_TABLE')
 def manage_record(report_id):
-    log = log_user(content=render_template('logs/admin/manage_record.html'))
+    log_user(content=render_template('logs/admin/manage_record.html'))
+    report = Report.query.get_or_404(report_id)
+
+    if current_user.is_teacher:
+        if report.teacher_id != current_user.id:
+            abort(403)
 
     per_page = current_app.config['MANAGE_RECORD_TABLE_PER_PAGE']
     page = request.args.get('page', 1, type=int)
@@ -344,12 +423,16 @@ def manage_record(report_id):
 @admin_bp.route('manage/record-table/<int:record_id>', methods=['POST'])
 @permission_required('MODERATOR_RECORD_TABLE')
 def delete_record(record_id):
-    record = RecordTable.query.get(record_id)
+    record = RecordTable.query.get_or_404(record_id)
 
     content = render_template(
         'logs/admin/delete_record.html', username=record.review_number,
         name=record.review_name, report=record.report_name)
-    log = log_user(content)
+    log_user(content)
+
+    if current_user.is_teacher:
+        if record.teacher_id != current_user.id:
+            abort(403)
 
     db.session.delete(record)
     db.session.commit()
@@ -361,6 +444,8 @@ def delete_record(record_id):
 @admin_bp.route('manage/logs/system')
 @permission_required('ADMINISTER')
 def system_log():
+    from uuid import uuid4
+
     log_user(content=render_template('logs/admin/system_log.html'))
 
     file = os.path.join(
@@ -376,6 +461,7 @@ def system_log():
 @permission_required('ADMINISTER')
 def user_log():
     import pandas as pd
+    from uuid import uuid4
 
     log_user(content=render_template('logs/admin/user_log.html'))
 

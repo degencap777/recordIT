@@ -43,8 +43,12 @@
                     <td>{{ record.reviewer_name }}</td>
                     <td>{{ record.reviewer_number }}</td>
                     <td>{{ record.score }}</td>
-                    <td>{{ record.time }}</td>
-                    <td>{{ record.remark|truncate(config['TABLE_MAX_WORDS']) }}</td>
+                    <td>{{ moment(record.time).format('llll') }}</td>
+                    <td>
+                        <span data-toggle="tooltip" title={{ record.remark }}>
+                            {{ record.remark|truncate(config['TABLE_MAX_WORDS']) }}
+                        </span>
+                    </td>
                     <td>
                         <div class="button-block">
                             <form action="{{ url_for('admin.delete_record', record_id=record.id) }}"

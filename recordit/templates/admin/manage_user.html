@@ -33,10 +33,10 @@
                 <div class="col-12">
                     <div class="details-tabs-list">
                         <ul class="nav" role="tablist">
-                            {{ render_tab_item(url_for('admin.manage_user', filter='all'), name='All', tag='all') }}
-                            {{ render_tab_item(url_for('admin.manage_user', filter='student'), name='Student', tag='student') }}
-                            {{ render_tab_item(url_for('admin.manage_user', filter='teacher'), name='Teacher', tag='teacher') }}
-                            {{ render_tab_item(url_for('admin.manage_user', filter='administrator'), name='Administrator', tag='administrator') }}
+                            {{ render_tab_item(url_for('admin.manage_user', filter='all'), name=_('All'), tag='all') }}
+                            {{ render_tab_item(url_for('admin.manage_user', filter='student'), name=_('Student'), tag='student') }}
+                            {{ render_tab_item(url_for('admin.manage_user', filter='teacher'), name=_('Teacher'), tag='teacher') }}
+                            {{ render_tab_item(url_for('admin.manage_user', filter='administrator'), name=_('Administrator'), tag='administrator') }}
                         </ul>
                     </div>
                 </div>

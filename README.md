@@ -25,11 +25,6 @@ wait for adding.
 
 ## TODO
 
-### Backstage
-
--   [ ] upload
--   [ ] role & permission control
-
 ### Other
 
 -   [ ] translation

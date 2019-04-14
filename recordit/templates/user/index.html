@@ -32,7 +32,8 @@
                                         <div class="single-our-blog mt--30">
                                             <div class="our-blog-contnet">
                                                 <h5>
-                                                    <a href="#">{{ report.name }}</a>
+                                                    <a href="{{ url_for('user.review', report_id=report.id) }}">
+                                                        {{ report.name }}</a>
                                                 </h5>
                                                 <div class="post_meta">
                                                     <ul>

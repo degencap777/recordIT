@@ -35,7 +35,8 @@ class Role(db.Model):
         roles_permissions_map = {
             'Student': ['RECORD'],
             'Teacher': ['RECORD', 'MODERATOR_COURSE', 'MODERATOR_REPORT', 'MODERATOR_RECORD_TABLE'],
-            'Administrator': ['RECORD', 'MODERATOR_COURSE', 'MODERATOR_REPORT', 'MODERATOR_RECORD_TABLE', 'MODERATOR_LOG', 'ADMINISTER']
+            'Administrator': ['RECORD', 'MODERATOR_COURSE', 'MODERATOR_REPORT', 'MODERATOR_RECORD_TABLE',
+                              'MODERATOR_LOG', 'ADMINISTER']
         }
 
         for role_name in roles_permissions_map:
@@ -129,7 +130,7 @@ class Course(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     teacher_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     name = db.Column(db.String(30), nullable=False)
-    grade = db.Column(db.Integer, nullable=False)
+    grade = db.Column(db.String(4), nullable=False)
 
     active = db.Column(db.Boolean, default=True)
     date = db.Column(db.Date, index=True, default=datetime.date.today)
@@ -187,8 +188,13 @@ class Report(db.Model):
     def teacher_number(self):
         return Course.query.get(self.course_id).teacher_number
 
+    @property
+    def teacher_id(self):
+        return Course.query.get(self.course_id).teacher_id
+
     def search_recordtabel(self, user_id):
-        return RecordTable.query.filter(RecordTable.report_id==self.id, RecordTable.user_id==user_id).first()
+        return RecordTable.query.filter(RecordTable.report_id == self.id, RecordTable.user_id == user_id).first()
+
 
 class RecordTable(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -218,6 +224,10 @@ class RecordTable(db.Model):
     @property
     def reviewer_number(self):
         return User.query.get(self.user_id).number
+
+    @property
+    def teacher_id(self):
+        return Report.query.get(self.report_id).teacher_id
 
 
 class Log(db.Model):

@@ -26,10 +26,8 @@
             <tr class="text-center">
                 <th>#</th>
                 <th>{{ _('Name') }}</th>
-                <th>{{ _('Reporter') }}</th>
-                <th>{{ _('Reporter Number') }}</th>
-                <th>{{ _('Teacher') }}</th>
-                <th>{{ _('Teacher Number') }}</th>
+                <th>{{ _('Speaker') }}</th>
+                <th>{{ _('Speaker Number') }}</th>
                 <th>{{ _('Score') }}</th>
                 <th>{{ _('Date') }}</th>
                 <th>{{ _('Active') }}</th>
@@ -44,24 +42,36 @@
                         {{ pagination.total - (config['MANAGE_REPORT_PER_PAGE'] * (page|int - 1) + loop.index) + 1 }}
                     </td>
                     <td>{{ report.name }}</td>
-                    <td>{{ report.reporter_name }}</td>
-                    <td>{{ report.reporter_number }}</td>
-                    <td>{{ report.teacher_name }}</td>
-                    <td>{{ report.teacher_number }}</td>
+                    <td>{{ report.speaker_name }}</td>
+                    <td>{{ report.speaker_number }}</td>
                     <td>{{ report.score }}</td>
-                    <td>{{ report.date }}</td>
-                    <td>{{ report.is_active }}</td>
-                    <td>{{ report.remark|truncate(config['TABLE_MAX_WORDS']) }}</td>
+                    <td>{{ moment(report.date).format('LL') }}</td>
+                    <td>
+                        {% if report.is_active %}
+                            {% set value = _('True') %}
+                        {% else %}
+                            {% set value = _('False') %}
+                        {% endif %}
+                        <form action="{{ url_for('admin.switch_report_state', report_id=report.id) }}" method="post">
+                            {{ switchform.csrf_token() }}
+                            {{ switchform.switch(class="btn", value=value) }}
+                        </form>
+                    </td>
+                    <td>
+                        <span data-toggle="tooltip" title={{ report.remark }}>
+                            {{ report.remark|truncate(config['TABLE_MAX_WORDS']) }}
+                        </span>
+                    </td>
                     <td>
                         <div class="button-block">
                             <a href="{{ url_for('admin.manage_record', report_id=report.id) }}"
                                class="btn">
-                                {{ _('Manage Record') }}
+                                {{ _('Record') }}
                             </a>
                             <form action="{{ url_for('admin.delete_report', report_id=report.id) }}"
                                   method="post">
-                                {{ form.csrf_token() }}
-                                {{ form.delete(class="btn") }}
+                                {{ deleteform.csrf_token() }}
+                                {{ deleteform.delete(class="btn") }}
                             </form>
                         </div>
                     </td>

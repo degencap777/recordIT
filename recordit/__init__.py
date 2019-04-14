@@ -2,11 +2,11 @@
 
 import logging
 import os
-from datetime import datetime, timedelta
+from datetime import timedelta
 from logging.handlers import RotatingFileHandler, SMTPHandler
 
 import click
-from flask import Flask, Markup, render_template, request, session
+from flask import Flask, render_template, request, session
 from flask_babel import _
 from flask_wtf.csrf import CSRFError
 
@@ -16,7 +16,6 @@ from recordit.blueprints.user import user_bp
 from recordit.blueprints.front import front_bp
 from recordit.extensions import (babel, bootstrap, cache, ckeditor, csrf, db,
                                  login_manager, scheduler, toolbar, moment)
-from recordit.models import Course, RecordTable, Report, User, Role, Log
 from recordit.settings import basedir, config
 
 
@@ -33,9 +32,7 @@ def create_app(config_name=None):
     register_extensions(app)
     register_blueprints(app)
     register_errors(app)
-    register_global_func(app)
     register_commands(app)
-    register_shell_context(app)
     register_logging(app)
     register_hook(app)
 
@@ -86,7 +83,7 @@ def register_extensions(app):
     cache.init_app(app)
     ckeditor.init_app(app)
     moment.init_app(app)
-    # toolbar.init_app(app)
+    toolbar.init_app(app)
     scheduler.init_app(app)
     scheduler.start()
 
@@ -148,26 +145,13 @@ def register_errors(app):
         return render_template('errors.html', code=code, info=info), 400
 
 
-def register_shell_context(app):
-    @app.shell_context_processor
-    def make_shell_context():
-        return dict()
-
-
-def register_global_func(app):
-
-    @app.template_global()
-    def now():
-        from datetime import datetime
-        return datetime.now().time()
-
-
 def register_commands(app):
     @app.cli.command()
     @click.option('--drop', is_flag=True, help='Create after drop.')
     def init(drop):
-        """Initialize recordit."""
+        """Initialize app."""
 
+        from recordit.models import  Role
         from recordit.fakes import fake_admin
 
         if drop:
@@ -191,11 +175,11 @@ def register_commands(app):
         click.echo('Done.')
 
     @app.cli.command()
-    @click.option('--teacher', default=1, help='Quantity of teachers, default is 1.')
-    @click.option('--student', default=30, help='Quantity of students, default is 30.')
+    @click.option('--teacher', default=3, help='Quantity of teachers, default is 3.')
+    @click.option('--student', default=20, help='Quantity of students, default is 20.')
     @click.option('--course', default=3, help='Quantity of courses, default is 3.')
-    @click.option('--report', default=3, help='Quantity of reports, default is 3.')
-    @click.option('--record', default=10, help='Quantity of records, default is 10.')
+    @click.option('--report', default=5, help='Quantity of reports, default is 5.')
+    @click.option('--record', default=30, help='Quantity of records, default is 30.')
     def forge(teacher, student, course, report, record):
         """Generate fake data."""
 
@@ -214,7 +198,10 @@ def register_commands(app):
         fake_teacher(teacher)
 
         click.echo('Generating %d students...' % student)
-        fake_student(student)
+        fake_student(student, grade='2017')
+
+        click.echo('Generating %d students...' % student)
+        fake_student(student, grade='2016')
 
         click.echo('Generating %d courses...' % course)
         fake_course(course)

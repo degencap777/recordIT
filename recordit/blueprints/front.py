@@ -3,11 +3,11 @@
 from flask import (Blueprint, abort, current_app, flash, make_response,
                    redirect, render_template, url_for)
 from flask_babel import _
-from flask_login import current_user, login_required
+from flask_login import current_user
 
-from recordit.extensions import db, cache
+from recordit.extensions import cache, db
 from recordit.models import Course, Report, Role, User
-from recordit.utils import log_user, redirect_back
+from recordit.utils import redirect_back
 
 front_bp = Blueprint('front', __name__)
 
@@ -22,6 +22,7 @@ def index():
 
 
 @front_bp.route('/about')
+@cache.cached(timeout=60)
 def about():
     role_teacher = Role.query.filter_by(name='Teacher').first()
     teacher_count = User.query.filter_by(role_id=role_teacher.id).count()

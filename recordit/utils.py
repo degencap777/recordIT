@@ -8,10 +8,10 @@ except ImportError:
 
 import os
 
-from flask import abort, redirect, request, url_for, flash
+from flask import abort, flash, redirect, request, url_for
 from flask_login import current_user
 
-from recordit.extensions import db, scheduler
+from recordit.extensions import db
 from recordit.models import Log
 
 
@@ -65,13 +65,3 @@ def packitup(input_path, output_path):
         else:
             abort(404)
 
-
-@scheduler.task('interval', id='clear_cache', weeks=1)
-def clear_cache():
-    with scheduler.app.app_context():
-        for root, _, files in os.walk(current_app.config['FILE_CACHE_PATH']):
-            for file in files:
-                if file == '.gitkeep':
-                    continue
-                path = os.path.join(root, file)
-                os.remove(path)

@@ -44,9 +44,22 @@
                     <td>{{ course.teacher_name }}</td>
                     <td>{{ course.teacher_number }}</td>
                     <td>{{ course.grade }}</td>
-                    <td>{{ course.date }}</td>
-                    <td>{{ course.is_active }}</td>
-                    <td>{{ course.remark|truncate(config['TABLE_MAX_WORDS']) }}</td>
+                    <td>{{ moment(course.date).format('LL') }}</td>
+                    <td>
+                        {% if course.is_active %}
+                            {% set value = _('True') %}
+                        {% else %}
+                            {% set value = _('False') %}
+                        {% endif %}
+                        <form action="{{ url_for('admin.switch_course_state', course_id=course.id) }}" method="post">
+                            {{ form.csrf_token() }}
+                            {{ form.switch(class="btn", value=value) }}
+                        </form>
+                    </td>
+                    <td>
+                        <span data-toggle="tooltip" title={{ course.remark }}>
+                            {{ course.remark|truncate(config['TABLE_MAX_WORDS']) }}
+                        </span>
                     <td>
                         <div class="button-block">
                             <a href="{{ url_for('admin.manage_report', course_id=course.id) }}"

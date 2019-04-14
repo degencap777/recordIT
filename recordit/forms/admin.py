@@ -35,7 +35,7 @@ class RegisterStudentForm(FlaskForm):
 
     def validate_username(self, field):
         if User.query.filter_by(number=field.data).first():
-            raise ValidationError('The username is already in use.')
+            raise ValidationError(_l('The username is already in use.'))
 
 
 class RegisterTeacherForm(FlaskForm):
@@ -59,7 +59,7 @@ class RegisterTeacherForm(FlaskForm):
 
     def validate_username(self, field):
         if User.query.filter_by(number=field.data).first():
-            raise ValidationError('The username is already in use.')
+            raise ValidationError(_l('The username is already in use.'))
 
 
 class RegisterAdministratorForm(FlaskForm):
@@ -85,7 +85,7 @@ class RegisterAdministratorForm(FlaskForm):
 
     def validate_username(self, field):
         if User.query.filter_by(number=field.data).first():
-            raise ValidationError('The username is already in use.')
+            raise ValidationError(_l('The username is already in use.'))
 
 
 class EditStudenteForm(FlaskForm):
@@ -104,13 +104,13 @@ class EditStudenteForm(FlaskForm):
 
     def validate_username(self, field):
         if field.data != current_user.username and User.query.filter_by(number=field.data).first():
-            raise ValidationError('The username is already in use.')
+            raise ValidationError(_l('The username is already in use.'))
 
 
 class EditTeacherForm(FlaskForm):
     username = StringField(
         _l('Number'),
-        validators=[DataRequired(), InputRequired(), Length(4, 12),
+        validators=[DataRequired(), InputRequired(), Length(4),
                     Regexp('^[0-9]*$', message=_l('The username should only contain 0-9.'))]
     )
     name = StringField(
@@ -123,7 +123,7 @@ class EditTeacherForm(FlaskForm):
 
     def validate_username(self, field):
         if field.data != current_user.username and User.query.filter_by(number=field.data).first():
-            raise ValidationError('The username is already in use.')
+            raise ValidationError(_l('The username is already in use.'))
 
 
 class EditAdministratorForm(FlaskForm):
@@ -142,7 +142,7 @@ class EditAdministratorForm(FlaskForm):
 
     def validate_username(self, field):
         if field.data != current_user.username and User.query.filter_by(number=field.data).first():
-            raise ValidationError('The username is already in use.')
+            raise ValidationError(_l('The username is already in use.'))
 
 
 class ChangePasswordForm(FlaskForm):
@@ -160,7 +160,7 @@ class DeleteUserForm(FlaskForm):
     delete = SubmitField(_l('Delete'))
 
 
-class AddCourseForm(FlaskForm):
+class AddCourseAdministratorForm(FlaskForm):
     name = StringField(
         _l('Name'),
         validators=[InputRequired(), DataRequired(), Length(1, 30)]
@@ -180,14 +180,33 @@ class AddCourseForm(FlaskForm):
     def validate_teacher(self, field):
         user = User.query.filter_by(number=field.data).first()
         if user is None:
-            raise ValidationError('The user is not existed.')
+            raise ValidationError(_l('The user is not existed.'))
         elif user.role.name != 'Teacher':
-            raise ValidationError('The user is not Teacher.')
+            raise ValidationError(_l('The user is not Teacher.'))
 
     def validate_grade(self, field):
         grades = User.all_grade()
         if field.data not in grades:
-            raise ValidationError('The grade is not existed.')
+            raise ValidationError(_l('The grade is not existed.'))
+
+
+class AddCourseTeacherForm(FlaskForm):
+    name = StringField(
+        _l('Name'),
+        validators=[InputRequired(), DataRequired(), Length(1, 30)]
+    )
+    grade = StringField(
+        _l('Student Grade'),
+        validators=[InputRequired(), DataRequired(), Length(4)]
+    )
+
+    remark = CKEditorField(_l('Remark'), validators=[Optional()])
+    submit = SubmitField(_l('Add'))
+
+    def validate_grade(self, field):
+        grades = User.all_grade()
+        if field.data not in grades:
+            raise ValidationError(_l('The grade is not existed.'))
 
 
 class DeleteReportForm(FlaskForm):
@@ -199,20 +218,23 @@ class AddReportForm(FlaskForm):
         _l('Report Name'),
         validators=[DataRequired(), InputRequired(), Length(1, 30)]
     )
-    reporter = StringField(
-        _l('Reporter Number'),
+    speaker = StringField(
+        _l('Speaker Number'),
         validators=[InputRequired(), DataRequired(), Length(1, 12)]
     )
     remark = CKEditorField(_l('Remark'), validators=[Optional()])
     submit = SubmitField(_l('Add'))
 
-    def validate_reporter(self, field):
+    def validate_speaker(self, field):
         user = User.query.filter_by(number=field.data).first()
         if user is None:
-            raise ValidationError('The reporter is not existed.')
+            raise ValidationError(_l('The speaker is not existed.'))
         elif user.role.name != 'Student':
-            raise ValidationError('The reporter is not Student.')
+            raise ValidationError(_l('The speaker is not Student.'))
 
 
 class DeleteRecordForm(FlaskForm):
     delete = SubmitField(_l('Delete'))
+
+class SwitchStateForm(FlaskForm):
+    switch =  SubmitField(_l('Switch'))

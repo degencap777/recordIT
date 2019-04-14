@@ -2651,7 +2651,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 
 /*-- Free Introductory --*/
 .free-introductory-bg {
-  background: url("../images/bg/bg-03.jpg");
+  background: url("../images/bg/bg-02.jpg");
 }
 
 .introductory-btn {
@@ -3266,7 +3266,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
     
 -----------------------*/
 .project-count-bg {
-  background: url("../images/bg/fun-01.jpg");
+  background: url("../images/fun.jpg");
 }
 
 .counter {

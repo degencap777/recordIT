@@ -183,6 +183,7 @@ def register_commands(app):
     def forge(teacher, student, course, report, record):
         """Generate fake data."""
 
+        from recordit.models import Role
         from recordit.fakes import fake_admin, fake_teacher, fake_student, fake_course, fake_report, fake_record
 
         db.drop_all()

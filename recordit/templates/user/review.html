@@ -1,0 +1,40 @@
+{% extends 'user/base.html' %}
+{% from 'bootstrap/form.html' import render_form %}
+{% from 'macros/macros.html' import render_breadcrumb_item %}
+
+
+{% block title %}Review{% endblock %}
+
+
+{% block breadcrumb_title %}
+    <h3>{{ _('Review') }}</h3>
+{% endblock breadcrumb_title %}
+
+
+{% block breadcrumb_item_list %}
+    {{ super() }}
+    <li class="breadcrumb-item active">Review</li>
+{% endblock breadcrumb_item_list %}
+
+
+{% block content %}
+        <div class="page-content section-ptb">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="account-dashboard">
+                        <div class="dashboard-content">
+                            {{ render_form(form) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+
+{% block scripts %}
+    {{ super() }}
+    {{ ckeditor.load() }}
+{% endblock %}

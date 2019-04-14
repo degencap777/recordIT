@@ -18,42 +18,58 @@
                     <div class="blog-top-bar">
                         <div class="toolbar-amount">
                         <span>
-                            {{ _('Reports') }}: <strong>{{ report_count|default(0) }}</strong>
+                            {{ _('Reports') }}: <strong>{{ pagination.total|default(0) }}</strong>
                         </span>
                         </div>
                     </div>
                 </div>
                 <div class="col-12">
                     <div class="blog-wrapper">
-                        <div class="tab-content">
-                            <div class="tab-pane active">
-                                <div class="row">
+                        <div class="row">
+                            {% if pagination.items %}
+                                {% for report in pagination.items %}
                                     <div class="col-lg-6  col-md-6 col-12">
                                         <div class="single-our-blog mt--30">
                                             <div class="our-blog-contnet">
-                                                <h5><a href="blog-details.html">Fugiat nulla Pariatur All.</a></h5>
+                                                <h5>
+                                                    <a href="#">{{ report.name }}</a>
+                                                </h5>
                                                 <div class="post_meta">
                                                     <ul>
                                                         <li>
-                                                            <p>By: <a href="#">Sekh Rana</a></p>
+                                                            <p>
+                                                                {{ report.speaker_name }}
+                                                            </p>
                                                         </li>
                                                         <li>
-                                                            <p>15 Fab 2018</p>
+                                                            <p>
+                                                                {{ report.speaker_number }}
+                                                            </p>
+                                                        </li>
+                                                        <li>
+                                                            <p>{{ report.date }}</p>
                                                         </li>
                                                     </ul>
                                                 </div>
-                                                <p>Contrary to popular belief, Lor isnotimply random text. Duis aute
-                                                    irure
-                                                    d rehenderit in voluptate velit esse..</p>
+                                                <p>{{ report.remark|truncate(config['USER_MAX_WORDS']) }}</p>
                                                 <div class="button-block">
-                                                    <a href="#" class="botton-border">Read more</a>
+                                                    <a href="{{ url_for('user.review', report_id=report.id) }}"
+                                                       class="botton-border">
+                                                        {{ _('Review it') }}</a>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-
+                                {% endfor %}
+                            {% else %}
+                                <div class="col-12">
+                                    <div class="our-blog-contnet">
+                                        <div class="tip">
+                                            <h5><i class="fas fa-ban"></i> {{ _('No Reports.') }}</h5>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

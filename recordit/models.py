@@ -151,9 +151,9 @@ class Course(db.Model):
 class Report(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     course_id = db.Column(db.Integer, db.ForeignKey('course.id'))
-    reporter_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    speaker_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     name = db.Column(db.String(30), nullable=False)
-    score = db.Column(db.Integer)
+    score = db.Column(db.Float)
 
     active = db.Column(db.Boolean, default=True)
     date = db.Column(db.Date, index=True, default=datetime.date.today)
@@ -172,12 +172,12 @@ class Report(db.Model):
         return Course.query.get(self.course_id).is_active and self.active
 
     @property
-    def reporter_name(self):
-        return User.query.get(self.reporter_id).name
+    def speaker_name(self):
+        return User.query.get(self.speaker_id).name
 
     @property
-    def reporter_number(self):
-        return User.query.get(self.reporter_id).number
+    def speaker_number(self):
+        return User.query.get(self.speaker_id).number
 
     @property
     def teacher_name(self):
@@ -187,12 +187,14 @@ class Report(db.Model):
     def teacher_number(self):
         return Course.query.get(self.course_id).teacher_number
 
+    def search_recordtabel(self, user_id):
+        return RecordTable.query.filter(RecordTable.report_id==self.id, RecordTable.user_id==user_id).first()
 
 class RecordTable(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     report_id = db.Column(db.Integer, db.ForeignKey('report.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    score = db.Column(db.Integer, nullable=False)
+    score = db.Column(db.Float, nullable=False)
 
     time = db.Column(db.DateTime, index=True, default=datetime.datetime.utcnow)
     remark = db.Column(db.Text)

@@ -8,7 +8,7 @@ except ImportError:
 
 import os
 
-from flask import abort, redirect, request, url_for
+from flask import abort, redirect, request, url_for, flash
 from flask_login import current_user
 
 from recordit.extensions import db, scheduler
@@ -29,6 +29,13 @@ def redirect_back(default='front.index', **kwargs):
         if is_safe_url(target):
             return redirect(target)
     return redirect(url_for(default, **kwargs))
+
+
+def flash_errors(form):
+    for field, errors in form.errors.items():
+        for error in errors:
+            name = getattr(form, field).label.text
+            flash(_("Error in the %(name)s field - %(error)s.", name=name, error=error), 'dark')
 
 
 def log_user(content):

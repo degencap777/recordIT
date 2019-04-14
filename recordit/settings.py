@@ -52,7 +52,13 @@ class BaseConfig(object):
     MANAGE_COURSE_PER_PAGE = 5
     MANAGE_REPORT_PER_PAGE = 30
     MANAGE_RECORD_TABLE_PER_PAGE = 30
+    USER_REPORT_PER_PAGE = 30
+    
     TABLE_MAX_WORDS = 10
+    USER_MAX_WORDS = 50
+
+    RECORD_TABLE_LOWER_LIMIT = 0
+    RECORD_TABLE_UPPER_LIMIT = 100
 
     FILE_CACHE_PATH = os.path.join(basedir, 'cache')
     SYSTEM_LOG_PATH = os.path.join(basedir, 'logs/recordit.log')

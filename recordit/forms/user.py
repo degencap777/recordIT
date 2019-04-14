@@ -4,8 +4,8 @@ from flask_babel import lazy_gettext as _l
 from flask_ckeditor import CKEditorField
 from flask_login import current_user
 from flask_wtf import FlaskForm
-from wtforms import PasswordField, StringField, SubmitField, ValidationError
-from wtforms.validators import (DataRequired, EqualTo, InputRequired, Length,
+from wtforms import PasswordField, StringField, SubmitField, ValidationError, FloatField
+from wtforms.validators import (DataRequired, EqualTo, InputRequired, Length, NumberRange,
                                 Optional, Regexp)
 
 from recordit.models import User
@@ -83,3 +83,13 @@ class ChangePasswordForm(FlaskForm):
         validators=[DataRequired(), InputRequired()])
 
     submit = SubmitField(_l('Change'))
+
+
+class ReviewForm(FlaskForm):
+    score = FloatField(
+        _l('Score'),
+        validators=[DataRequired(), InputRequired()]
+    )
+    remark = CKEditorField(_l('Remark'), validators=[Optional()])
+
+    submit = SubmitField(_l('Review'))

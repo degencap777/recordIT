@@ -85,7 +85,7 @@ def fake_report(count=3):
             role_id=role.id).order_by(func.random()).first()
         report = Report(
             course_id=course.id,
-            reporter_id=user.id,
+            speaker_id=user.id,
             name=fake.text(max_nb_chars=10),
             remark=fake.text()
         )
@@ -102,7 +102,7 @@ def fake_record(count=10):
         print(i)
         user = User.query.order_by(func.random()).first()
         report = Report.query.filter(
-            Report.reporter_id != user.id).order_by(func.random()).first()
+            Report.speaker_id != user.id).order_by(func.random()).first()
         record = RecordTable(
             report_id=report.id,
             user_id=user.id,

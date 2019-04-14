@@ -65,7 +65,7 @@
         {{ render_pagination(pagination, align='center') }}
     {% else %}
         <div class="tip">
-            <h5><i class="fas fa-ban"></i> No Courses.</h5>
+            <h5><i class="fas fa-ban"></i> {{ _('No Courses.') }}</h5>
         </div>
     {% endif %}
 {% endblock dashboard_content %}

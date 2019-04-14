@@ -5,7 +5,7 @@ from flask import (Blueprint, abort, current_app, flash, make_response,
 from flask_babel import _
 from flask_login import current_user, login_required
 
-from recordit.extensions import db
+from recordit.extensions import db, cache
 from recordit.models import Course, Report, Role, User
 from recordit.utils import log_user, redirect_back
 

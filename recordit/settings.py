@@ -22,8 +22,8 @@ class BaseConfig(object):
     FILE_CACHE_PATH = os.path.join(basedir, 'cache')
 
     ADMIN_NUMBER = os.getenv('ADMIN_NUMBER')
-    ADMIN_EMAIL = os.getenv('ADMIN_EMAIL')
-    ADMIN_PASSWORD = os.getenv('ADMIN_PASSWORD')
+    ADMIN_EMAIL = os.getenv('ADMIN_EMAIL', '007')
+    ADMIN_PASSWORD = os.getenv('ADMIN_PASSWORD', 'recordit')
 
     MAIL_SERVER = os.getenv('MAIL_SERVER', 'smtp.sendgrid.net')
     MAIL_PORT = os.getenv('MAIL_PORT', 587)

@@ -13,7 +13,7 @@ $ git clone https://github.com/Zeroto521/recordit.git
 $ cd recordit
 $ pipenv install --dev
 $ pipenv shell
-$ pipenv init
+$ flask init
 $ flask forge
 $ flask run
 * Running on http://127.0.0.1:5000/
@@ -21,13 +21,10 @@ $ flask run
 
 ## Feature
 
-wait for adding.
+![features](assets/features.png)
 
 ## TODO
 
-### Other
-
--   [x] translation
 -   [ ] verification code
 -   [ ] database relationship
-
+-   [ ] log showing : log file size and log numbers

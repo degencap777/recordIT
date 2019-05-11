@@ -27,3 +27,6 @@ $ flask run
 
 -   [ ] verification code
 -   [ ] log showing : log file size and log numbers
+-   [ ] compress asset size
+-   [ ] batch import user
+-   [ ] batch import report

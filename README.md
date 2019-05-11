@@ -26,5 +26,4 @@ $ flask run
 ## TODO
 
 -   [ ] verification code
--   [ ] database relationship
 -   [ ] log showing : log file size and log numbers

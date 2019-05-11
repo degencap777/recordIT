@@ -4,8 +4,10 @@ from flask_babel import lazy_gettext as _l
 from flask_ckeditor import CKEditorField
 from flask_login import current_user
 from flask_wtf import FlaskForm
-from wtforms import PasswordField, StringField, SubmitField, ValidationError, FloatField
-from wtforms.validators import (DataRequired, EqualTo, InputRequired, Length, NumberRange,
+from flask_wtf.file import FileAllowed, FileField
+from wtforms import (FloatField, PasswordField, StringField, SubmitField,
+                     ValidationError)
+from wtforms.validators import (DataRequired, EqualTo, InputRequired, Length,
                                 Optional, Regexp)
 
 from recordit.models import User
@@ -91,5 +93,12 @@ class ReviewForm(FlaskForm):
         validators=[DataRequired(), InputRequired()]
     )
     remark = CKEditorField(_l('Remark'), validators=[Optional()])
+
+    file = FileField(
+        _l("Attachment"),
+        validators=[
+            FileAllowed(['jpg', 'jpeg', 'png'], _l('jpg, jpeg or png only!'))
+        ]
+    )
 
     submit = SubmitField(_l('Review'))

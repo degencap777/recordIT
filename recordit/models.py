@@ -136,6 +136,8 @@ class Course(db.Model):
     date = db.Column(db.Date, index=True, default=datetime.date.today)
     remark = db.Column(db.Text)
 
+    reports = db.relationship('Report', cascade='all, delete-orphan')
+
     @property
     def is_active(self):
         return self.active
@@ -159,6 +161,8 @@ class Report(db.Model):
     active = db.Column(db.Boolean, default=True)
     date = db.Column(db.Date, index=True, default=datetime.date.today)
     remark = db.Column(db.Text)
+
+    recordtables = db.relationship('RecordTable', cascade='all, delete-orphan')
 
     @property
     def grade(self):
@@ -201,6 +205,7 @@ class RecordTable(db.Model):
     report_id = db.Column(db.Integer, db.ForeignKey('report.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     score = db.Column(db.Float, nullable=False)
+    file = db.Column(db.String)
 
     time = db.Column(db.DateTime, index=True, default=datetime.datetime.utcnow)
     remark = db.Column(db.Text)

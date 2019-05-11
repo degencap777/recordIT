@@ -27,5 +27,7 @@ wait for adding.
 
 ### Other
 
--   [ ] translation
+-   [x] translation
 -   [ ] verification code
+-   [ ] database relationship
+

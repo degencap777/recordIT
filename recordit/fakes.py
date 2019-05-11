@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 
 from faker import Faker
+from flask import current_app
 from sqlalchemy.sql.expression import func
 
 from recordit import db
-from recordit.models import Course, RecordTable, Report, User, Role
+from recordit.models import Course, RecordTable, Report, Role, User
 
 fake = Faker('zh_CN')
 
@@ -12,10 +13,10 @@ fake = Faker('zh_CN')
 def fake_admin():
     admin = User(
         name=fake.name(),
-        number='007',
+        number=current_app.config['ADMIN_NUMBER'],
         remark=fake.text()
     )
-    admin.set_password('recordit')
+    admin.set_password(current_app.config['ADMIN_PASSWORD'])
 
     db.session.add(admin)
     db.session.commit()
@@ -29,7 +30,7 @@ def fake_teacher(count=1):
             number=str(fake.random_number(digits=4, fix_len=True)),
             remark=fake.text(),
         )
-        user.set_password('recordit')
+        user.set_password(current_app.config['ADMIN_PASSWORD'])
         user.set_role('Teacher')
 
         db.session.add(user)
@@ -48,7 +49,7 @@ def fake_student(count=50, grade='2016'):
             number=number,
             remark=fake.text(),
         )
-        user.set_password('recordit')
+        user.set_password(current_app.config['ADMIN_PASSWORD'])
 
         db.session.add(user)
         try:

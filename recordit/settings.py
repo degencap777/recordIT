@@ -23,6 +23,7 @@ class BaseConfig(object):
 
     ADMIN_NUMBER = os.getenv('ADMIN_NUMBER')
     ADMIN_EMAIL = os.getenv('ADMIN_EMAIL')
+    ADMIN_PASSWORD = os.getenv('ADMIN_PASSWORD')
 
     MAIL_SERVER = os.getenv('MAIL_SERVER', 'smtp.sendgrid.net')
     MAIL_PORT = os.getenv('MAIL_PORT', 587)

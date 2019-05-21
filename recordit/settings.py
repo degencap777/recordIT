@@ -64,6 +64,8 @@ class BaseConfig(object):
     FILE_CACHE_PATH = os.path.join(basedir, 'cache')
     SYSTEM_LOG_PATH = os.path.join(basedir, 'logs/recordit.log')
 
+    SESSION_LIFETIME_MINUTES = os.getenv('SESSION_LIFETIME_MINUTES', 10)
+
 
 class DevelopmentConfig(BaseConfig):
     FLASK_ENV = 'development'

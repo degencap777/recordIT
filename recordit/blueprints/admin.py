@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import os
-
 from flask import (Blueprint, abort, current_app, flash, render_template,
                    request, send_file)
 from flask_babel import _
@@ -15,10 +13,11 @@ from recordit.forms.admin import (AddCourseAdministratorForm,
                                   DeleteReportForm, DeleteUserForm,
                                   EditAdministratorForm, EditStudenteForm,
                                   EditTeacherForm, RegisterAdministratorForm,
-                                  RegisterStudentForm, RegisterTeacherForm,
-                                  SwitchStateForm)
+                                  RegisterBatchForm, RegisterStudentForm,
+                                  RegisterTeacherForm, SwitchStateForm)
 from recordit.models import Course, Log, RecordTable, Report, Role, User
-from recordit.utils import log_user, packitup, redirect_back
+from recordit.utils import (flash_errors, log_user, packitup, redirect_back,
+                            safe_filename)
 
 admin_bp = Blueprint('admin', __name__)
 
@@ -232,6 +231,61 @@ def register_administrator():
     return render_template('admin/register_user.html', form=form)
 
 
+@admin_bp.route('manage/user/register/batch', methods=['GET', 'POST'])
+@permission_required('ADMINISTER')
+def register_batch():
+    from os import path
+    from uuid import uuid4
+
+    import pandas as pd
+
+    form = RegisterBatchForm()
+    if form.validate_on_submit():
+        file = request.files.get('file')
+        path = path.join(
+            current_app.config['FILE_CACHE_PATH'], safe_filename(file.filename))
+        file.save(path)
+        df = pd.read_excel(path)
+
+        if not set(df.columns) >= set(['number', 'name', 'role', 'remark', 'password']):
+            flash(
+                _('The EXCEL file columns should contain number, name, role,remark and password.'), 'error')
+            return redirect_back()
+
+        for i, row in df.iterrows():
+            content = render_template(
+                'logs/admin/register_user.html',
+                username=row['number'], name=row['name'])
+            log_user(content)
+
+            if not User.query.filter_by(number=row['number']).first():
+                if row['role'] not in ['Teacher', 'Student']:
+                    flash(_("%(number)s role should be Student or Student.",
+                            number=row['number']), 'error')
+                else:
+                    user = User(
+                        number=row['number'],
+                        name=row['name'],
+                        remark=row['remark']
+                    )
+                    user.set_password(row['password'])
+                    user.set_role(row['role'])
+                    db.session.add(user)
+
+                    try:
+                        db.session.commit()
+                    except:
+                        db.session.rollback()
+            else:
+                flash(_("%(number)s is already existed.",
+                        number=row['number']), 'error')
+
+        flash_errors(form)
+        flash(_('Register success.'), 'success')
+
+    return render_template('admin/register_batch.html', form=form)
+
+
 @admin_bp.route('manage/course')
 @permission_required('MODERATOR_COURSE')
 def manage_course():
@@ -327,6 +381,12 @@ def manage_report(course_id):
         'admin/manage_report.html', pagination=pagination, deleteform=deleteform, switchform=switchform)
 
 
+@admin_bp.route('manage/report/<int:course_id>/download')
+@permission_required('MODERATOR_REPORT')
+def download_report(course_id):
+    return redirect_back()
+
+
 @admin_bp.route('manage/report/<int:report_id>/switch-state', methods=['POST'])
 @permission_required('MODERATOR_REPORT')
 def switch_report_state(report_id):
@@ -420,6 +480,12 @@ def manage_record(report_id):
         'admin/manage_record.html', pagination=pagination, form=form)
 
 
+@admin_bp.route('manage/record-table/<int:report_id>/download')
+@permission_required('MODERATOR_RECORD_TABLE')
+def download_record(report_id):
+    return redirect_back()
+
+
 @admin_bp.route('manage/record-table/<int:record_id>', methods=['POST'])
 @permission_required('MODERATOR_RECORD_TABLE')
 def delete_record(record_id):
@@ -444,11 +510,12 @@ def delete_record(record_id):
 @admin_bp.route('manage/logs/system')
 @permission_required('ADMINISTER')
 def system_log():
+    from os import path
     from uuid import uuid4
 
     log_user(content=render_template('logs/admin/system_log.html'))
 
-    file = os.path.join(
+    file = path.join(
         current_app.config['FILE_CACHE_PATH'], uuid4().hex + '.zip')
     packitup(current_app.config['SYSTEM_LOG_PATH'], file)
 
@@ -460,8 +527,10 @@ def system_log():
 @admin_bp.route('manage/logs/user')
 @permission_required('ADMINISTER')
 def user_log():
-    import pandas as pd
+    from os import path
     from uuid import uuid4
+
+    import pandas as pd
 
     log_user(content=render_template('logs/admin/user_log.html'))
 
@@ -471,7 +540,7 @@ def user_log():
 
     df.drop(columns=['id', 'user_id'], inplace=True)
 
-    file = os.path.join(
+    file = path.join(
         current_app.config['FILE_CACHE_PATH'], uuid4().hex + '.xlsx')
     zfile = file.replace('.xlsx', '.zip')
     df.to_excel(file, index=False)

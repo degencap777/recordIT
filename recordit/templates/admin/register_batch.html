@@ -1,0 +1,8 @@
+{% extends 'admin/register_user.html' %}
+{% from 'bootstrap/form.html' import render_form %}
+
+
+{% block dashboard_content %}
+    {{ render_form(form) }}
+{% endblock dashboard_content %}
+

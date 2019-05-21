@@ -88,6 +88,18 @@ class RegisterAdministratorForm(FlaskForm):
             raise ValidationError(_l('The username is already in use.'))
 
 
+class RegisterBatchForm(FlaskForm):
+    file = FileField(
+        _l("Students or Teachers EXCEL file"),
+        validators=[
+            FileRequired(),
+            FileAllowed(['xls', 'xlsx'], _l('xls or xlsx only!'))
+        ]
+    )
+
+    submit = SubmitField(_l('Register'))
+
+
 class EditStudenteForm(FlaskForm):
     username = StringField(
         _l('Number'),
@@ -236,5 +248,6 @@ class AddReportForm(FlaskForm):
 class DeleteRecordForm(FlaskForm):
     delete = SubmitField(_l('Delete'))
 
+
 class SwitchStateForm(FlaskForm):
-    switch =  SubmitField(_l('Switch'))
+    switch = SubmitField(_l('Switch'))

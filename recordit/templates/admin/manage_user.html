@@ -69,17 +69,20 @@
                                                             <td>{{ user.name }}</td>
                                                             <td>
                                                                 {% if user.role.name == 'Teacher' %}
-                                                                    <span
-                                                                            class="badge badge-pill badge-warning">{{ user.role.name }}</span>
+                                                                    <span class="badge badge-pill badge-warning">{{ user.role.name }}</span>
                                                                 {% elif user.role.name == 'Administrator' %}
-                                                                    <span
-                                                                            class="badge badge-pill badge-danger">{{ user.role.name }}</span>
+                                                                    <span class="badge badge-pill badge-danger">{{ user.role.name }}</span>
                                                                 {% else %}
-                                                                    <span
-                                                                            class="badge badge-pill badge-light">{{ user.role.name }}</span>
+                                                                    <span class="badge badge-pill badge-light">{{ user.role.name }}</span>
                                                                 {% endif %}
                                                             </td>
-                                                            <td>{{ user.remark|truncate(config['TABLE_MAX_WORDS']) }}</td>
+                                                            <td>
+                                                                {% if user.remark %}
+                                                                    <span data-toggle="tooltip" title={{ user.remark }}>
+                                                                    {{ user.remark|truncate(config['TABLE_MAX_WORDS']) }}
+                                                                    </span>
+                                                                {% endif %}
+                                                            </td>
                                                             <td>
                                                                 <div class="button-block">
                                                                     <a href="{{ url_for('admin.edit_profile', user_id=user.id) }}"
@@ -115,6 +118,5 @@
                 </div>
             </div>
         </div>
-    </div>
     </div>
 {% endblock content %}

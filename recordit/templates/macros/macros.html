@@ -125,3 +125,10 @@
         </div>
     </div>
 {% endmacro %}
+
+
+{% macro render_tip(title, info) %}
+    <span data-toggle="tooltip" title="{{ title }}">
+        {{ info }}
+    </span>
+{% endmacro %}

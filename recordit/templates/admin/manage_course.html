@@ -1,6 +1,6 @@
 {% extends 'admin/base.html' %}
-{% from 'bootstrap/form.html' import render_form %}
 {% from 'macros/macros.html' import render_breadcrumb_item %}
+{% from 'macros/macros.html' import render_tip %}
 {% from 'macros/pagination.html' import render_pagination %}
 
 
@@ -28,9 +28,7 @@
                 <th>{{ _('Teacher') }}</th>
                 <th>{{ _('Teacher Number') }}</th>
                 <th>{{ _('Grade') }}</th>
-                <th>{{ _('Date') }}</th>
                 <th>{{ _('Active') }}</th>
-                <th>{{ _('Remark') }}</th>
                 <th>{{ _('Actions') }}</th>
             </tr>
             </thead>
@@ -40,11 +38,18 @@
                         {% set page = request.args.get('page', 1) %}
                         {{ pagination.total - (config['MANAGE_COURSE_PER_PAGE'] * (page|int - 1) + loop.index) + 1 }}
                     </td>
-                    <td>{{ course.name }}</td>
+                    <td>
+                        <span data-toggle="tooltip" title="{{ course.remark }}">
+                            {{ course.name }}
+                        </span>
+                    </td>
                     <td>{{ course.teacher_name }}</td>
                     <td>{{ course.teacher_number }}</td>
-                    <td>{{ course.grade }}</td>
-                    <td>{{ moment(course.date).format('LL') }}</td>
+                    <td>
+                        <span data-toggle="tooltip" title="{{ course.date }}">
+                            {{ course.grade }}
+                        </span>
+                    </td>
                     <td>
                         {% if course.is_active %}
                             {% set value = _('True') %}
@@ -57,18 +62,18 @@
                         </form>
                     </td>
                     <td>
-                        <span data-toggle="tooltip" title={{ course.remark }}>
-                            {{ course.remark|truncate(config['TABLE_MAX_WORDS']) }}
-                        </span>
-                    <td>
                         <div class="button-block">
                             <a href="{{ url_for('admin.manage_report', course_id=course.id) }}"
                                class="btn">
-                                {{ _('Manage Report') }}
+                                {{ _('Manage') }}
+                            </a>
+                            <a href="{{ url_for('admin.download_report', course_id=course.id) }}"
+                               class="btn">
+                                {{ _('Download') }}
                             </a>
                             <a href="{{ url_for('admin.add_report', course_id=course.id) }}"
                                class="btn">
-                                {{ _('Add Report') }}
+                                {{ _('Add') }}
                             </a>
                         </div>
                     </td>

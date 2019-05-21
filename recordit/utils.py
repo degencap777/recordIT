@@ -9,6 +9,7 @@ except ImportError:
 import os
 
 from flask import abort, flash, redirect, request, url_for
+from flask_babel import _
 from flask_login import current_user
 
 from recordit.extensions import db
@@ -65,3 +66,11 @@ def packitup(input_path, output_path):
         else:
             abort(404)
 
+
+def safe_filename(filename):
+    from pypinyin import lazy_pinyin
+    from werkzeug.utils import secure_filename
+
+    filename = secure_filename(''.join(lazy_pinyin(filename)))
+
+    return filename

@@ -28,10 +28,8 @@
                 <th>{{ _('Name') }}</th>
                 <th>{{ _('Speaker') }}</th>
                 <th>{{ _('Speaker Number') }}</th>
-                <th>{{ _('Score') }}</th>
                 <th>{{ _('Date') }}</th>
                 <th>{{ _('Active') }}</th>
-                <th>{{ _('Remark') }}</th>
                 <th>{{ _('Actions') }}</th>
             </tr>
             </thead>
@@ -41,10 +39,13 @@
                         {% set page = request.args.get('page', 1) %}
                         {{ pagination.total - (config['MANAGE_REPORT_PER_PAGE'] * (page|int - 1) + loop.index) + 1 }}
                     </td>
-                    <td>{{ report.name }}</td>
+                    <td>
+                        <span data-toggle="tooltip" title={{ report.remark }}>
+                            {{ report.name }}
+                        </span>
+                    </td>
                     <td>{{ report.speaker_name }}</td>
                     <td>{{ report.speaker_number }}</td>
-                    <td>{{ report.score }}</td>
                     <td>{{ moment(report.date).format('LL') }}</td>
                     <td>
                         {% if report.is_active %}
@@ -58,15 +59,14 @@
                         </form>
                     </td>
                     <td>
-                        <span data-toggle="tooltip" title={{ report.remark }}>
-                            {{ report.remark|truncate(config['TABLE_MAX_WORDS']) }}
-                        </span>
-                    </td>
-                    <td>
                         <div class="button-block">
                             <a href="{{ url_for('admin.manage_record', report_id=report.id) }}"
                                class="btn">
-                                {{ _('Record') }}
+                                {{ _('Manage') }}
+                            </a>
+                            <a href="{{ url_for('admin.download_record', report_id=report.id) }}"
+                               class="btn">
+                                {{ _('Download') }}
                             </a>
                             <form action="{{ url_for('admin.delete_report', report_id=report.id) }}"
                                   method="post">

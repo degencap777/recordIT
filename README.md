@@ -29,3 +29,4 @@ $ flask run
 -   [ ] log showing : log file size and log numbers
 -   [ ] compress asset size
 -   [ ] batch import report
+-   [ ] mobile phone showing in menue and table problem

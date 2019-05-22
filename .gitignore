@@ -109,6 +109,7 @@ venv.bak/
 *.zip
 cache/
 *.xmind
+uploads/
 
 # templates
 Bootstrap学校教育网站HTML模板/

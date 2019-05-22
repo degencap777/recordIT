@@ -1,2 +1,3 @@
 FLASK_APP=recordit
 FLASK_ENV=development
+SESSION_LIFETIME_MINUTES=30

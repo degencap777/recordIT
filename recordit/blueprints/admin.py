@@ -7,14 +7,12 @@ from flask_login import current_user, fresh_login_required, login_required
 
 from recordit.decorators import permission_required, role_required
 from recordit.extensions import db
-from recordit.forms.admin import (AddCourseAdministratorForm,
-                                  AddCourseTeacherForm, AddReportForm,
-                                  ChangePasswordForm, DeleteRecordForm,
-                                  DeleteReportForm, DeleteUserForm,
-                                  EditAdministratorForm, EditStudenteForm,
-                                  EditTeacherForm, RegisterAdministratorForm,
-                                  RegisterBatchForm, RegisterStudentForm,
-                                  RegisterTeacherForm, SwitchStateForm)
+from recordit.forms.admin import (
+    AddCourseAdministratorForm, AddCourseTeacherForm, AddReportBatchForm,
+    AddReportForm, ChangePasswordForm, DeleteRecordForm, DeleteReportForm,
+    DeleteUserForm, EditAdministratorForm, EditStudenteForm, EditTeacherForm,
+    RegisterAdministratorForm, RegisterBatchForm, RegisterStudentForm,
+    RegisterTeacherForm, SwitchStateForm)
 from recordit.models import Course, Log, RecordTable, Report, Role, User
 from recordit.utils import (flash_errors, log_user, packitup, redirect_back,
                             safe_filename)
@@ -35,11 +33,11 @@ def index():
     log_user(content=render_template('logs/admin/index.html'))
 
     user_count = User.query.count()
-    role_administrator = Role.query.filter_by(name='Administrator').first()
+    role_administrator = Role.query.filter_by(name='Administrator').one()
     admin_count = User.query.filter_by(role_id=role_administrator.id).count()
-    role_teacher = Role.query.filter_by(name='Teacher').first()
+    role_teacher = Role.query.filter_by(name='Teacher').one()
     teacher_count = User.query.filter_by(role_id=role_teacher.id).count()
-    role_student = Role.query.filter_by(name='Student').first()
+    role_student = Role.query.filter_by(name='Student').one()
     student_count = User.query.filter_by(role_id=role_student.id).count()
     log_count = Log.query.count()
     course_count = Course.query.count()
@@ -63,9 +61,10 @@ def manage_user():
     filter_rule = request.args.get('filter', 'all')
     page = request.args.get('page', 1, type=int)
     per_page = current_app.config['MANAGE_USER_PER_PAGE']
-    role_administrator = Role.query.filter_by(name='Administrator').first()
-    role_teacher = Role.query.filter_by(name='Teacher').first()
-    role_student = Role.query.filter_by(name='Student').first()
+    role_administrator = Role.query.filter_by(
+        name='Administrator').one()
+    role_teacher = Role.query.filter_by(name='Teacher').one()
+    role_student = Role.query.filter_by(name='Student').one()
 
     if filter_rule == 'student':
         filtered_users = User.query.filter_by(role=role_student)
@@ -249,7 +248,7 @@ def register_batch():
 
         if not set(df.columns) >= set(['number', 'name', 'role', 'remark', 'password']):
             flash(
-                _('The EXCEL file columns should contain number, name, role,remark and password.'), 'error')
+                _("The EXCEL file columns should contain 'number', 'name', 'role', 'remark' and 'password'."), 'error')
             return redirect_back()
 
         for i, row in df.iterrows():
@@ -258,9 +257,9 @@ def register_batch():
                 username=row['number'], name=row['name'])
             log_user(content)
 
-            if not User.query.filter_by(number=row['number']).first():
+            if not User.query.filter_by(number=row['number']).one_or_none():
                 if row['role'] not in ['Teacher', 'Student']:
-                    flash(_("%(number)s role should be Student or Student.",
+                    flash(_("%(number)s role should be 'Student' or 'Teacher'.",
                             number=row['number']), 'error')
                 else:
                     user = User(
@@ -282,6 +281,7 @@ def register_batch():
 
         flash_errors(form)
         flash(_('Register success.'), 'success')
+        return redirect_back()
 
     return render_template('admin/register_batch.html', form=form)
 
@@ -338,19 +338,16 @@ def add_course():
         log_user(content)
 
         if current_user.is_teacher:
-            course = Course(
-                teacher_id=current_user.id,
-                name=form.name.data,
-                grade=form.grade.data,
-                remark=form.remark.data
-            )
+            teacher_id = current_user.id
         else:
-            course = Course(
-                teacher_id=form.teacher.data,
-                name=form.name.data,
-                grade=form.grade.data,
-                remark=form.remark.data
-            )
+            teacher_id = form.teacher.data
+
+        course = Course(
+            teacher_id=form.teacher.data,
+            name=form.name.data,
+            grade=form.grade.data,
+            remark=form.remark.data
+        )
         db.session.add(course)
         db.session.commit()
 
@@ -384,7 +381,54 @@ def manage_report(course_id):
 @admin_bp.route('manage/report/<int:course_id>/download')
 @permission_required('MODERATOR_REPORT')
 def download_report(course_id):
-    return redirect_back()
+    from os import path
+    from uuid import uuid4
+
+    import pandas as pd
+
+    course = Course.query.get(course_id)
+    content = render_template(
+        'logs/admin/download_report.html', course=course.name)
+    log_user(content=content)
+
+    query = RecordTable.query.join(Report).filter_by(course_id=course_id)
+    df = pd.read_sql_query(query.statement, db.engine)
+
+    df['grade'] = (
+        df['report_id'].apply(lambda x: Report.query.get(x).grade))
+    df['course_name'] = (
+        df['report_id'].apply(lambda x: Report.query.get(x).course_name))
+    df['report_name'] = (
+        df['report_id'].apply(lambda x: Report.query.get(x).name))
+    df['speaker_name'] = (
+        df['report_id'].apply(lambda x: Report.query.get(x).speaker_name))
+    df['speaker_number'] = (
+        df['report_id'].apply(lambda x: Report.query.get(x).speaker_number))
+    df['reviewer_name'] = (
+        df['id'].apply(lambda x: RecordTable.query.get(x).reviewer_name))
+    df['reviewer_number'] = (
+        df['id'].apply(lambda x: RecordTable.query.get(x).reviewer_number))
+    df['teacher_name'] = (
+        df['report_id'].apply(lambda x: Report.query.get(x).teacher_name))
+    df['teacher_number'] = (
+        df['report_id'].apply(lambda x: Report.query.get(x).teacher_number))
+
+    df.drop(columns=['id', 'report_id', 'user_id'], inplace=True)
+
+    file = path.join(
+        current_app.config['FILE_CACHE_PATH'], uuid4().hex + '.xlsx')
+    df.to_excel(file, index=False)
+
+    zfile = file.replace('.xlsx', '.zip')
+
+    images = [path.join(current_app.config['UPLOAD_PATH'], rt.file)
+              for report in course.reports for rt in report.recordtables if rt.file]
+    packitup(file, zfile, mode='w')
+    packitup(images, zfile, mode='a', diff=True)
+
+    flash(_('The file is already downloaded.'), 'success')
+
+    return send_file(zfile, as_attachment=True, attachment_filename='reports.zip')
 
 
 @admin_bp.route('manage/report/<int:report_id>/switch-state', methods=['POST'])
@@ -416,7 +460,7 @@ def add_report(course_id):
 
     if form.validate_on_submit():
         course = Course.query.get_or_404(course_id)
-        user = User.query.get_or_404(form.speaker.data)
+        user = User.query.filter_by(number=form.speaker.data).one()
         if course.grade == user.grade:
             content = render_template(
                 'logs/admin/add_report.html', course=course.name, grade=course.grade,
@@ -425,6 +469,7 @@ def add_report(course_id):
 
             report = Report(
                 course_id=course_id,
+                speaker_id=user.id,
                 name=form.name.data,
                 remark=form.remark.data
             )
@@ -438,6 +483,63 @@ def add_report(course_id):
         return redirect_back()
 
     return render_template('admin/add_report.html', form=form)
+
+
+@admin_bp.route('manage/report/<int:course_id>/batch', methods=['GET', 'POST'])
+@permission_required('MODERATOR_REPORT')
+def add_report_batch(course_id):
+    from os import path
+    from uuid import uuid4
+
+    import pandas as pd
+
+    form = AddReportBatchForm()
+    if form.validate_on_submit():
+        file = request.files.get('file')
+        path = path.join(
+            current_app.config['FILE_CACHE_PATH'], safe_filename(file.filename))
+        file.save(path)
+        df = pd.read_excel(path)
+
+        if not set(df.columns) >= set(['name', 'number', 'remark']):
+            flash(
+                _("The EXCEL file columns should contain 'name', 'number' and 'remark'."), 'error')
+            return redirect_back()
+
+        course = Course.query.get_or_404(course_id)
+        for i, row in df.iterrows():
+            number = row['number']
+            if isinstance(number, (int, float)):
+                number = str(int(number))
+
+            user = User.query.filter_by(number=number).one()
+            if user:
+                if course.grade == user.grade:
+                    content = render_template(
+                        'logs/admin/add_report.html', course=course.name, grade=course.grade,
+                        username=user.number, name=user.name, report=row['name'])
+                    log_user(content)
+
+                    report = Report(
+                        course_id=course_id,
+                        speaker_id=user.id,
+                        name=row['name'],
+                        remark=row['remark']
+                    )
+                    db.session.add(report)
+                    db.session.commit()
+                else:
+                    flash(
+                        _('The %(speaker)s is not belong to this course.', speaker=user.number), 'error')
+            else:
+                flash(_("%(number)s is not existed.",
+                        number=number), 'error')
+
+        flash_errors(form)
+        flash(_('Add Report success.'), 'success')
+        return redirect_back()
+
+    return render_template('admin/add_report_batch.html', form=form)
 
 
 @admin_bp.route('manage/report/<int:report_id>/delete', methods=['POST'])
@@ -480,10 +582,68 @@ def manage_record(report_id):
         'admin/manage_record.html', pagination=pagination, form=form)
 
 
+@admin_bp.route('manage/record-table/<string:file>/download')
+@permission_required('MODERATOR_RECORD_TABLE')
+def download_file(file):
+    from os import path
+
+    content = render_template('logs/admin/download_file.html', file=file)
+    log_user(content=content)
+
+    path = path.join(current_app.config['UPLOAD_PATH'], file)
+    return send_file(path)
+
+
 @admin_bp.route('manage/record-table/<int:report_id>/download')
 @permission_required('MODERATOR_RECORD_TABLE')
 def download_record(report_id):
-    return redirect_back()
+    from os import path
+    from uuid import uuid4
+
+    import pandas as pd
+
+    report = Report.query.get(report_id)
+    content = render_template(
+        'logs/admin/download_record.html', report=report.name, username=report.speaker_number)
+    log_user(content=content)
+
+    query = RecordTable.query.filter_by(report_id=report_id)
+    df = pd.read_sql_query(query.statement, db.engine)
+
+    df['grade'] = (
+        df['report_id'].apply(lambda x: Report.query.get(x).grade))
+    df['course_name'] = (
+        df['report_id'].apply(lambda x: Report.query.get(x).course_name))
+    df['report_name'] = (
+        df['report_id'].apply(lambda x: Report.query.get(x).name))
+    df['reviewer_name'] = (
+        df['id'].apply(lambda x: RecordTable.query.get(x).reviewer_name))
+    df['reviewer_number'] = (
+        df['id'].apply(lambda x: RecordTable.query.get(x).reviewer_number))
+    df['speaker_name'] = (
+        df['report_id'].apply(lambda x: Report.query.get(x).speaker_name))
+    df['speaker_number'] = (
+        df['report_id'].apply(lambda x: Report.query.get(x).speaker_number))
+    df['teacher_name'] = (
+        df['report_id'].apply(lambda x: Report.query.get(x).teacher_name))
+    df['teacher_number'] = (
+        df['report_id'].apply(lambda x: Report.query.get(x).teacher_number))
+
+    df.drop(columns=['id', 'report_id', 'user_id'], inplace=True)
+
+    file = path.join(
+        current_app.config['FILE_CACHE_PATH'], uuid4().hex + '.xlsx')
+    df.to_excel(file, index=False)
+
+    zfile = file.replace('.xlsx', '.zip')
+    images = [path.join(current_app.config['UPLOAD_PATH'], rt.file)
+              for rt in report.recordtables if rt.file]
+    packitup(file, zfile, mode='w')
+    packitup(images, zfile, mode='a', diff=True)
+
+    flash(_('The file is already downloaded.'), 'success')
+
+    return send_file(zfile, as_attachment=True, attachment_filename='records.zip')
 
 
 @admin_bp.route('manage/record-table/<int:record_id>', methods=['POST'])
@@ -492,8 +652,8 @@ def delete_record(record_id):
     record = RecordTable.query.get_or_404(record_id)
 
     content = render_template(
-        'logs/admin/delete_record.html', username=record.review_number,
-        name=record.review_name, report=record.report_name)
+        'logs/admin/delete_record.html', username=record.reviewer_number,
+        name=record.reviewer_name, report=record.report_name)
     log_user(content)
 
     if current_user.is_teacher:

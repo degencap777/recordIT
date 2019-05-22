@@ -10,7 +10,7 @@ from recordit.extensions import db
 from recordit.forms.user import (ChangePasswordForm, EditAdministratorForm,
                                  EditStudenteForm, EditTeacherForm, ReviewForm)
 from recordit.models import Course, RecordTable, Report, User
-from recordit.utils import log_user, redirect_back
+from recordit.utils import allowed_file, gen_uuid, log_user, redirect_back
 
 user_bp = Blueprint('user', __name__)
 
@@ -46,6 +46,7 @@ def index():
 def review(report_id):
     form = ReviewForm()
     report = Report.query.get_or_404(report_id)
+
     if current_user.is_student and current_user.id == report.speaker_id:
         abort(403)
     elif current_user.is_teacher and current_user.id != report.teacher_id:
@@ -53,6 +54,8 @@ def review(report_id):
     else:
         record = report.search_recordtabel(current_user.id)
         if form.validate_on_submit():
+            from os import path
+
             content = render_template(
                 'logs/user/reivew.html', course=report.course_name,
                 number=report.speaker_number, name=report.speaker_name, report=report.name)
@@ -60,25 +63,35 @@ def review(report_id):
 
             upper = current_app.config['RECORD_TABLE_UPPER_LIMIT']
             lower = current_app.config['RECORD_TABLE_LOWER_LIMIT']
-            if lower <= form.score.data <= upper:
-                if record is None:
-                    record = RecordTable(
-                        report_id=report.id,
-                        user_id=current_user.id,
-                        score=form.score.data,
-                        remark=form.remark.data
-                    )
-                    db.session.add(record)
-                else:
-                    record.score = form.score.data
-                    record.remark = form.remark.data
-
-                db.session.commit()
-                flash(_('Reviewed success.'), 'success')
-            else:
+            if not lower <= form.score.data <= upper:
                 flash(_('The score out of range from %(lower)s to %(upper)s.',
                         lower=lower, upper=upper), 'error')
+                return redirect_back()
 
+            file = request.files.get('file')
+            filename = None
+            if file:
+                filename = gen_uuid(file.filename)
+                file.save(
+                    path.join(current_app.config['UPLOAD_PATH'], filename))
+
+            if record is None:
+                record = RecordTable(
+                    report_id=report.id,
+                    user_id=current_user.id,
+                    score=form.score.data,
+                    remark=form.remark.data,
+                    file=filename
+                )
+                db.session.add(record)
+            else:
+                record.score = form.score.data
+                record.remark = form.remark.data
+                if file:
+                    record.file = filename
+
+            db.session.commit()
+            flash(_('Reviewed success.'), 'success')
             return redirect_back()
 
         if record is not None:

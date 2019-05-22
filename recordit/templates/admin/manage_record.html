@@ -31,6 +31,7 @@
                 <th>{{ _('Score') }}</th>
                 <th>{{ _('Time') }}</th>
                 <th>{{ _('Remark') }}</th>
+                <th>{{ _('File') }}</th>
                 <th>{{ _('Actions') }}</th>
             </tr>
             </thead>
@@ -48,6 +49,15 @@
                         <span data-toggle="tooltip" title={{ record.remark }}>
                             {{ record.remark|truncate(config['TABLE_MAX_WORDS']) }}
                         </span>
+                    </td>
+                    <td>
+                        {% if record.file %}
+                            <a href="{{ url_for('admin.download_file', file=record.file) }}" target="_blank">
+                                {{ record.file }}
+                            </a>
+                        {% else %}
+                            {{ record.file }}
+                        {% endif %}
                     </td>
                     <td>
                         <div class="button-block">

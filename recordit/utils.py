@@ -6,9 +6,9 @@ try:
 except ImportError:
     from urllib.parse import urlparse, urljoin
 
-import os
+from os import path
 
-from flask import abort, flash, redirect, request, url_for
+from flask import abort, current_app, flash, redirect, request, url_for
 from flask_babel import _
 from flask_login import current_user
 
@@ -36,7 +36,8 @@ def flash_errors(form):
     for field, errors in form.errors.items():
         for error in errors:
             name = getattr(form, field).label.text
-            flash(_("Error in the %(name)s field - %(error)s.", name=name, error=error), 'dark')
+            flash(_("Error in the %(name)s field - %(error)s.",
+                    name=name, error=error), 'dark')
 
 
 def log_user(content):
@@ -50,21 +51,31 @@ def log_user(content):
     db.session.commit()
 
 
-def packitup(input_path, output_path):
+def packitup(input_paths, output_path, diff=False, names=None, mode='w'):
+    from os import listdir, sep, walk
     from zipfile import ZipFile
 
-    with ZipFile(output_path, 'w') as z:
-        if os.path.isdir(input_path):
-            for root, _, files in os.walk(input_path):
-                for file in files:
+    with ZipFile(output_path, mode) as z:
+        if diff:
+            if names:
+                for input_path, name in zip(input_paths, names):
+                    z.write(input_path, name)
+            else:
+                for input_path in input_paths:
+                    name = path.join(*input_path.split(sep)[-2:])
+                    z.write(input_path, name)
+        else:
+            if path.isdir(input_paths):
+                partent = input_paths.split(sep)[-1]
+                for file in listdir(input_paths):
                     if file == '.gitkeep':
                         continue
-                    z.write(os.path.join(root, file), file)
-
-        elif os.path.isfile(input_path):
-            z.write(input_path, os.path.split(input_path)[1])
-        else:
-            abort(404)
+                    z.write(path.join(input_paths, file), path.join(partent, file))
+            elif path.isfile(input_paths):
+                name = names if names is not None else path.split(input_paths)[-1]
+                z.write(input_paths, name)
+            else:
+                abort(404)
 
 
 def safe_filename(filename):
@@ -74,3 +85,15 @@ def safe_filename(filename):
     filename = secure_filename(''.join(lazy_pinyin(filename)))
 
     return filename
+
+
+def gen_uuid(filename):
+    from uuid import uuid1
+
+    return uuid1().hex + path.splitext(filename)[-1]
+
+
+def allowed_file(filename):
+
+    return ('.' in filename
+            and filename.rsplit('.', 1)[1].lower() in current_app.config['ALLOWED_EXTENSIONS'])

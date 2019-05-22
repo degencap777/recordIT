@@ -25,8 +25,10 @@
             <tr class="text-center">
                 <th>#</th>
                 <th>{{ _('Name') }}</th>
-                <th>{{ _('Teacher') }}</th>
-                <th>{{ _('Teacher Number') }}</th>
+                {% if not current_user.is_teacher %}
+                    <th>{{ _('Teacher') }}</th>
+                    <th>{{ _('Teacher Number') }}</th>
+                {% endif %}
                 <th>{{ _('Grade') }}</th>
                 <th>{{ _('Active') }}</th>
                 <th>{{ _('Actions') }}</th>
@@ -43,8 +45,10 @@
                             {{ course.name }}
                         </span>
                     </td>
-                    <td>{{ course.teacher_name }}</td>
-                    <td>{{ course.teacher_number }}</td>
+                    {% if not current_user.is_teacher %}
+                        <td>{{ course.teacher_name }}</td>
+                        <td>{{ course.teacher_number }}</td>
+                    {% endif %}
                     <td>
                         <span data-toggle="tooltip" title="{{ course.date }}">
                             {{ course.grade }}
@@ -74,6 +78,10 @@
                             <a href="{{ url_for('admin.add_report', course_id=course.id) }}"
                                class="btn">
                                 {{ _('Add') }}
+                            </a>
+                            <a href="{{ url_for('admin.add_report_batch', course_id=course.id) }}"
+                               class="btn">
+                                {{ _('Batch Add') }}
                             </a>
                         </div>
                     </td>

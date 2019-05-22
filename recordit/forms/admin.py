@@ -93,7 +93,7 @@ class RegisterBatchForm(FlaskForm):
         _l("Students or Teachers EXCEL file"),
         validators=[
             FileRequired(),
-            FileAllowed(['xls', 'xlsx'], _l('xls or xlsx only!'))
+            FileAllowed(['xls', 'xlsx'], _l("'xls' or 'xlsx' only!"))
         ]
     )
 
@@ -243,6 +243,18 @@ class AddReportForm(FlaskForm):
             raise ValidationError(_l('The speaker is not existed.'))
         elif user.role.name != 'Student':
             raise ValidationError(_l('The speaker is not Student.'))
+
+
+class AddReportBatchForm(FlaskForm):
+    file = FileField(
+        _l("Reports EXCEL file"),
+        validators=[
+            FileRequired(),
+            FileAllowed(['xls', 'xlsx'], _l("'xls' or 'xlsx' only!"))
+        ]
+    )
+
+    submit = SubmitField(_l('Add'))
 
 
 class DeleteRecordForm(FlaskForm):

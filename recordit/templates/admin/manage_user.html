@@ -48,61 +48,64 @@
                                     <div class="col-lg-12">
                                         <div class="comments-reply-area tow-revew">
                                             {% if pagination.items %}
-                                                <table class="table table-striped table-hover table-sm">
-                                                    <thead>
-                                                    <tr class="text-center">
-                                                        <th>#</th>
-                                                        <th>{{ _('Number') }}</th>
-                                                        <th>{{ _('Name') }}</th>
-                                                        <th>{{ _('Role') }}</th>
-                                                        <th>{{ _('Remark') }}</th>
-                                                        <th>{{ _('Actions') }}</th>
-                                                    </tr>
-                                                    </thead>
-                                                    {% for user in pagination.items %}
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped table-hover table-sm">
+                                                        <thead>
                                                         <tr class="text-center">
-                                                            <td>
-                                                                {% set page = request.args.get('page', 1) %}
-                                                                {{ pagination.total - (config['MANAGE_USER_PER_PAGE'] * (page|int - 1) + loop.index) + 1 }}
-                                                            </td>
-                                                            <td>{{ user.number }}</td>
-                                                            <td>{{ user.name }}</td>
-                                                            <td>
-                                                                {% if user.role.name == 'Teacher' %}
-                                                                    <span class="badge badge-pill badge-warning">{{ user.role.name }}</span>
-                                                                {% elif user.role.name == 'Administrator' %}
-                                                                    <span class="badge badge-pill badge-danger">{{ user.role.name }}</span>
-                                                                {% else %}
-                                                                    <span class="badge badge-pill badge-light">{{ user.role.name }}</span>
-                                                                {% endif %}
-                                                            </td>
-                                                            <td>
-                                                                {% if user.remark %}
-                                                                    <span data-toggle="tooltip" title={{ user.remark }}>
-                                                                    {{ user.remark|truncate(config['TABLE_MAX_WORDS']) }}
-                                                                    </span>
-                                                                {% endif %}
-                                                            </td>
-                                                            <td>
-                                                                <div class="button-block">
-                                                                    <a href="{{ url_for('admin.edit_profile', user_id=user.id) }}"
-                                                                       class="btn">
-                                                                        {{ _('Profile') }}
-                                                                    </a>
-                                                                    <a href="{{ url_for('admin.change_password', user_id=user.id) }}"
-                                                                       class="btn">
-                                                                        {{ _('Password') }}
-                                                                    </a>
-                                                                    <form action="{{ url_for('admin.delete_user', user_id=user.id) }}"
-                                                                          method="post">
-                                                                        {{ form.csrf_token() }}
-                                                                        {{ form.delete(class="btn") }}
-                                                                    </form>
-                                                                </div>
-                                                            </td>
+                                                            <th>#</th>
+                                                            <th>{{ _('Number') }}</th>
+                                                            <th>{{ _('Name') }}</th>
+                                                            <th>{{ _('Role') }}</th>
+                                                            <th>{{ _('Remark') }}</th>
+                                                            <th>{{ _('Actions') }}</th>
                                                         </tr>
-                                                    {% endfor %}
-                                                </table>
+                                                        </thead>
+                                                        {% for user in pagination.items %}
+                                                            <tr class="text-center">
+                                                                <td>
+                                                                    {% set page = request.args.get('page', 1) %}
+                                                                    {{ pagination.total - (config['MANAGE_USER_PER_PAGE'] * (page|int - 1) + loop.index) + 1 }}
+                                                                </td>
+                                                                <td>{{ user.number }}</td>
+                                                                <td>{{ user.name }}</td>
+                                                                <td>
+                                                                    {% if user.role.name == 'Teacher' %}
+                                                                        <span class="badge badge-pill badge-warning">{{ user.role.name }}</span>
+                                                                    {% elif user.role.name == 'Administrator' %}
+                                                                        <span class="badge badge-pill badge-danger">{{ user.role.name }}</span>
+                                                                    {% else %}
+                                                                        <span class="badge badge-pill badge-light">{{ user.role.name }}</span>
+                                                                    {% endif %}
+                                                                </td>
+                                                                <td>
+                                                                    {% if user.remark %}
+                                                                        <span data-toggle="tooltip"
+                                                                              title={{ user.remark }}>
+                                                                        {{ user.remark|truncate(config['TABLE_MAX_WORDS']) }}
+                                                                        </span>
+                                                                    {% endif %}
+                                                                </td>
+                                                                <td>
+                                                                    <div class="button-block">
+                                                                        <a href="{{ url_for('admin.edit_profile', user_id=user.id) }}"
+                                                                           class="btn">
+                                                                            {{ _('Profile') }}
+                                                                        </a>
+                                                                        <a href="{{ url_for('admin.change_password', user_id=user.id) }}"
+                                                                           class="btn">
+                                                                            {{ _('Password') }}
+                                                                        </a>
+                                                                        <form action="{{ url_for('admin.delete_user', user_id=user.id) }}"
+                                                                              method="post">
+                                                                            {{ form.csrf_token() }}
+                                                                            {{ form.delete(class="btn") }}
+                                                                        </form>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        {% endfor %}
+                                                    </table>
+                                                </div>
                                                 {{ render_pagination(pagination, align='center') }}
                                             {% else %}
                                                 <div class="tip">

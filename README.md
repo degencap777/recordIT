@@ -28,4 +28,3 @@ $ flask run
 -   [ ] verification code
 -   [ ] log showing : log file size and log numbers
 -   [ ] compress asset size
--   [ ] mobile phone showing in menue and table problem

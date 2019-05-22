@@ -22,55 +22,57 @@
 
 {% block dashboard_content %}
     {% if pagination.items %}
-        <table class="table table-striped table-hover table-sm">
-            <thead>
-            <tr class="text-center">
-                <th>#</th>
-                <th>{{ _('Reviewer Name') }}</th>
-                <th>{{ _('Reviewer Number') }}</th>
-                <th>{{ _('Score') }}</th>
-                <th>{{ _('Time') }}</th>
-                <th>{{ _('Remark') }}</th>
-                <th>{{ _('File') }}</th>
-                <th>{{ _('Actions') }}</th>
-            </tr>
-            </thead>
-            {% for record in pagination.items %}
+        <div class="table-responsive">
+            <table class="table table-striped table-hover table-sm">
+                <thead>
                 <tr class="text-center">
-                    <td class="text-center">
-                        {% set page = request.args.get('page', 1) %}
-                        {{ pagination.total - (config['MANAGE_REPORT_PER_PAGE'] * (page|int - 1) + loop.index) + 1 }}
-                    </td>
-                    <td>{{ record.reviewer_name }}</td>
-                    <td>{{ record.reviewer_number }}</td>
-                    <td>{{ record.score }}</td>
-                    <td>{{ moment(record.time).format('llll') }}</td>
-                    <td>
-                        <span data-toggle="tooltip" title={{ record.remark }}>
-                            {{ record.remark|truncate(config['TABLE_MAX_WORDS']) }}
-                        </span>
-                    </td>
-                    <td>
-                        {% if record.file %}
-                            <a href="{{ url_for('admin.download_file', file=record.file) }}" target="_blank">
-                                {{ record.file }}
-                            </a>
-                        {% else %}
-                            {{ record.file }}
-                        {% endif %}
-                    </td>
-                    <td>
-                        <div class="button-block">
-                            <form action="{{ url_for('admin.delete_record', record_id=record.id) }}"
-                                  method="post">
-                                {{ form.csrf_token() }}
-                                {{ form.delete(class="btn") }}
-                            </form>
-                        </div>
-                    </td>
+                    <th>#</th>
+                    <th>{{ _('Reviewer Name') }}</th>
+                    <th>{{ _('Reviewer Number') }}</th>
+                    <th>{{ _('Score') }}</th>
+                    <th>{{ _('Time') }}</th>
+                    <th>{{ _('Remark') }}</th>
+                    <th>{{ _('File') }}</th>
+                    <th>{{ _('Actions') }}</th>
                 </tr>
-            {% endfor %}
-        </table>
+                </thead>
+                {% for record in pagination.items %}
+                    <tr class="text-center">
+                        <td class="text-center">
+                            {% set page = request.args.get('page', 1) %}
+                            {{ pagination.total - (config['MANAGE_REPORT_PER_PAGE'] * (page|int - 1) + loop.index) + 1 }}
+                        </td>
+                        <td>{{ record.reviewer_name }}</td>
+                        <td>{{ record.reviewer_number }}</td>
+                        <td>{{ record.score }}</td>
+                        <td>{{ moment(record.time).format('llll') }}</td>
+                        <td>
+                            <span data-toggle="tooltip" title={{ record.remark }}>
+                                {{ record.remark|truncate(config['TABLE_MAX_WORDS']) }}
+                            </span>
+                        </td>
+                        <td>
+                            {% if record.file %}
+                                <a href="{{ url_for('admin.download_file', file=record.file) }}" target="_blank">
+                                    {{ record.file }}
+                                </a>
+                            {% else %}
+                                {{ record.file }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            <div class="button-block">
+                                <form action="{{ url_for('admin.delete_record', record_id=record.id) }}"
+                                      method="post">
+                                    {{ form.csrf_token() }}
+                                    {{ form.delete(class="btn") }}
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
         {{ render_pagination(pagination, align='center') }}
     {% else %}
         <div class="tip">

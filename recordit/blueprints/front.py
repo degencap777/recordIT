@@ -24,9 +24,9 @@ def index():
 @front_bp.route('/about')
 @cache.cached(timeout=60)
 def about():
-    role_teacher = Role.query.filter_by(name='Teacher').first()
+    role_teacher = Role.query.filter_by(name='Teacher').one()
     teacher_count = User.query.filter_by(role_id=role_teacher.id).count()
-    role_student = Role.query.filter_by(name='Student').first()
+    role_student = Role.query.filter_by(name='Student').one()
     student_count = User.query.filter_by(role_id=role_student.id).count()
 
     course_count = Course.query.count()

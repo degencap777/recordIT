@@ -17,8 +17,6 @@ else:
 class BaseConfig(object):
     SECRET_KEY = os.getenv('SECRET_KEY', 'secret key')
 
-    UPLOAD_PATH = os.path.join(basedir, 'uploads')
-
     FILE_CACHE_PATH = os.path.join(basedir, 'cache')
 
     ADMIN_NUMBER = os.getenv('ADMIN_NUMBER')
@@ -29,20 +27,16 @@ class BaseConfig(object):
     MAIL_PORT = os.getenv('MAIL_PORT', 587)
     MAIL_USERNAME = os.getenv('MAIL_USERNAME')
     MAIL_PASSWORD = os.getenv('SENDGRID_API_KEY')
+    MAIL_USE_SSL = True
+    MAIL_DEFAULT_SENDER = MAIL_USERNAME
 
     DEBUG_TB_INTERCEPT_REDIRECTS = False
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_RECORD_QUERIES = True
 
-    # file size exceed to 17 Mb will return a 413 error response.
-    MAX_CONTENT_LENGTH = 17 * 1024 * 1024
-
     LOCALES = ['zh_Hans_CN', 'en_US']
     BABEL_DEFAULT_LOCALE = LOCALES[0]
-
-    MAIL_USE_SSL = True
-    MAIL_DEFAULT_SENDER = MAIL_USERNAME
 
     SENDGRID_DEFAULT_FROM = MAIL_USERNAME
     SENDGRID_API_KEY = MAIL_PASSWORD
@@ -54,7 +48,7 @@ class BaseConfig(object):
     MANAGE_REPORT_PER_PAGE = 30
     MANAGE_RECORD_TABLE_PER_PAGE = 30
     USER_REPORT_PER_PAGE = 30
-    
+
     TABLE_MAX_WORDS = 10
     USER_MAX_WORDS = 50
 
@@ -64,7 +58,11 @@ class BaseConfig(object):
     FILE_CACHE_PATH = os.path.join(basedir, 'cache')
     SYSTEM_LOG_PATH = os.path.join(basedir, 'logs/recordit.log')
 
-    SESSION_LIFETIME_MINUTES = os.getenv('SESSION_LIFETIME_MINUTES', 10)
+    SESSION_LIFETIME_MINUTES = int(os.getenv('SESSION_LIFETIME_MINUTES', 10))
+
+    ALLOWED_EXTENSIONS = set(['jpg', 'jpeg', 'png'])
+    UPLOAD_PATH = os.path.join(basedir, 'uploads')
+    MAX_CONTENT_LENGTH = 17 * 1024 * 1024
 
 
 class DevelopmentConfig(BaseConfig):
